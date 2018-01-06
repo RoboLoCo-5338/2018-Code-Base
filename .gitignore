@@ -1,6 +1,15 @@
 /.gradle
 /build
 
+.classpath
+.project
+.settings/
+
+*.iml
+*.ipr
+*.iws
+/.idea
+
 # Compiled class file
 *.class
 
