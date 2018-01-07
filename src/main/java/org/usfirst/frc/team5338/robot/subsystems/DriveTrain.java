@@ -1,68 +1,51 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.OI.DriveState;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
-import com.ctre.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class DriveTrain extends Subsystem {
-    private final CANTalon DRIVEL1 = new CANTalon(4);
-    public final CANTalon DRIVEL2 = new CANTalon(3);
-    public final CANTalon DRIVER1 = new CANTalon(2);
-    public final CANTalon DRIVER2 = new CANTalon(1);
+public class DriveTrain extends Subsystem
+{
+	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
+	private final TalonSRX DRIVEL1 = new TalonSRX(4);
+	public final TalonSRX DRIVEL2 = new TalonSRX(3);
+	public final TalonSRX DRIVER1 = new TalonSRX(2);
+	public final TalonSRX DRIVER2 = new TalonSRX(1);
+	private final SpeedControllerGroup m_left =
+					new SpeedControllerGroup((SpeedController) this.DRIVEL1, (SpeedController) this.DRIVEL2);
+	private final SpeedControllerGroup m_right =
+					new SpeedControllerGroup((SpeedController) this.DRIVER1, (SpeedController) this.DRIVER2);
+	private double throttle = 1.0;
 
-    public final RobotDrive DRIVE = new RobotDrive(DRIVEL1, DRIVEL2, DRIVER1, DRIVER2);
-
-    private double throttle = 1.0;
-
-    public DriveTrain() {
-	super();
-    }
-
-    @Override
-    public void initDefaultCommand() {
-	setDefaultCommand(new TankDriveWithJoysticks());
-    }
-
-    public void drive(OI oi) {
-	if (oi.get(OI.Button.REVERSE)) {
-	    oi.driveState = DriveState.REVERSE;
-	} else if (oi.get(OI.Button.FORWARD)) {
-	    oi.driveState = DriveState.FORWARD;
+	public DriveTrain()
+	{
+		super();
 	}
-
-	if (oi.get(OI.Button.SLOW)) {
-	    throttle = 0.5;
-	} else {
-	    throttle = 1.0;
+	public void drive(final double left, final double right)
+	{
+		this.DRIVE.tankDrive(this.throttle * left, this.throttle * right, false);
 	}
-
-	switch (oi.driveState) {
-	case REVERSE:
-	    if (oi.get(OI.Button.STRAIGHT)) {
-		DRIVE.tankDrive(oi.getLeft(), oi.getLeft(), false);
-	    } else {
-		DRIVE.tankDrive(throttle * oi.getRight(), throttle * oi.getLeft(), false);
-	    }
-	    break;
-	case FORWARD:
-	    if (oi.get(OI.Button.STRAIGHT)) {
-		DRIVE.tankDrive(-oi.getLeft(), -oi.getLeft(), false);
-	    } else {
-		DRIVE.tankDrive(-throttle * oi.getLeft(), -throttle * oi.getRight(), false);
-	    }
-	    break;
-	default:
-	    drive(0.0, 0.0);
-	    break;
+	public void drive(final OI oi)
+	{
+		if(oi.get(OI.Button.SLOW))
+		{
+			this.throttle = 0.5;
+		}
+		else
+		{
+			this.throttle = 1.0;
+		}
+		this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getLeft(), false);
 	}
-    }
-
-    public void drive(double left, double right) {
-	DRIVE.tankDrive(throttle * left, throttle * right, false);
-    }
+	@Override
+	public void initDefaultCommand()
+	{
+		this.setDefaultCommand(new TankDriveWithJoysticks());
+	}
 }
