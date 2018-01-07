@@ -56,8 +56,8 @@ public class DriveTrain extends Subsystem
 			this.throttle = 1.0;
 		}
 
-		xPrimeRight = directionRight * (a * Math.pow(this.throttle * oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
-		xPrimeLeft = directionLeft * (a * Math.pow(this.throttle * oi.getLeft(),3) * (1-a)*(this.throttle * oi.getLeft()));
+		xPrimeRight =  (a * Math.pow(this.throttle * oi.getRight(),2) * (1-a)*(this.throttle * oi.getRight()));
+		xPrimeLeft =   (a * Math.pow(this.throttle * oi.getLeft(),2) * (1-a)*(this.throttle * oi.getLeft()));
 
 		if(!oi.get(OI.Button.STRAIGHT))
 		{
