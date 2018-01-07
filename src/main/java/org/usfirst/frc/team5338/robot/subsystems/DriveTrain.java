@@ -19,7 +19,7 @@ public class DriveTrain extends Subsystem
 	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
 	private double throttle = 1.0;
-	
+
 	public DriveTrain()
 	{
 		super();
@@ -38,7 +38,14 @@ public class DriveTrain extends Subsystem
 		{
 			this.throttle = 1.0;
 		}
-		this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getLeft(), false);
+		if(!oi.get(OI.Button.STRAIGHT))
+		{
+			this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getLeft(), false);
+		}
+		else
+		{
+			this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getRight(), false);
+		}
 	}
 	@Override
 	public void initDefaultCommand()
