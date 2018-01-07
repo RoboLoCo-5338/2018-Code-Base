@@ -3,24 +3,21 @@ package org.usfirst.frc.team5338.robot.subsystems;
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveTrain extends Subsystem
 {
+	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(4);
+	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(3);
+	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(2);
+	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(1);
+	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
+	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
-	private final TalonSRX DRIVEL1 = new TalonSRX(4);
-	public final TalonSRX DRIVEL2 = new TalonSRX(3);
-	public final TalonSRX DRIVER1 = new TalonSRX(2);
-	public final TalonSRX DRIVER2 = new TalonSRX(1);
-	private final SpeedControllerGroup m_left =
-					new SpeedControllerGroup((SpeedController) this.DRIVEL1, (SpeedController) this.DRIVEL2);
-	private final SpeedControllerGroup m_right =
-					new SpeedControllerGroup((SpeedController) this.DRIVER1, (SpeedController) this.DRIVER2);
 	private double throttle = 1.0;
 	
 	public DriveTrain()
