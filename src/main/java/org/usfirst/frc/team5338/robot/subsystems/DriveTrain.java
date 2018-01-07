@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-
+//
 public class DriveTrain extends Subsystem
 {
 	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(4);
@@ -20,6 +20,8 @@ public class DriveTrain extends Subsystem
 	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
 	private double throttle = 1.0;
+	private double xPrimeRight, xPrimeLeft, a;
+	int directionRight, directionLeft;
 
 	public DriveTrain()
 	{
@@ -31,6 +33,20 @@ public class DriveTrain extends Subsystem
 	}
 	public void drive(final OI oi)
 	{
+		a = 0.25;
+
+		if((this.throttle * oi.getRight()) < 0) {
+			directionRight = 1;
+		} else {
+			directionRight = -1;
+		}
+
+		if((this.throttle * oi.getLeft()) < 0) {
+			directionLeft = 1;
+		} else {
+			directionLeft = -1;
+		}
+
 		if(oi.get(OI.Button.SLOW))
 		{
 			this.throttle = 0.5;
@@ -39,13 +55,17 @@ public class DriveTrain extends Subsystem
 		{
 			this.throttle = 1.0;
 		}
+
+		xPrimeRight = directionRight * (a * Math.pow(this.throttle * oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
+		xPrimeLeft = directionLeft * (a * Math.pow(this.throttle * oi.getLeft(),3) * (1-a)*(this.throttle * oi.getLeft()));
+
 		if(!oi.get(OI.Button.STRAIGHT))
 		{
-			this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getLeft(), false);
+			this.DRIVE.tankDrive(xPrimeRight, xPrimeLeft, false);
 		}
 		else
 		{
-			this.DRIVE.tankDrive(this.throttle * oi.getRight(), this.throttle * oi.getRight(), false);
+			this.DRIVE.tankDrive(xPrimeRight, xPrimeRight, false);
 		}
 	}
 	@Override
