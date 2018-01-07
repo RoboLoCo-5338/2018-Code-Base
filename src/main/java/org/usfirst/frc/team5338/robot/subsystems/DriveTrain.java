@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem
 	private final SpeedControllerGroup m_right =
 					new SpeedControllerGroup((SpeedController) this.DRIVER1, (SpeedController) this.DRIVER2);
 	private double throttle = 1.0;
-
+	
 	public DriveTrain()
 	{
 		super();
