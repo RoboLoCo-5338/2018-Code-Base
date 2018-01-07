@@ -13,11 +13,11 @@ public class OI
 	{
 		if(value > 0.05)
 		{
-			return (value - 0.05) / 0.95;
+			return (value - 0.025) / 0.975;
 		}
 		else if(value < -0.05)
 		{
-			return (value + 0.05) / 0.95;
+			return (value + 0.025) / 0.975;
 		}
 		return value;
 	}
@@ -33,9 +33,9 @@ public class OI
 		switch(button)
 		{
 			case SLOW:
-				return this.joyR.getRawButton(1);
-			case STRAIGHT:
 				return this.joyL.getRawButton(1);
+			case STRAIGHT:
+				return this.joyR.getRawButton(1);
 			default:
 				return false;
 		}
