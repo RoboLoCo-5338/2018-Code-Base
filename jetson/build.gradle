@@ -15,7 +15,7 @@ deploy {
     ssh.run {
         session(remotes.jetson) {
             put from: 'jetson/src/python/', into: '/mnt/data/code/active'
-            //execute 'sudo systemd roboloco restart'
+            execute 'sudo /bin/systemctl restart roboloco'
         }
     }
 }
