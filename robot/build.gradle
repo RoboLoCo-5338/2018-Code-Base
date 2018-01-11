@@ -3,7 +3,7 @@ apply plugin: "jaci.openrio.gradle.GradleRIO"
 deploy {
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
-            team = 5333
+            team = 5338
         }
     }
     artifacts {
