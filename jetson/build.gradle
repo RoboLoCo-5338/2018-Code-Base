@@ -1,7 +1,9 @@
+// Applies the EmbeddedTools and Gradle SSH plugins from before.
 apply plugin: 'jaci.gradle.EmbeddedTools'
 apply plugin: 'org.hidetake.ssh'
 
-FileTree tree = fileTree(dir: 'src/python', excludes: ['*.pyc', '*.pyo'])
+
+FileTree tree = fileTree(dir: 'src/python', include: '*.py')
 
 remotes {
     jetson {
@@ -26,7 +28,9 @@ task deployJetson {
 deploy {
     targets {
         target('jetson') {
+            // If you are setting up, comment out the line 
+            // below to prevent a error.
             deployJetson.execute()
-        }
+            }
     }
 }

@@ -1,29 +1,39 @@
-// Note 'apply false' for each plugin. This ensures they aren't applied to the root project (here),
-// but it makes the plugins available for subprojects.
+// This allows the use of the following plugins in the two sub-projects, but does
+// not enable them for the root project.
 plugins {
-    // GradleRIO is used for code intended to go on robots, which is why it's only applied to the 'robot' project.
+    // GradleRio is a plugin used to build and deploy code to robots, and is only
+    // applied to the robot sub-project. This line can be used to also update
+    // the plugin version automatically.
     id "jaci.openrio.gradle.GradleRIO" version "2018.01.11" apply false
 
-    // EmbeddedTools is the backing library for GradleRIO, and includes everything that's non-frc specific, which
-    // is why we use it for our coprocessor project.
+    // EmbeddedTools is a plugin used to build and deploy code to non-frc specifc
+    // targets, and is only applied to the jetson sub-project. This line can be
+    // used to also update the plugin version automatically.
     id "jaci.gradle.EmbeddedTools" version "2017.12.23" apply false
 
+    // Gradle SSH is a plugin used to ssh and transfer code to our Jetson TX1,
+    // target, and is only applied to the jetson sub-project. This line can be
+    // used to also update the plugin version automatically.
     id 'org.hidetake.ssh' version '2.9.0' apply false
 }
 
-// Using the 'idea' plugin allows us to use IntelliJ IDEA. IntelliJ works out-of-the-box with multiproject builds
-// and so it's very, very easy to integrate with GradleRIO and EmbeddedTools.
-// We need to apply 'idea' to all projects, including the root project (here).
+// Applies the idea plugin to allow easy integration with IntelliJ IDEA for our 
+// multiproject build set-up, including on the root and sub-projects.
 allprojects {
     apply plugin: "idea"
 }
 
-// Setup the configuration for all sub-projects. This is a shortcut for manually applying the configuration
-// in each subproject individually.
+// Applies the java plugin for building our Java code in the robot sub-project.
 subprojects {
-    apply plugin: "java"
+    // Checks to see if a sub-project's name is "robot" first.
+    subproject -> 
+    if (subproject.name.equals("robot")) {
+        apply plugin: "java"
+}
 }
 
+// Gradle version setup.
 task wrapper(type: Wrapper) {
+    // This line can be update the actual Gradle version automatically.
     gradleVersion = '4.4'
 }

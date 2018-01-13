@@ -1,5 +1,7 @@
+// Applies the GradleRio plugin from before.
 apply plugin: "jaci.openrio.gradle.GradleRIO"
 
+// On the deploy call
 deploy {
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
@@ -16,15 +18,18 @@ deploy {
     }
 }
 
-// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
-// and NavX.
+// Defines dependencies that gradle will pull in, updating them when needed,
+// and then compiling them for deployment alongside our code.
 dependencies {
+    // Currently using the WPILib, CTRE Phoenix, NavX, and openRio MatchData
+    // libraries for the season.
     compile wpilib()
     compile ctre()
     compile navx()
     compile openrio.powerup.matchData()
 }
 
+// Builds the jar needed by the RoboRio to run our code.
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest("org.usfirst.frc.team5338.robot.Robot")

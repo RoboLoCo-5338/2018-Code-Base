@@ -1,1 +1,4 @@
+// Sets up build system to build the code in both the robot and jetson folder
+// based on the build.gradle files for the two subproject and the root 
+// project.
 include "robot", "jetson"
