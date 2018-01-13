@@ -3,15 +3,16 @@ apply plugin: "jaci.openrio.gradle.GradleRIO"
 
 // On the deploy call
 deploy {
+    // Creates the roborio target to deploy code to and identifies our
+    // team number as 5338.
     targets {
         target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
             team = 5338
         }
     }
     artifacts {
-        // Define my robot artifact. The FRCJavaArtifact type gives access to
-        // robotCommand and other tools necessary for the RoboRIO to detect
-        // and run our code.
+        // Define my robot build artifact. The FRCJavaArtifact type
+        // is used so that the RoboRIO can detect and run our code.
         artifact('robotCode', jaci.openrio.gradle.frc.FRCJavaArtifact) {
             targets << "roborio"
         }
