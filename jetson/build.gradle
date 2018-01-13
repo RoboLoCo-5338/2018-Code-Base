@@ -1,7 +1,7 @@
 apply plugin: 'jaci.gradle.EmbeddedTools'
 apply plugin: 'org.hidetake.ssh'
 
-    FileTree tree = fileTree(dir: 'src/python',excludes: ['*.pyc','*.pyo'])
+FileTree tree = fileTree(dir: 'src/python', excludes: ['*.pyc', '*.pyo'])
 
 remotes {
     jetson {
@@ -11,11 +11,22 @@ remotes {
     }
 }
 
+
+task deployJetson {
+    doLast {
+        ssh.run {
+            session(remotes.jetson) {
+                put from: 'jetson/src/python/', into: '/mnt/data/code/active'
+                execute 'sudo /bin/systemctl restart roboloco'
+            }
+        }
+    }
+}
+
 deploy {
-    ssh.run {
-        session(remotes.jetson) {
-            put from: 'jetson/src/python/', into: '/mnt/data/code/active'
-            execute 'sudo /bin/systemctl restart roboloco'
+    targets {
+        target('jetson') {
+            deployJetson.execute()
         }
     }
 }
