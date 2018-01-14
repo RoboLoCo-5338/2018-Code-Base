@@ -5,12 +5,10 @@ from multiprocessing import Pool
 cv2.setUseOptimized(True)
 vid = cv2.VideoCapture(0)
 
-lower_col, upper_col = np.array([20, 100, 100]), np.array([30, 255, 255])
-minw, minh = 125, 125
+lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
+minw, minh = 0, 0
 
-frames = 0
-
-def process_frame(frame,frames):
+def process_frame(frame):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     mask = cv2.inRange(hsv, lower_col, upper_col)
@@ -32,15 +30,16 @@ def process_frame(frame,frames):
                 max_rect = rect
     if max_rect is not None:
         x, y, w, h = max_rect
-        print("CRD: {} {}".format(repr(((x + w/2, y + h/2),(w, h))),frames))
+        return ((x, y), (w, h))
     else:
-        print("CRD: {} {}".format(None,frames))
+        return None
+
 
 
 while(True):
     ret, frame = vid.read()
-    frames += 1
     with Pool(processes=4) as pool:
-        pool.apply_async(process_frame,(frame,frames))
+        result = pool.apply_async(process_frame,(frame,))
+        print(result.get())
 
 vid.release()
