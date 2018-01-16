@@ -1,12 +1,17 @@
 import cv2
 import numpy as np
 from multiprocessing import Pool
+from networktables import NetworkTables
 
 cv2.setUseOptimized(True)
 vid = cv2.VideoCapture(0)
 
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
 minw, minh = 0, 0
+
+NetworkTables.initialize(server="10.53.38.2")
+
+table = NetworkTables.getTable('SmartDashboard')
 
 def process_frame(frame):
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -30,7 +35,10 @@ def process_frame(frame):
                 max_rect = rect
     if max_rect is not None:
         x, y, w, h = max_rect
-        return ((x, y), (w, h))
+        table.putNumber('x', x)
+        table.putNumber('y', y)
+        table.putNumber('w', w)
+        table.putNumber('h', h)
     else:
         return None
 
