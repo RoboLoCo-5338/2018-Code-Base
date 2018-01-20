@@ -22,7 +22,7 @@ task deployJetson {
     doLast {
         ssh.run {
             session(remotes.jetson) {
-                put from: 'jetson/src/python/', into: '/mnt/data/code/active'
+                put from: 'jetson/src/python/', into: '/home/roboloco/code/active'
                 execute 'sudo /bin/systemctl restart roboloco'
             }
         }
