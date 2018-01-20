@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
@@ -13,9 +15,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //
 public class DriveTrain extends Subsystem
 {
-	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(4);
-	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(3);
-	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(2);
+	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(2);
+	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(4);
+	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(3);
 	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(1);
 	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
 	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
@@ -23,10 +25,15 @@ public class DriveTrain extends Subsystem
 	private double throttle = 1.0;
 	private double speedPrimeLeft, turn, a;
 	int directionRight, directionLeft;
+	private final Compressor driveCompressor = new Compressor(5);
 
 	public DriveTrain()
 	{
 		super();
+		driveCompressor.setClosedLoopControl(true);
+
+		//SmartDashboard.putNumber("value",1);
+		driveCompressor.start();
 	}
 	public void drive(final double left, final double right)
 	{
@@ -36,7 +43,7 @@ public class DriveTrain extends Subsystem
 	{
 		a = 0.2;
 
-		if((this.throttle * oi.getRight('Y')) < 0) {
+		if((this.throttle * oi.getRight('X')) < 0) {
 			directionRight = 1;
 		} else {
 			directionRight = -1;
