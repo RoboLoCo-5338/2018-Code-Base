@@ -7,7 +7,7 @@ import os
 import sys
 import signal
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 root_log = logging.getLogger()
 robo_log = root_log.getChild('roboloco')
 log = robo_log.getChild('main')
