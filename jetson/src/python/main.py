@@ -1,15 +1,16 @@
 import cv2
 import numpy as np
 from multiprocessing import Pool
-from networktables import NetworkTables
+from networktables import NetworkTablesInstance
 import logging
 import os
-import sys
 import signal
 
 logging.basicConfig(level=logging.INFO)
 root_log = logging.getLogger()
 robo_log = root_log.getChild('roboloco')
+nt_log = root_log.getChild('nt')
+nt_log.setLevel(logging.DEBUG)
 log = robo_log.getChild('main')
 
 # Video capture device
@@ -17,10 +18,10 @@ log = robo_log.getChild('main')
 VCAP = 0
 
 # Roborio's IP address or hostname
-NT_SERVER = "10.53.38.2"
+NT_SERVER = ("10.53.38.2", 5800)
 
 # NetworkTables table
-NT_TABLE = 'SmartDashboard'
+NT_TABLE = 'vision'
 
 global keep_running
 keep_running = True
@@ -35,15 +36,19 @@ log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
 minw, minh = 0, 0
 
+NetworkTables = NetworkTablesInstance.create()
 log.debug("Init'ing network tables connection to %r", NT_SERVER)
 NetworkTables.initialize(server=NT_SERVER)
+#NetworkTables.setServerTeam(5338, 5800)
 
 log.debug("Getting table %r", NT_TABLE)
 table = NetworkTables.getTable(NT_TABLE)
+NetworkTables.enableVerboseLogging()
 
+log.info("Network mode %r", NetworkTables.getNetworkMode())
 
-def process_frame(frame, log_parent, frame_id):
-    log = log_parent.getChild('frame_proc.%d' % os.getpid())
+def process_frame(frame, frame_id):
+    log = logging.getLogger('roboloco.main.frame_%d.%d' % (frame_id, os.getpid()))
     log.debug("Working on frame %d", frame_id)
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
@@ -67,12 +72,19 @@ def process_frame(frame, log_parent, frame_id):
                 max_rect = rect
     if max_rect is not None:
         x, y, w, h = max_rect
-        table.putNumber('x', x)
-        table.putNumber('y', y)
-        table.putNumber('w', w)
-        table.putNumber('h', h)
-        return (x, y, w, h)
+        result = table.putNumber('x', x)
+        if frame_id % 30 == 0:
+            log.info("Return result %r", result)
+            log.info("Table Value %r", table.getNumber("x", -42.0))
+            log.info("Table Keys %r", table.getKeys())
+            #log.info("Connection info %r", NetworkTables.getConnections())
+        #table.putNumber('y', y)
+        #table.putNumber('w', w)
+        #table.putNumber('h', h)
+        if frame_id % 30 == 0: log.debug(" ".join([str(i) for i in (x, y, w, h)]))
+        return x
     else:
+        if frame_id % 30 == 0: log.info("Not found")
         return None
 
 
@@ -97,7 +109,8 @@ try:
 
         log_frame.debug("Launching frame")
         with Pool(processes=4) as pool:
-            result = pool.apply_async(process_frame, (frame, log_frame, frame_id))
+            result = pool.apply_async(process_frame, (frame, frame_id))
+            if frame_id % 30 == 0: log.info("Result: %r", result.get())
             # print(result.get())  # Avoid enabling this - will force async jobs to only run one at a time!
         log_frame.debug("Frame processing launched")
         frame_id += 1
