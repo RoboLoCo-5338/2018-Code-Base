@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from multiprocessing import Pool
-from networktables import NetworkTablesInstance
 import logging
 import os
 import signal
@@ -18,8 +17,8 @@ log = robo_log.getChild('main')
 VCAP = 0
 
 # Roborio's IP address or hostname
-NT_SERVER = ("10.53.38.2", 5800)
-
+NT_PORT = 5800
+TEAM = 5338
 # NetworkTables table
 NT_TABLE = 'vision'
 
@@ -38,19 +37,19 @@ minw, minh = 0, 0
 
 
 def process_frame(frame, frame_id):
+    from networktables import NetworkTablesInstance
     log = logging.getLogger('roboloco.main.frame_%d.%d' % (frame_id, os.getpid()))
     log.debug("Working on frame %d", frame_id)
 
-    NetworkTables = NetworkTablesInstance.create()
-    log.debug("Init'ing network tables connection to %r", NT_SERVER)
-    NetworkTables.initialize(server=NT_SERVER)
-    # NetworkTables.setServerTeam(5338, 5800)
+    nt_inst = NetworkTablesInstance.create()
+    log.debug("Init'ing network tables connection to %r via %r", TEAM, NT_PORT)
+    nt_inst.startClientTeam(team=TEAM, port=NT_PORT)
+    nt_inst.enableVerboseLogging()
 
     log.debug("Getting table %r", NT_TABLE)
-    table = NetworkTables.getTable(NT_TABLE)
-    NetworkTables.enableVerboseLogging()
+    table = nt_inst.getTable(NT_TABLE)
 
-    log.info("Network mode %r", NetworkTables.getNetworkMode())
+    log.info("Network mode %r", nt_inst.getNetworkMode())
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -79,18 +78,18 @@ def process_frame(frame, frame_id):
             log.info("Return result %r", result)
             log.info("Table Value %r", table.getNumber("x", -42.0))
             log.info("Table Keys %r", table.getKeys())
-            #log.info("Connection info %r", NetworkTables.getConnections())
-        NetworkTables.flush()
-        #table.putNumber('y', y)
-        #table.putNumber('w', w)
-        #table.putNumber('h', h)
+            # log.info("Connection info %r", NetworkTables.getConnections())
+        nt_inst.flush()
+        # table.putNumber('y', y)
+        # table.putNumber('w', w)
+        # table.putNumber('h', h)
         if frame_id % 30 == 0: log.debug(" ".join([str(i) for i in (x, y, w, h)]))
         ret = x
     else:
         if frame_id % 30 == 0: log.info("Not found")
         ret = None
-    NetworkTables.flush()
-    NetworkTables.stopClient()
+    nt_inst.flush()
+    nt_inst.stopClient()
     return ret
 
 
