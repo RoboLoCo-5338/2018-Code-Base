@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
@@ -26,14 +27,17 @@ public class DriveTrain extends Subsystem
 	private double speedPrimeLeft, turn, a;
 	int directionRight, directionLeft;
 	private final Compressor driveCompressor = new Compressor(5);
+	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(1,2 );
+	private boolean shift;
 
 	public DriveTrain()
 	{
 		super();
 		driveCompressor.setClosedLoopControl(true);
-
-		//SmartDashboard.putNumber("value",1);
 		driveCompressor.start();
+		driveSolenoid.set(DoubleSolenoid.Value.kReverse);
+		shift = false;
+
 	}
 	public void drive(final double left, final double right)
 	{
@@ -63,7 +67,7 @@ public class DriveTrain extends Subsystem
 		{
 			this.throttle = 1.0;
 		}
-//
+////
 		//speedPrimeRight =  directionRight * (a * Math.pow(this.throttle * oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
 		//speedPrimeLeft =  (a * Math.pow(this.throttle * oi.getLeft('Y'),2) * (1-a)*(this.throttle * oi.getLeft('Y')));
 
@@ -82,10 +86,24 @@ public class DriveTrain extends Subsystem
 		{
 			this.DRIVE.arcadeDrive(speedPrimeLeft, oi.getLeft('X'), false);
 		}
+
+		if(shift) turn*=.7;
+
+		if(oi.get(OI.Button.SHIFTUP)) {
+			driveSolenoid.set(DoubleSolenoid.Value.kForward);
+			shift = true;
+		} else if(oi.get(OI.Button.SHIFTDOWN)) {
+			driveSolenoid.set(DoubleSolenoid.Value.kReverse);
+			shift = false;
+		}
 	}
 	@Override
 	public void initDefaultCommand()
 	{
 		this.setDefaultCommand(new TankDriveWithJoysticks());
+	}
+
+	public void shiftMode(DoubleSolenoid.Value setting) {
+		driveSolenoid.set(setting);
 	}
 }
