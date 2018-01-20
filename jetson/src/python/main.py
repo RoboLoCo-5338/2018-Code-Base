@@ -19,6 +19,7 @@ VCAP = 0
 # Roborio's IP address or hostname
 NT_PORT = 5800
 TEAM = 5338
+NT_HOST = '10.53.38.2'
 # NetworkTables table
 NT_TABLE = 'vision'
 
@@ -43,7 +44,8 @@ def process_frame(frame, frame_id):
 
     nt_inst = NetworkTablesInstance.create()
     log.debug("Init'ing network tables connection to %r via %r", TEAM, NT_PORT)
-    nt_inst.startClientTeam(team=TEAM, port=NT_PORT)
+    # nt_inst.startClientTeam(team=TEAM, port=NT_PORT)
+    nt_inst.initialize(server=(NT_HOST, NT_PORT))
     nt_inst.enableVerboseLogging()
 
     log.debug("Getting table %r", NT_TABLE)
