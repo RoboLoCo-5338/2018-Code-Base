@@ -4,7 +4,7 @@ from multiprocessing import Pool
 import logging
 import os
 import signal
-
+from networktables import NetworkTablesInstance
 logging.basicConfig(level=logging.INFO)
 root_log = logging.getLogger()
 robo_log = root_log.getChild('roboloco')
@@ -36,22 +36,23 @@ log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
 minw, minh = 0, 0
 
+nt_inst = NetworkTablesInstance.create()
+nt_inst.enableVerboseLogging()
+log.debug("Init'ing network tables connection to %r via %r", TEAM, NT_PORT)
+# nt_inst.startClientTeam(team=TEAM, port=NT_PORT)
+
+nt_inst.initialize(server=(NT_HOST, NT_PORT))
+
+log.debug("Getting table %r", NT_TABLE)
+table = nt_inst.getTable(NT_TABLE)
+
+log.info("Network mode %r", nt_inst.getNetworkMode())
 
 def process_frame(frame, frame_id):
-    from networktables import NetworkTablesInstance
+
     log = logging.getLogger('roboloco.main.frame_%d.%d' % (frame_id, os.getpid()))
     log.debug("Working on frame %d", frame_id)
 
-    nt_inst = NetworkTablesInstance.create()
-    log.debug("Init'ing network tables connection to %r via %r", TEAM, NT_PORT)
-    # nt_inst.startClientTeam(team=TEAM, port=NT_PORT)
-    nt_inst.initialize(server=(NT_HOST, NT_PORT))
-    nt_inst.enableVerboseLogging()
-
-    log.debug("Getting table %r", NT_TABLE)
-    table = nt_inst.getTable(NT_TABLE)
-
-    log.info("Network mode %r", nt_inst.getNetworkMode())
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -81,7 +82,7 @@ def process_frame(frame, frame_id):
             log.info("Table Value %r", table.getNumber("x", -42.0))
             log.info("Table Keys %r", table.getKeys())
             # log.info("Connection info %r", NetworkTables.getConnections())
-        nt_inst.flush()
+        # nt_inst.flush()
         # table.putNumber('y', y)
         # table.putNumber('w', w)
         # table.putNumber('h', h)
@@ -90,8 +91,8 @@ def process_frame(frame, frame_id):
     else:
         if frame_id % 30 == 0: log.info("Not found")
         ret = None
-    nt_inst.flush()
-    nt_inst.stopClient()
+    # nt_inst.flush()
+    # nt_inst.stopClient()
     return ret
 
 
@@ -115,10 +116,11 @@ try:
         ret, frame = vid.read()
 
         log_frame.debug("Launching frame")
-        with Pool(processes=4) as pool:
-            result = pool.apply_async(process_frame, (frame, frame_id))
-            if frame_id % 30 == 0: log.info("Result: %r", result.get())
-            # print(result.get())  # Avoid enabling this - will force async jobs to only run one at a time!
+        process_frame(frame, frame_id)
+        # with Pool(processes=4) as pool:
+        #     result = pool.apply_async(process_frame, (frame, frame_id))
+        #     #if frame_id % 30 == 0: log.info("Result: %r", result.get())
+        #     # print(result.get())  # Avoid enabling this - will force async jobs to only run one at a time!
         log_frame.debug("Frame processing launched")
         frame_id += 1
     log.info("Exited loop")
@@ -129,3 +131,6 @@ except Exception as e:
 log.info("Releasing video device")
 vid.release()
 log.info("Video device released")
+
+nt_inst.flush()
+nt_inst.stopClient()
