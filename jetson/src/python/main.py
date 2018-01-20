@@ -36,20 +36,21 @@ log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
 minw, minh = 0, 0
 
-NetworkTables = NetworkTablesInstance.create()
-log.debug("Init'ing network tables connection to %r", NT_SERVER)
-NetworkTables.initialize(server=NT_SERVER)
-#NetworkTables.setServerTeam(5338, 5800)
-
-log.debug("Getting table %r", NT_TABLE)
-table = NetworkTables.getTable(NT_TABLE)
-NetworkTables.enableVerboseLogging()
-
-log.info("Network mode %r", NetworkTables.getNetworkMode())
 
 def process_frame(frame, frame_id):
     log = logging.getLogger('roboloco.main.frame_%d.%d' % (frame_id, os.getpid()))
     log.debug("Working on frame %d", frame_id)
+
+    NetworkTables = NetworkTablesInstance.create()
+    log.debug("Init'ing network tables connection to %r", NT_SERVER)
+    NetworkTables.initialize(server=NT_SERVER)
+    # NetworkTables.setServerTeam(5338, 5800)
+
+    log.debug("Getting table %r", NT_TABLE)
+    table = NetworkTables.getTable(NT_TABLE)
+    NetworkTables.enableVerboseLogging()
+
+    log.info("Network mode %r", NetworkTables.getNetworkMode())
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -70,6 +71,7 @@ def process_frame(frame, frame_id):
         if w > minw and h > minh:
             if w * h > max_size:
                 max_rect = rect
+    ret = None
     if max_rect is not None:
         x, y, w, h = max_rect
         result = table.putNumber('x', x)
@@ -78,14 +80,18 @@ def process_frame(frame, frame_id):
             log.info("Table Value %r", table.getNumber("x", -42.0))
             log.info("Table Keys %r", table.getKeys())
             #log.info("Connection info %r", NetworkTables.getConnections())
+        NetworkTables.flush()
         #table.putNumber('y', y)
         #table.putNumber('w', w)
         #table.putNumber('h', h)
         if frame_id % 30 == 0: log.debug(" ".join([str(i) for i in (x, y, w, h)]))
-        return x
+        ret = x
     else:
         if frame_id % 30 == 0: log.info("Not found")
-        return None
+        ret = None
+    NetworkTables.flush()
+    NetworkTables.stopClient()
+    return ret
 
 
 def sigint_handler(signal, frame):
