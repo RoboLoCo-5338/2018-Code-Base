@@ -39,6 +39,7 @@ def process_frame(frame):
         table.putNumber('y', y)
         table.putNumber('w', w)
         table.putNumber('h', h)
+        return (x, y, w, h)
     else:
         return None
 
