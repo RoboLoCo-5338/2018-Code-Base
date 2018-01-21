@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 //
 public class DriveTrain extends Subsystem
 {
-	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(2);
+	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(1);
 	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(4);
 	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(3);
-	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(1);
+	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(2);
 	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
 	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
@@ -27,7 +27,7 @@ public class DriveTrain extends Subsystem
 	private double speedPrimeLeft, turn, a;
 	int directionRight, directionLeft;
 	private final Compressor driveCompressor = new Compressor(5);
-	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(1,2 );
+	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(1,2);
 	private boolean shift;
 
 	public DriveTrain()
@@ -47,19 +47,19 @@ public class DriveTrain extends Subsystem
 	{
 		a = 0.2;
 
-		if((this.throttle * oi.getRight('X')) < 0) {
+		if((this.throttle * Robot.oi.getRight('X')) < 0) {
 			directionRight = 1;
 		} else {
 			directionRight = -1;
 		}
 
-		if((this.throttle * oi.getLeft('Y')) < 0) {
+		if((this.throttle * Robot.oi.getLeft('Y')) < 0) {
 			directionLeft = 1;
 		} else {
 			directionLeft = -1;
 		}
 
-		if(oi.get(OI.Button.SLOW))
+		if(Robot.oi.get(OI.Button.SLOW))
 		{
 			this.throttle = 0.5;
 		}
@@ -72,11 +72,11 @@ public class DriveTrain extends Subsystem
 		//speedPrimeLeft =  (a * Math.pow(this.throttle * oi.getLeft('Y'),2) * (1-a)*(this.throttle * oi.getLeft('Y')));
 
         turn = Robot.oi.getLeft('X')*Math.abs(Robot.oi.getLeft('X'));
-        speedPrimeLeft = -directionLeft * (a * Math.pow(oi.getLeft('Y'),3) * (1-a)*(oi.getLeft('Y')));
+        speedPrimeLeft = -directionLeft * (a * Math.pow(Robot.oi.getLeft('Y'),3) * (1-a)*(Robot.oi.getLeft('Y')));
 
-		if(!oi.get(OI.Button.STRAIGHT))
+		if(!Robot.oi.get(OI.Button.STRAIGHT))
         {
-		    if(oi.getLeft('Y') >= 0.6) {
+		    if(Robot.oi.getLeft('Y') >= 0.6) {
                 this.DRIVE.curvatureDrive(speedPrimeLeft, turn, false);
             } else {
                 this.DRIVE.arcadeDrive(speedPrimeLeft, turn, false);
@@ -84,15 +84,15 @@ public class DriveTrain extends Subsystem
 		}
 		else
 		{
-			this.DRIVE.arcadeDrive(speedPrimeLeft, oi.getLeft('X'), false);
+			this.DRIVE.arcadeDrive(speedPrimeLeft, Robot.oi.getLeft('X'), false);
 		}
 
 		if(shift) turn*=.7;
 
-		if(oi.get(OI.Button.SHIFTUP)) {
+		if(Robot.oi.get(OI.Button.SHIFT_UP)) {
 			driveSolenoid.set(DoubleSolenoid.Value.kForward);
 			shift = true;
-		} else if(oi.get(OI.Button.SHIFTDOWN)) {
+		} else if(Robot.oi.get(OI.Button.SHIFT_DOWN)) {
 			driveSolenoid.set(DoubleSolenoid.Value.kReverse);
 			shift = false;
 		}
@@ -101,9 +101,5 @@ public class DriveTrain extends Subsystem
 	public void initDefaultCommand()
 	{
 		this.setDefaultCommand(new TankDriveWithJoysticks());
-	}
-
-	public void shiftMode(DoubleSolenoid.Value setting) {
-		driveSolenoid.set(setting);
 	}
 }

@@ -10,7 +10,7 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
-		SLOW, STRAIGHT
+		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN
 	}
 
 	// Private method that returns a deadzone-adjusted value for a joystick value
@@ -42,6 +42,10 @@ public class OI
 				return this.joyL.getRawButton(1);
 			case STRAIGHT:
 				return this.joyR.getRawButton(1);
+			case SHIFT_DOWN:
+				return this.joyL.getRawButton(2);
+			case SHIFT_UP:
+				return this.joyR.getRawButton(2);
 			default:
 				return false;
 		}
@@ -64,14 +68,30 @@ public class OI
 		}
 	}
 	// Public method that returns the left joystick's deadzone-adjusted y-axis value
-	public double getLeft()
-	{
-		return OI.joystickDeadZone(this.joyL.getRawAxis(1));
+	public double getLeft(Character input) {
+		switch (input) {
+		case 'X': // Gets deadzone corrected x-axis position
+			return joystickDeadZone(joyL.getRawAxis(0));
+		case 'Y': // Gets deadzone corrected y-axis position
+			return joystickDeadZone(joyL.getRawAxis(1));
+		case 'Z': // Gets deadzone corrected z-axis (rotation) position
+			return joystickDeadZone(joyL.getRawAxis(2));
+		default: // Returns 0.0 is argument is unknown
+			return 0.0;
+		}
 	}
 	// Public method that returns the right joystick's deadzone-adjusted y-axis
 	// value
-	public double getRight()
-	{
-		return OI.joystickDeadZone(this.joyR.getRawAxis(1));
+	public double getRight(Character input) {
+		switch (input) {
+		case 'X': // Gets deadzone corrected x-axis position
+			return joystickDeadZone(joyR.getRawAxis(0));
+		case 'Y': // Gets deadzone corrected y-axis position
+			return joystickDeadZone(joyR.getRawAxis(1));
+		case 'Z': // Gets deadzone corrected z-axis (rotation) position
+			return joystickDeadZone(joyR.getRawAxis(2));
+		default: // Returns 0.0 is argument is unknown
+			return 0.0;
+		}
 	}
 }
