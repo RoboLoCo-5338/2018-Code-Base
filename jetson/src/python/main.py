@@ -77,15 +77,15 @@ def process_frame(frame, frame_id):
     if max_rect is not None:
         x, y, w, h = max_rect
         result = table.putNumber('x', x)
+        table.putNumber('y', y)
+        table.putNumber('w', w)
+        table.putNumber('h', h)
         if frame_id % 30 == 0:
             log.info("Return result %r", result)
             log.info("Table Value %r", table.getNumber("x", -42.0))
             log.info("Table Keys %r", table.getKeys())
             # log.info("Connection info %r", NetworkTables.getConnections())
         # nt_inst.flush()
-        # table.putNumber('y', y)
-        # table.putNumber('w', w)
-        # table.putNumber('h', h)
         if frame_id % 30 == 0: log.debug(" ".join([str(i) for i in (x, y, w, h)]))
         ret = x
     else:

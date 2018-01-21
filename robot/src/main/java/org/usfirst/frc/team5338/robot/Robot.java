@@ -46,14 +46,16 @@ public class Robot extends IterativeRobot
 	{
 		// Eventual code to disable autonomous will occur here.
 	}
-	// Public method that runs continuously every 20ms during autonomous.
+	// Public method that runs continuously every 20ms during teleop.
 	@Override
 	public void teleopPeriodic()
 	{
-		SmartDashboard.putBoolean("Is Connected", this.instance.isConnected());
-		SmartDashboard.putNumber("X Cord", this.table.getEntry("x").getDouble(-22.0));
-		SmartDashboard.putBoolean("X Cord Exists", this.table.getEntry("x").exists());
-		SmartDashboard.putString("Table Keys", this.table.getKeys().toString());
-		// Scheduler.getInstance().run();
+//		SmartDashboard.putBoolean("Is Connected", this.instance.isConnected());
+//		SmartDashboard.putNumber("X Cord", this.table.getEntry("x").getDouble(-22.0));
+//		SmartDashboard.putBoolean("X Cord Exists", this.table.getEntry("x").exists());
+//		SmartDashboard.putNumber("Y Cord", this.table.getEntry("x").getDouble(-22.0));
+//		SmartDashboard.putBoolean("Y Cord Exists", this.table.getEntry("y").exists());
+//		SmartDashboard.putString("Table Keys", this.table.getKeys().toString());
+		Scheduler.getInstance().run();
 	}
 }
