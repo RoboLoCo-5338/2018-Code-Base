@@ -3,6 +3,7 @@ package org.usfirst.frc.team5338.robot;
 
 //Import of all essential wpilib classes.
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Main class that handles Operator Input.
 public class OI
