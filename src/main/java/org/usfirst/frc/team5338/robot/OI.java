@@ -74,7 +74,7 @@ public class OI
 		case 'X': // Gets deadzone corrected x-axis position
 			return joystickDeadZone(joyL.getRawAxis(0));
 		case 'Y': // Gets deadzone corrected y-axis position
-			return joystickDeadZone(joyL.getRawAxis(1));
+			return -joystickDeadZone(joyL.getRawAxis(1));
 		case 'Z': // Gets deadzone corrected z-axis (rotation) position
 			return joystickDeadZone(joyL.getRawAxis(2));
 		default: // Returns 0.0 is argument is unknown
@@ -88,7 +88,7 @@ public class OI
 		case 'X': // Gets deadzone corrected x-axis position
 			return joystickDeadZone(joyR.getRawAxis(0));
 		case 'Y': // Gets deadzone corrected y-axis position
-			return joystickDeadZone(joyR.getRawAxis(1));
+			return -joystickDeadZone(joyR.getRawAxis(1));
 		case 'Z': // Gets deadzone corrected z-axis (rotation) position
 			return joystickDeadZone(joyR.getRawAxis(2));
 		default: // Returns 0.0 is argument is unknown

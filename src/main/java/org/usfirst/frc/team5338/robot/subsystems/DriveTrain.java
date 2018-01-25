@@ -35,7 +35,7 @@ public class DriveTrain extends Subsystem {
         super();
         driveCompressor.setClosedLoopControl(true);
         driveCompressor.start();
-        driveSolenoid.set(DoubleSolenoid.Value.kReverse);
+        driveSolenoid.set(DoubleSolenoid.Value.kForward);
         shift = false;
 
     }
@@ -64,7 +64,7 @@ public class DriveTrain extends Subsystem {
         } else {
             this.throttle = 1.0;
         }*/
-////
+
         //speedPrimeRight =  directionRight * (a * Math.pow(this.throttle * oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
         //speedPrimeLeft =  (a * Math.pow(this.throttle * oi.getLeft('Y'),2) * (1-a)*(this.throttle * oi.getLeft('Y')));
 
@@ -84,14 +84,16 @@ public class DriveTrain extends Subsystem {
 */
         drive(Robot.oi.getLeft('Y'), Robot.oi.getRight('Y'));
         if (shift) turn *= .7;
-
+   
         if (Robot.oi.get(OI.Button.SHIFT_UP)) {
-            SmartDashboard.putBoolean("SHIFT_UP", true);
-            driveSolenoid.set(DoubleSolenoid.Value.kForward);
+            driveSolenoid.set(DoubleSolenoid.Value.kReverse);
             shift = true;
         } else if (Robot.oi.get(OI.Button.SHIFT_DOWN)) {
-            driveSolenoid.set(DoubleSolenoid.Value.kReverse);
+        		if(Math.abs(m_left.get()) <= 0.20 && Math.abs(m_right.get()) <= 0.20)
+        		{
+            driveSolenoid.set(DoubleSolenoid.Value.kForward);
             shift = false;
+        		}
         }
         SmartDashboard.putBoolean("shift", shift);
     }
@@ -101,3 +103,4 @@ public class DriveTrain extends Subsystem {
         this.setDefaultCommand(new TankDriveWithJoysticks());
     }
 }
+
