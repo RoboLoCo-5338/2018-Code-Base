@@ -40,8 +40,8 @@ public class DriveTrain extends Subsystem {
 
     }
 
-    public void drive(final double left, final double right) {
-        this.DRIVE.tankDrive(this.throttle * left, this.throttle * right, false);
+    public void drive(final double front, final double rotate) {
+        this.DRIVE.arcadeDrive(this.throttle * front, this.throttle * rotate, false);
     }
 
     public void drive(final OI oi) {
@@ -82,7 +82,7 @@ public class DriveTrain extends Subsystem {
             this.DRIVE.arcadeDrive(speedPrimeLeft, Robot.oi.getLeft('X'), false);
         }
 */
-        drive(Robot.oi.getLeft('Y'), Robot.oi.getRight('Y'));
+        drive(Robot.oi.getLeft('Y'), Robot.oi.getLeft('Z'));
         if (shift) turn *= .7;
    
         if (Robot.oi.get(OI.Button.SHIFT_UP)) {

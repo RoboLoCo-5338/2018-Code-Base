@@ -44,9 +44,9 @@ public class OI
 			case STRAIGHT:
 				return this.joyR.getRawButton(1);
 			case SHIFT_DOWN:
-				return this.joyL.getRawButton(2);
+				return this.joyL.getRawButton(5);
 			case SHIFT_UP:
-				return this.joyR.getRawButton(2);
+				return this.joyL.getRawButton(3);
 			default:
 				return false;
 		}
@@ -76,7 +76,7 @@ public class OI
 		case 'Y': // Gets deadzone corrected y-axis position
 			return -joystickDeadZone(joyL.getRawAxis(1));
 		case 'Z': // Gets deadzone corrected z-axis (rotation) position
-			return joystickDeadZone(joyL.getRawAxis(2));
+			return joystickDeadZone(joyL.getRawAxis(3));
 		default: // Returns 0.0 is argument is unknown
 			return 0.0;
 		}
@@ -90,7 +90,7 @@ public class OI
 		case 'Y': // Gets deadzone corrected y-axis position
 			return -joystickDeadZone(joyR.getRawAxis(1));
 		case 'Z': // Gets deadzone corrected z-axis (rotation) position
-			return joystickDeadZone(joyR.getRawAxis(2));
+			return joystickDeadZone(joyR.getRawAxis(3));
 		default: // Returns 0.0 is argument is unknown
 			return 0.0;
 		}
