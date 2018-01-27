@@ -2,6 +2,7 @@
 package org.usfirst.frc.team5338.robot;
 
 //Import of necessary subsystem.
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 //Import of all essential wpilib classes.
@@ -31,6 +32,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit()
 	{
+		LiveWindow.disableAllTelemetry();
 		// Eventual code to grab field status from FMS will occur here.
 	}
 	// Public method that runs once at the beginning of teleop.
