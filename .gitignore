@@ -1,15 +1,21 @@
+# Gradle Files
 /.gradle
 /build
 /bin
 
+# Eclipse Files
 .classpath
 .project
 .settings/
+.pydevproject
 
+# IntelliJ Files
 *.iml
 *.ipr
 *.iws
 /.idea
+
+#Java gitignore
 
 # Compiled class file
 *.class
@@ -33,6 +39,8 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+#Python gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
