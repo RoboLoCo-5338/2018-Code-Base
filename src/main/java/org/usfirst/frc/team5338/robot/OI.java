@@ -42,11 +42,11 @@ public class OI
 			case SLOW:
 				return this.joyL.getRawButton(1);
 			case STRAIGHT:
-				return this.joyR.getRawButton(1);
+				return this.joyL.getRawButton(2);
 			case SHIFT_DOWN:
-				return this.joyR.getRawButton(3);
+				return this.joyL.getRawButton(6);
 			case SHIFT_UP:
-				return this.joyR.getRawButton(4);
+				return this.joyL.getRawButton(4);
 			default:
 				return false;
 		}
