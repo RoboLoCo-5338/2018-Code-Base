@@ -18,8 +18,8 @@ public class DartActuatorControl extends Subsystem {
 
     private final WPI_TalonSRX dartTalon = new WPI_TalonSRX(31);
     private double potValue;
-    final double retracted = -192;
-    final double extended = -124;
+    final double retracted = -190;
+    final double extended = -126;
     
     public DartActuatorControl() {
         super();
@@ -36,9 +36,9 @@ public class DartActuatorControl extends Subsystem {
 
         potValue = dartTalon.getSensorCollection().getAnalogIn();
         if (Robot.oi.get(OI.Button.RAISE)) {
-            if (potValue <= extended) {
+            if (potValue <= extended) { //extend
                 double difference = Math.abs(potValue - extended);
-                int distance = 12;
+                int distance = 15;
                 if (difference <= distance) {
                     double speedDifference = (0.90 - 0.10) / distance;
                     dartTalon.set(0.90 - (speedDifference * (distance - difference)));
@@ -51,9 +51,9 @@ public class DartActuatorControl extends Subsystem {
                 dartTalon.set(0);
             }
         } else if (Robot.oi.get(OI.Button.LOWER)) {
-            if (potValue >= retracted) {
+            if (potValue >= retracted) { //retract
                 double difference = Math.abs(potValue - retracted);
-                int distance = 20;
+                int distance = 27;
                 if (difference <= distance) {
                     double speedDifference = (0.90 - 0.10) / distance;
                     dartTalon.set(-(0.90 - (speedDifference * (distance - difference))));
