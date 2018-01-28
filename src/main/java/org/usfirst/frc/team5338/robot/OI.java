@@ -11,7 +11,7 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
-		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN
+		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN, RAISE, LOWER
 	}
 
 	// Private method that returns a deadzone-adjusted value for a joystick value
@@ -47,6 +47,10 @@ public class OI
 				return this.joyL.getRawButton(5);
 			case SHIFT_UP:
 				return this.joyL.getRawButton(3);
+			case LOWER:
+				return this.joyL.getRawButton(4);
+			case RAISE:
+				return this.joyL.getRawButton(6);
 			default:
 				return false;
 		}

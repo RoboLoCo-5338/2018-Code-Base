@@ -100,7 +100,7 @@ public class DriveTrain extends Subsystem {
 
     @Override
     public void initDefaultCommand() {
-        this.setDefaultCommand(new TankDriveWithJoysticks());
+        //this.setDefaultCommand(new TankDriveWithJoysticks());
     }
 }
 
