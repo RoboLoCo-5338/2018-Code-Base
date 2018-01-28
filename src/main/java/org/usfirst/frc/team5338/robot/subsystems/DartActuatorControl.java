@@ -20,6 +20,7 @@ public class DartActuatorControl extends Subsystem {
     private double potValue;
     final double retracted = -192;
     final double extended = -124;
+    
     public DartActuatorControl() {
         super();
         //dartTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 0);
