@@ -1,22 +1,21 @@
 //Package for all of our code.
 package org.usfirst.frc.team5338.robot;
 
-//Import of necessary subsystem.
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team5338.robot.commands.DartActuator;
-import org.usfirst.frc.team5338.robot.subsystems.DartActuatorControl;
+import org.usfirst.frc.team5338.robot.subsystems.ClawTilter;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 //Import of all essential wpilib classes.
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
+//Import of necessary subsystem.
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
 {
 	// Creates static subsystem and OI objects for use elsewhere.
-	//public static final DriveTrain drivetrain = new DriveTrain();
-	public static final DartActuatorControl dartActuatorControl = new DartActuatorControl();
+	public static final DriveTrain drivetrain = new DriveTrain();
+	public static final ClawTilter clawtilter = new ClawTilter();
 	public static final OI oi = new OI();
 	
 	// Public method that runs once at the beginning of autonomous.
