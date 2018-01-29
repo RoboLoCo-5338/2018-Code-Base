@@ -3,7 +3,6 @@ package org.usfirst.frc.team5338.robot;
 
 //Import of all essential wpilib classes.
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Main class that handles Operator Input.
 public class OI
@@ -11,9 +10,9 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
-		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN
+		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN, RAISE, LOWER
 	}
-
+	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -28,11 +27,11 @@ public class OI
 		}
 		return value;
 	}
-
+	
 	// Creates private joystick objects for use.
 	private final Joystick joyL = new Joystick(0);
 	private final Joystick joyR = new Joystick(1);
-
+	
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
@@ -47,6 +46,10 @@ public class OI
 				return this.joyR.getRawButton(3);
 			case SHIFT_UP:
 				return this.joyR.getRawButton(4);
+			case LOWER:
+				return this.joyL.getRawButton(4);
+			case RAISE:
+				return this.joyL.getRawButton(6);
 			default:
 				return false;
 		}
@@ -69,7 +72,8 @@ public class OI
 		}
 	}
 	// Public method that returns the left joystick's deadzone-adjusted y-axis value
-	public double getLeft(Character input) {
+
+	public double getLeft(char input) {
 		switch (input) {
 		case 'X': // Gets deadzone corrected x-axis position
 			return joystickDeadZone(joyL.getRawAxis(0));
@@ -83,7 +87,7 @@ public class OI
 	}
 	// Public method that returns the right joystick's deadzone-adjusted y-axis
 	// value
-	public double getRight(Character input) {
+	public double getRight(char input) {
 		switch (input) {
 		case 'X': // Gets deadzone corrected x-axis position
 			return joystickDeadZone(joyR.getRawAxis(0));

@@ -6,12 +6,15 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
-import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Class in which Robot calls to perform all functions: specifically Drive Train
 public class DriveTrain extends Subsystem {
@@ -76,11 +79,7 @@ public class DriveTrain extends Subsystem {
         } else {
             this.throttle = 1.0;
         }
-
-        //speedPrimeRight =  directionRight * (a * Math.pow(this.throttle * oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
-        //speedPrimeLeft =  (a * Math.pow(this.throttle * oi.getLeft('Y'),2) * (1-a)*(this.throttle * oi.getLeft('Y')));
-
-
+      
         //Uses directions and input to create a turn coefficient
         turn = Robot.oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
         speedPrimeLeft = -directionLeft * (a * Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - a) * (Robot.oi.getLeft('Y')));
@@ -120,4 +119,3 @@ public class DriveTrain extends Subsystem {
         this.setDefaultCommand(new TankDriveWithJoysticks());
     }
 }
-
