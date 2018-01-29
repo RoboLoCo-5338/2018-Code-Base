@@ -4,12 +4,12 @@ plugins {
     // GradleRio is a plugin used to build and deploy code to robots, and is only
     // applied to the robot sub-project. This line can be used to also update
     // the plugin version automatically.
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.11" apply false
+    id "jaci.openrio.gradle.GradleRIO" version "2018.01.22" apply false
 
     // EmbeddedTools is a plugin used to build and deploy code to non-frc specifc
     // targets, and is only applied to the jetson sub-project. This line can be
     // used to also update the plugin version automatically.
-    id "jaci.gradle.EmbeddedTools" version "2017.12.23" apply false
+    id "jaci.gradle.EmbeddedTools" version "2018.01.24" apply false
 
     // Gradle SSH is a plugin used to ssh and transfer code to our Jetson TX1,
     // target, and is only applied to the jetson sub-project. This line can be
@@ -21,6 +21,7 @@ plugins {
 // multiproject build set-up, including on the root and sub-projects.
 allprojects {
     apply plugin: "idea"
+    apply plugin: "eclipse"
 }
 
 // Applies the java plugin for building our Java code in the robot sub-project.

@@ -1,24 +1,22 @@
+//Package for all of our code.
 package org.usfirst.frc.team5338.robot.commands;
 
+//Import all needed classes from our code.
 import org.usfirst.frc.team5338.robot.Robot;
 
+//Import all needed classes from WPILib.
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TankDriveWithJoysticks extends Command
+public class CubeDetection extends Command
 {
-	public TankDriveWithJoysticks()
+	public CubeDetection()
 	{
-		this.requires(Robot.drivetrain);
-	}
-	@Override
-	protected void end()
-	{
-		Robot.drivetrain.drive(0.0, 0.0);
+		this.requires(Robot.visionsystem);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.drive(Robot.oi);
+		Robot.visionsystem.track();
 	}
 	@Override
 	protected boolean isFinished()

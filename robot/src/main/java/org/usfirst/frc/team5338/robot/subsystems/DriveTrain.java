@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
+import org.usfirst.frc.team5338.robot.commands.JoystickDrive;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -50,6 +50,6 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		this.setDefaultCommand(new TankDriveWithJoysticks());
+		this.setDefaultCommand(new JoystickDrive());
 	}
 }

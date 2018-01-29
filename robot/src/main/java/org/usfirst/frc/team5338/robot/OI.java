@@ -7,12 +7,17 @@ import edu.wpi.first.wpilibj.Joystick;
 //Main class that handles Operator Input.
 public class OI
 {
+	// Creates private joystick objects for use, with axis based on Logitech Extreme
+	// 3D Pro Joystick only.
+	private final Joystick joyL = new Joystick(0);
+	private final Joystick joyR = new Joystick(1);
+	
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
 		SLOW, STRAIGHT
 	}
-
+	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -27,11 +32,6 @@ public class OI
 		}
 		return value;
 	}
-
-	// Creates private joystick objects for use.
-	private final Joystick joyL = new Joystick(0);
-	private final Joystick joyR = new Joystick(1);
-
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
