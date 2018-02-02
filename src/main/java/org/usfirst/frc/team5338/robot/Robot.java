@@ -15,7 +15,7 @@ public class Robot extends IterativeRobot
 {
 	// Creates static subsystem and OI objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
-	public static final ClawTilter clawtilter = new ClawTilter();
+	//public static final ClawTilter clawtilter = new ClawTilter();
 	public static final OI oi = new OI();
 	
 	// Public method that runs once at the beginning of autonomous.

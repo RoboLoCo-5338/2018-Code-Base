@@ -8,7 +8,7 @@ public class TiltClaw extends Command
 {
 	public TiltClaw()
 	{
-		this.requires(Robot.clawtilter);
+		//this.requires(Robot.clawtilter);
 	}
 	@Override
 	protected void end()
@@ -17,7 +17,7 @@ public class TiltClaw extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.clawtilter.tilt(Robot.oi);
+		//Robot.clawtilter.tilt(Robot.oi);
 	}
 	@Override
 	protected boolean isFinished()

@@ -24,7 +24,7 @@ public class ClawTilter extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		this.setDefaultCommand(new TiltClaw());
+		//this.setDefaultCommand(new TiltClaw());
 	}
 	public void tilt(final OI oi)
 	{
