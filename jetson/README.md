@@ -1,5 +1,4 @@
-##Requirements##
-
+##Requirements
 User named roboloco with access as a member of sudo and video groups.
 SD card as a home directory for TX1, ext4 formatted, or using onboard storage on TX2.
 roboloco.service moved to /lib/systemd/system
@@ -10,7 +9,7 @@ tegrastats moved to /usr/bin
 Code directory with active subfolder should be in roboloco home directory
 On TX2, fix two cores being disabled by editing /etc/nvpmodel.conf and changing the default state to 2
 
-##Dependencies##
+##Dependencies
 Run the commands from this (site)[https://jkjung-avt.github.io/opencv3-on-tx2/]
 python3.5, python3-pip, python3-dev, and python3-tk must be installed using apt
 tmux, screen, atop, htop, and vim should be installed using apt
@@ -38,5 +37,3 @@ sudo vim /usr/local/lib/python3.5/dist-packages/matplotlib/mpl-data/matplotlibrc
 sudo vim /usr/local/cuda-8.0/include/cuda_gl_interop.h and comment out line 62-66 as well as 68
 cd /usr/lib/aarch64-linux-gnu/
 sudo ln -sf tegra/libGL.so libGL.so
-
-                     
