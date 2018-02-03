@@ -1,4 +1,4 @@
-##Requirements
+##Requirements##
 User named roboloco with access as a member of sudo and video groups.
 SD card as a home directory for TX1, ext4 formatted, or using onboard storage on TX2.
 roboloco.service moved to /lib/systemd/system
@@ -6,10 +6,10 @@ Activate systemd changes using systemctl daemon-reload
 Enable service on boot using systemctl enable roboloco
 wifi-Gp.sh and wifi-lcps.sh moved to /root
 tegrastats moved to /usr/bin
-code directory with active subfolder should be in roboloco home directory
+Code directory with active subfolder should be in roboloco home directory
 On TX2, fix two cores being disabled by editing /etc/nvpmodel.conf and changing the default state to 2
 
-##Dependencies
+##Dependencies##
 Run the commands from this (site)[https://jkjung-avt.github.io/opencv3-on-tx2/]
 python3.5, python3-pip, python3-dev, and python3-tk must be installed using apt
 tmux, screen, atop, htop, and vim should be installed using apt
