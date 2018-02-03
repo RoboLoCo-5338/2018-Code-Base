@@ -1,4 +1,5 @@
 ##Requirements##
+
 User named roboloco with access as a member of sudo and video groups.
 SD card as a home directory for TX1, ext4 formatted, or using onboard storage on TX2.
 roboloco.service moved to /lib/systemd/system
