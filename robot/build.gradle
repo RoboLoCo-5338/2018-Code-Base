@@ -19,6 +19,17 @@ deploy {
     }
 }
 
+wpi {
+    wpilibVersion = '2018.2.2'
+    ntcoreVersion = '4.0.0'
+    cscoreVersion = '1.1.0'
+
+    ctreVersion = '5.2.1.1'
+    navxVersion = "3.0.346"
+
+    smartDashboardVersion = '3.0.0'
+    shuffleboardVersion = '1.1.1'
+}
 // Defines dependencies that gradle will pull in, updating them when needed,
 // and then compiling them for deployment alongside our code.
 dependencies {
@@ -26,8 +37,6 @@ dependencies {
     // libraries for the season.
     compile wpilib()
     compile ctre()
-    // compile navx()
-    // compile openrio.powerup.matchData()
 }
 
 // Builds the jar needed by the RoboRio to run our code.

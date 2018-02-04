@@ -1,20 +1,10 @@
-// This allows the use of the following plugins in the two sub-projects, but does
+// This allows the use of the following plugins in the sub-project, but does
 // not enable them for the root project.
 plugins {
     // GradleRio is a plugin used to build and deploy code to robots, and is only
     // applied to the robot sub-project. This line can be used to also update
     // the plugin version automatically.
     id "jaci.openrio.gradle.GradleRIO" version "2018.01.22" apply false
-
-    // EmbeddedTools is a plugin used to build and deploy code to non-frc specifc
-    // targets, and is only applied to the jetson sub-project. This line can be
-    // used to also update the plugin version automatically.
-    id "jaci.gradle.EmbeddedTools" version "2018.02.04" apply false
-
-    // Gradle SSH is a plugin used to ssh and transfer code to our Jetson TX1,
-    // target, and is only applied to the jetson sub-project. This line can be
-    // used to also update the plugin version automatically.
-    id 'org.hidetake.ssh' version '2.9.0' apply false
 }
 
 // Applies the idea plugin to allow easy integration with IntelliJ IDEA for our 
