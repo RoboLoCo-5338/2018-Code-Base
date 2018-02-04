@@ -12,39 +12,19 @@ public class OI
 	private final Joystick joyL = new Joystick(0);
 	private final Joystick joyR = new Joystick(1);
 	
-	// Enum that represents all possible buttons in use.
-	public enum Button
-	{
-		SLOW, STRAIGHT
-	}
-	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
 	{
-		if(value > 0.05)
+		if(value > 0.025)
 		{
 			return (value - 0.025) / 0.975;
 		}
-		else if(value < -0.05)
+		else if(value < -0.025)
 		{
 			return (value + 0.025) / 0.975;
 		}
 		return value;
-	}
-	// Public method that returns the state of a particular button based on the
-	// Button enum.
-	public boolean get(final Button button)
-	{
-		switch(button)
-		{
-			case SLOW:
-				return this.joyL.getRawButton(1);
-			case STRAIGHT:
-				return this.joyR.getRawButton(1);
-			default:
-				return false;
-		}
 	}
 	// Public method that returns the desired joystick object based on the int
 	// input.
