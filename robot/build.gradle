@@ -26,8 +26,8 @@ dependencies {
     // libraries for the season.
     compile wpilib()
     compile ctre()
-    compile navx()
-    compile openrio.powerup.matchData()
+    // compile navx()
+    // compile openrio.powerup.matchData()
 }
 
 // Builds the jar needed by the RoboRio to run our code.

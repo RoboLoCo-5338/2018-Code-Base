@@ -9,7 +9,7 @@ plugins {
     // EmbeddedTools is a plugin used to build and deploy code to non-frc specifc
     // targets, and is only applied to the jetson sub-project. This line can be
     // used to also update the plugin version automatically.
-    id "jaci.gradle.EmbeddedTools" version "2018.01.24" apply false
+    id "jaci.gradle.EmbeddedTools" version "2018.02.04" apply false
 
     // Gradle SSH is a plugin used to ssh and transfer code to our Jetson TX1,
     // target, and is only applied to the jetson sub-project. This line can be
