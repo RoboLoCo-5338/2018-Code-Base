@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
 	private final Compressor driveCompressor = new Compressor(5);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
-	
+
 	public DriveTrain()
 	{
 		super();
@@ -32,11 +32,11 @@ public class DriveTrain extends Subsystem
 	}
 	public void drive(final double left, final double right)
 	{
-		this.DRIVE.tankDrive(left, right, true);
+		this.DRIVE.tankDrive(left, right, false);
 	}
 	public void drive(final OI oi)
 	{
-		this.DRIVE.tankDrive(oi.getLeft(), oi.getRight(), true);
+		this.DRIVE.tankDrive(oi.getRight() / 3.0, oi.getLeft() / 3.0, false);
 	}
 	@Override
 	public void initDefaultCommand()
