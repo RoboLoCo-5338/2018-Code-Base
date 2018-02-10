@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -33,8 +32,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(5);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
 	private boolean shift;
-	private final PowerDistributionPanel pdp = new PowerDistributionPanel(0);
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -84,14 +82,14 @@ public class DriveTrain extends Subsystem
 		// speedPrimeLeft = (a * Math.pow(this.throttle * oi.getLeft('Y'),2) *
 		// (1-a)*(this.throttle * oi.getLeft('Y')));
 		// Uses directions and input to create a turn coefficient
-		this.turn = Robot.oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
+		this.turn = oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
 		this.speedPrimeLeft = -this.directionLeft
 						* (this.a * Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - this.a) * (Robot.oi.getLeft('Y')));
 		// Unless the robot is driving straight, use curvature drive if throttle >= 0.6
 		// else use arcade drive
-		if(!Robot.oi.get(OI.Button.STRAIGHT))
+		if(!oi.get(OI.Button.STRAIGHT))
 		{
-			if(Robot.oi.getLeft('Y') >= 0.6)
+			if(oi.getLeft('Y') >= 0.6)
 			{
 				this.DRIVE.curvatureDrive(this.speedPrimeLeft, this.turn, false);
 			}
@@ -112,12 +110,12 @@ public class DriveTrain extends Subsystem
 			this.turn *= .7;
 		}
 		// Logic to make sure that you can't shift down unless speed is less than 20%
-		if(Robot.oi.get(OI.Button.SHIFT_UP))
+		if(oi.get(OI.Button.SHIFT_UP))
 		{
 			this.driveSolenoid.set(DoubleSolenoid.Value.kReverse);
 			this.shift = true;
 		}
-		else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
+		else if(oi.get(OI.Button.SHIFT_DOWN))
 		{
 			if((Math.abs(this.m_left.get()) <= 0.20) && (Math.abs(this.m_right.get()) <= 0.20))
 			{

@@ -6,7 +6,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team5338.robot.commands.Autonomus;
+import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
 //Import of all essential wpilib classes.
@@ -43,7 +43,7 @@ public class Robot extends IterativeRobot
 	public void autonomousInit()
 	{
 		// Eventual autonomous choosing will occur here.
-		final Command Auto = new Autonomus();
+		final Command Auto = new Autonomous();
 		Auto.start();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
