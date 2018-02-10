@@ -12,7 +12,7 @@ import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 //Import of all essential wpilib classes.
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import org.usfirst.frc.team5338.robot.subsystems.EncoderCommandController;
+import org.usfirst.frc.team5338.robot.subsystems.Sensors;
 
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot
 	// Creates static subsystem and OI objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
-	public static final EncoderCommandController encoders = new EncoderCommandController();
+	public static final Sensors encoders = new Sensors();
 
 	//Initializes the Navx
 	public static final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));

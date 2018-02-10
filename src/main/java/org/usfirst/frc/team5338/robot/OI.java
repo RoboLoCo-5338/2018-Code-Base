@@ -3,7 +3,6 @@ package org.usfirst.frc.team5338.robot;
 
 //Import of all essential wpilib classes.
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Main class that handles Operator Input.
 public class OI
@@ -69,30 +68,34 @@ public class OI
 		}
 	}
 	// Public method that returns the left joystick's deadzone-adjusted y-axis value
-	public double getLeft(Character input) {
-		switch (input) {
-		case 'X': // Gets deadzone corrected x-axis position
-			return joystickDeadZone(joyL.getRawAxis(0));
-		case 'Y': // Gets deadzone corrected y-axis position
-			return -joystickDeadZone(joyL.getRawAxis(1));
-		case 'Z': // Gets deadzone corrected z-axis (rotation) position
-			return joystickDeadZone(joyL.getRawAxis(2));
-		default: // Returns 0.0 is argument is unknown
-			return 0.0;
+	public double getLeft(final char input)
+	{
+		switch(input)
+		{
+			case 'X': // Gets deadzone corrected x-axis position
+				return OI.joystickDeadZone(this.joyL.getRawAxis(0));
+			case 'Y': // Gets deadzone corrected y-axis position
+				return -OI.joystickDeadZone(this.joyL.getRawAxis(1));
+			case 'Z': // Gets deadzone corrected z-axis (rotation) position
+				return OI.joystickDeadZone(this.joyL.getRawAxis(2));
+			default: // Returns 0.0 is argument is unknown
+				return 0.0;
 		}
 	}
 	// Public method that returns the right joystick's deadzone-adjusted y-axis
 	// value
-	public double getRight(Character input) {
-		switch (input) {
-		case 'X': // Gets deadzone corrected x-axis position
-			return joystickDeadZone(joyR.getRawAxis(0));
-		case 'Y': // Gets deadzone corrected y-axis position
-			return -joystickDeadZone(joyR.getRawAxis(1));
-		case 'Z': // Gets deadzone corrected z-axis (rotation) position
-			return joystickDeadZone(joyR.getRawAxis(2));
-		default: // Returns 0.0 is argument is unknown
-			return 0.0;
+	public double getRight(final char input)
+	{
+		switch(input)
+		{
+			case 'X': // Gets deadzone corrected x-axis position
+				return OI.joystickDeadZone(this.joyR.getRawAxis(0));
+			case 'Y': // Gets deadzone corrected y-axis position
+				return -OI.joystickDeadZone(this.joyR.getRawAxis(1));
+			case 'Z': // Gets deadzone corrected z-axis (rotation) position
+				return OI.joystickDeadZone(this.joyR.getRawAxis(2));
+			default: // Returns 0.0 is argument is unknown
+				return 0.0;
 		}
 	}
 }
