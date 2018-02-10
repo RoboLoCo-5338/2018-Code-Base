@@ -13,7 +13,7 @@ public class ClawTilter extends Subsystem {
     final double extendedValue = -126; //potentiometer value when dart actuator is extended
 
     @Override
-    protected void initDefaultCommand() {
+    protected void initDefaultCommand() { //default command required by Subsystem class.  Not being modified
         return;
     }
 

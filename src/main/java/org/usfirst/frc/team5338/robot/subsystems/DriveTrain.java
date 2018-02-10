@@ -33,8 +33,7 @@ public class DriveTrain extends Subsystem {
 
     //general variables that will be passed in to define the motion of the robot at a given moment
     private double throttle = 1.0;
-    private double correctedPowerFromJoystick, turnIntensity, maxPower;
-    int directionRight, directionLeft;
+    private double correctedPowerFromJoystick, turnIntensity;
 
     //Objects that control the shift and compressor mechanism
     private final Compressor driveCompressor = new Compressor(5);
@@ -58,22 +57,6 @@ public class DriveTrain extends Subsystem {
 
     //Actual drive method called in Robot class
     public void drive(final OI oi) {
-        //Power Input cap
-        maxPower = 0.5;
-
-        //Conditionals that changes throttle and direction based on Joystick Input
-        if ((this.throttle * Robot.oi.getRight('X')) < 0) {
-            directionRight = 1;
-        } else {
-            directionRight = -1;
-        }
-
-        if ((this.throttle * Robot.oi.getLeft('Y')) < 0) {
-            directionLeft = 1;
-        } else {
-            directionLeft = -1;
-        }
-
         //Checks whether the user has inputted the 'slow' command, thus reducing the speed of all motions
         if (Robot.oi.get(OI.Button.SLOW)) {
             this.throttle = 0.5;
@@ -83,8 +66,8 @@ public class DriveTrain extends Subsystem {
       
         //Uses directions and input to create a turn coefficient
         turnIntensity = Robot.oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
-        correctedPowerFromJoystick = -directionLeft * (maxPower * Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - maxPower) * (Robot.oi.getLeft('Y')));
-
+//        correctedPowerFromJoystick = -directionLeft * (a * Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - a) * (Robot.oi.getLeft('Y')));
+        correctedPowerFromJoystick = (Math.pow(Robot.oi.getLeft('Y'), 3));
 
         //If the robot is driving straight or, in case it isn't driving straight, has a throttle <= 0.6, use arcade drive
         //else use curvature drive for better handling
@@ -95,7 +78,8 @@ public class DriveTrain extends Subsystem {
                 this.DRIVE.arcadeDrive(correctedPowerFromJoystick, turnIntensity, false);
             }
         } else {
-            this.DRIVE.arcadeDrive(correctedPowerFromJoystick, Robot.oi.getLeft('X'), false);
+//            this.DRIVE.arcadeDrive(correctedPowerFromJoystick, Robot.oi.getLeft('X'), false);
+            this.DRIVE.arcadeDrive(correctedPowerFromJoystick, 0, false);
         }
 
         /**Shift Control System**/
@@ -113,7 +97,16 @@ public class DriveTrain extends Subsystem {
                 shiftedUp = false;
             }
         }
+
+        /**IMPORTANT: Due to motor mirroring
+         * Forward: Left = +, Right = -
+         * Backward: Left = -, Right = +
+         */
         SmartDashboard.putBoolean("Is shifted Up", shiftedUp);
+        SmartDashboard.putNumber("Left Motor 1", this.DRIVEL1.getMotorOutputPercent());
+        SmartDashboard.putNumber("Left Motor 2", this.DRIVEL2.getMotorOutputPercent());
+        SmartDashboard.putNumber("Right Motor 1", this.DRIVER1.getMotorOutputPercent());
+        SmartDashboard.putNumber("Right Motor 2", this.DRIVER2.getMotorOutputPercent());
     }
 
     //Default drive command will be a general tank drive instead of arcade drive
