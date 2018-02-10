@@ -5,9 +5,9 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Autonomus extends CommandGroup {
+public class Autonomous extends CommandGroup {
 
-    public Autonomus() {
+    public Autonomous() {
         addSequential(new Move(24.0));
     }
 }
