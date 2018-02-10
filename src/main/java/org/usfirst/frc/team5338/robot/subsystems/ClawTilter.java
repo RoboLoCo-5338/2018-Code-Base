@@ -1,87 +1,76 @@
 package org.usfirst.frc.team5338.robot.subsystems;
-
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
-import org.usfirst.frc.team5338.robot.commands.TiltClaw;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+public class ClawTilter extends Subsystem {
+    private final WPI_TalonSRX dartTalon = new WPI_TalonSRX(31); //talon connected to the dart actuator
+    private double potValue; //potentiometer value
+    final double retractedValue = -190; // potentiometer value when the dart actuator is retracted
+    final double extendedValue = -126; //potentiometer value when dart actuator is extended
 
-public class ClawTilter extends Subsystem
-{
-	private final WPI_TalonSRX dartTalon = new WPI_TalonSRX(31); //talon connected to the dart actuator
-	private double potValue; //potentiometer value
-	final double retracted = -190; // potentiometer value when the dart actuator is retracted
-	final double extended = -126; //potentiometer value when dart actuator is extended
-	boolean working;
-	
-	public ClawTilter()
-	{
-		super();
-	}
-	//
-	@Override
-	public void initDefaultCommand()
-	{
-		//this.setDefaultCommand(new TiltClaw());
-	}
-	public void tilt(final OI oi)
-	{
-		this.potValue = this.dartTalon.getSensorCollection().getAnalogIn(); //sense potentiometer value
-		working = true; // change to talon sensing
-		if(!working) { //if the talon isn't working
-			
-		}
-		else if(Robot.oi.get(OI.Button.RAISE)) // raise the arm (extends the actuator)
-		{
-			if(this.potValue <= this.extended) // if the actuator isn't fully extended
-			{ // we slow the actuator at the end to prevent a hard stop
-				final double difference = Math.abs(this.potValue - this.extended); //how much further does the actuator need to extend
-				final int distance = 15; //how soon should the actuator begin to slow down (while extending)
-				final double lowSpeed = 0.10; //the speed to which the actuator will slow down to
-				if(difference <= distance)
-				{
-					final double speedDifference = (0.90 - lowSpeed) / distance;//this code slows the speed in a linear fashion
-					this.dartTalon.set(0.90 - (speedDifference * (distance - difference)));
-				}
-				else
-				{
-					this.dartTalon.set(0.90); //extend at a fast speed
-				}
-			}
-			else
-			{
-				this.dartTalon.set(0); //turn off the actuator if it has gone past the limit. Prevents jamming.
-			}
-		}
-		else if(Robot.oi.get(OI.Button.LOWER)) // lower the arm (retracts the actuator)
-		{ //this code mirrors the code above that is used for extending
-			if(this.potValue >= this.retracted) // if the actuator isn't fully retracted
-			{
-				final double difference = Math.abs(this.potValue - this.retracted);
-				final int distance = 27;  //how soon should the actuator begin to slow down (while retracting)
-				final double lowSpeed = 0.10;
-				if(difference <= distance)
-				{
-					final double speedDifference = (0.90 - lowSpeed) / distance;
-					this.dartTalon.set(-(0.90 - (speedDifference * (distance - difference))));
-				}
-				else
-				{
-					this.dartTalon.set(-0.90);
-				}
-			}
-			else
-			{
-				this.dartTalon.set(0);
-			}
-		}
-		else // if we aren't extending or retracting, stop the motor
-		{
-			this.dartTalon.set(0);
-		}
-		SmartDashboard.putNumber("pot", this.potValue); // display the potentiometer value in case the code needs to be fine tuned 
-	}
+
+    public ClawTilter() { super(); }//Default Constructor
+
+    /**Method: tilt
+     * @param oi
+     * Action: takes in the OI and takes care of all claw tilting actions based on Operator Input
+     */
+    public void tilt(final OI oi){
+        this.potValue = this.dartTalon.getSensorCollection().getAnalogIn(); // get the analog value of the talon on which the Dart Actuator runs
+
+        if(Robot.oi.get(OI.Button.RAISE)){
+            if(this.potValue < this.extendedValue){ //if the user wants to raise the claw and the claw hasn't hit its max yet
+                final double distanceToMax = Math.abs(this.potValue - this.extendedValue); //the amount needed to extend to max
+                final int slowDownRange = 15; //declares that actuator will slow 15 points away from the actuator's maximum value
+                final double minSpeed = 0.10; //Speed to which the actuator will slow
+                final double maxSpeed = 0.90;
+                if(distanceToMax <= slowDownRange){
+                    /**model the slowing down of the actuator as y = mx + b if we are within slow-down range**/
+                    //d = (range in speed) / slowDownRange
+                    final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
+                    //maxSpeed - newSpeed = d (slowDownRange - distanceToMax)
+                    // -newSpeed = d (slowDownRange - distanceToMax) - maxSpeed
+                    // newSpeed = maxSpeed - (d(slowDownRange - distanceToMax))
+                    final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
+                    this.dartTalon.set(newSpeed);
+                }else{
+                    //If we have more distance to the maximum than the 15 point limit, slow down the actuator at maximum speed until we need to decelerate
+                    this.dartTalon.set(maxSpeed);
+                }
+            }else{
+                this.dartTalon.set(0); //stop the talon if the potentiometer value is greater than the value for extension.
+                //prevents jamming the actuator
+            }
+        }else if(Robot.oi.get(OI.Button.LOWER)){
+            if(this.potValue > this.retractedValue){ //if the user wants to retract and the claw hasn't hit minimum value
+                final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
+                final int slowDownRange = 27; //declares that the actuator will slow 27 points away from minimum value
+                final double lowSpeed = 0.10; //speed to which actuator slows
+                final double maxSpeed = 0.90;
+                if(distanceToMin <= slowDownRange){
+                    /**model the slowing down of the actuator as y = mx + b if we are within slow-down range**/
+                    final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; //deceleration rate as calculated in raising portion of code
+                    //calculate new speed as was done in raising portion of code, but multiply by -1 to show direction change to lowering
+                    final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
+                    this.dartTalon.set(newSpeed);
+                }else{
+                    //if we are beyond slow-down range, slow down at max speed
+                    this.dartTalon.set(-1 * maxSpeed);
+                }
+            }else{
+                this.dartTalon.set(0);//stop the talon if the potentiometer value is less than the value for retraction.
+                //prevents jamming the actuator
+            }
+        }else{
+            //if the user doesn't want to raise or lower, stop the talon
+            this.dartTalon.set(0);
+        }
+
+        //log the potentiometer value for testing purposes
+        SmartDashboard.putNumber("Pot value", this.potValue);
+    }
 }
