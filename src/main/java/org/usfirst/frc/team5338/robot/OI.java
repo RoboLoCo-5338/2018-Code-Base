@@ -67,7 +67,7 @@ public class OI
 			return null;
 		}
 	}
-	// Public method that returns the left joystick's deadzone-adjusted y-axis value
+	// Public method that returns the left joystick's deadzone-adjusted values
 	public double getLeft(final char input)
 	{
 		switch(input)
@@ -82,8 +82,7 @@ public class OI
 				return 0.0;
 		}
 	}
-	// Public method that returns the right joystick's deadzone-adjusted y-axis
-	// value
+	// Public method that returns the right joystick's deadzone-adjusted values
 	public double getRight(final char input)
 	{
 		switch(input)

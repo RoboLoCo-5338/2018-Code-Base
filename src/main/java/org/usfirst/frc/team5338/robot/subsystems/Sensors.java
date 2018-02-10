@@ -1,10 +1,12 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.EncoderCommand;
+import org.usfirst.frc.team5338.robot.commands.GetSensorData;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,15 +14,18 @@ public class Sensors extends Subsystem
 {
 	private double encoderValue;
 	private double encoderLeft, encoderRight = 0.0;
-	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(1);
-	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(2);
-	
+	public static final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
+
 	public Sensors()
 	{
 		super();
+		while(Sensors.ahrs.isCalibrating() || Sensors.ahrs.isMagnetometerCalibrated())
+		{
+		}
 	}
-	public void returnRotation(final OI oi)
+	public void returnRotation()
 	{
+		this.DRIVEL1.getSensorCollection().
 		this.encoderLeft = this.DRIVEL1.getSensorCollection().getQuadraturePosition();
 		this.encoderRight = this.DRIVER2.getSensorCollection().getQuadraturePosition();
 		SmartDashboard.putNumber("encoder left", this.encoderLeft);
@@ -34,6 +39,6 @@ public class Sensors extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		this.setDefaultCommand(new EncoderCommand());
+		this.setDefaultCommand(new GetSensorData());
 	}
 }

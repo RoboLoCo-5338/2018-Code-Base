@@ -2,6 +2,7 @@ package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
+import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -39,7 +40,7 @@ public class DriveTrain extends Subsystem
 		super();
 		this.driveCompressor.setClosedLoopControl(true);
 		this.driveCompressor.start();
-		this.driveSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.driveSolenoid.set(DoubleSolenoid.Value.kReverse);
 		this.shift = false;
 	}
 	// Uses arcade drive, currently deprecated
@@ -128,6 +129,6 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		// this.setDefaultCommand(new TankDriveWithJoysticks());
+		this.setDefaultCommand(new TankDriveWithJoysticks());
 	}
 }
