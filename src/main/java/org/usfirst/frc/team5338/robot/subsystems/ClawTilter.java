@@ -12,6 +12,10 @@ public class ClawTilter extends Subsystem {
     final double retractedValue = -190; // potentiometer value when the dart actuator is retracted
     final double extendedValue = -126; //potentiometer value when dart actuator is extended
 
+    @Override
+    protected void initDefaultCommand() {
+        return;
+    }
 
     public ClawTilter() { super(); }//Default Constructor
 
