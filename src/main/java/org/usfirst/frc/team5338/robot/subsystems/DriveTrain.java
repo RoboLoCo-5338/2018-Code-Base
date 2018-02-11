@@ -40,7 +40,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(5);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
 	private boolean shiftedUp;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -145,6 +145,7 @@ public class DriveTrain extends Subsystem
 		SmartDashboard.putNumber("Left Motor 2", this.DRIVEL2.getMotorOutputPercent());
 		SmartDashboard.putNumber("Right Motor 1", this.DRIVER1.getMotorOutputPercent());
 		SmartDashboard.putNumber("Right Motor 2", this.DRIVER2.getMotorOutputPercent());
+		SmartDashboard.putData(this.DRIVE);
 	}
 	// Default drive command will be a general tank drive instead of arcade drive
 	@Override
