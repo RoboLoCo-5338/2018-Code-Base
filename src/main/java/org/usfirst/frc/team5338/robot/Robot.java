@@ -32,6 +32,7 @@ public class Robot extends IterativeRobot
 	public void autonomousInit()
 	{
 		// Eventual autonomous choosing will occur here.
+		Robot.sensors.zeroEncoders();
 		Robot.Auto.start();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
@@ -52,7 +53,6 @@ public class Robot extends IterativeRobot
 		}
 		catch(final Exception e)
 		{
-			e.printStackTrace();
 		}
 	}
 	// Public method that runs continuously every 20ms during autonomous.

@@ -1,21 +1,18 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
-import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.GetSensorData;
+import org.usfirst.frc.team5338.robot.Robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.SensorCollection;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Sensors extends Subsystem
 {
-	private double encoderValue;
-	private double encoderLeft, encoderRight = 0.0;
+	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
 	public static final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
-
+	
 	public Sensors()
 	{
 		super();
@@ -23,22 +20,18 @@ public class Sensors extends Subsystem
 		{
 		}
 	}
-	public void returnRotation()
+	public void zeroEncoders()
 	{
-		this.DRIVEL1.getSensorCollection().
-		this.encoderLeft = this.DRIVEL1.getSensorCollection().getQuadraturePosition();
-		this.encoderRight = this.DRIVER2.getSensorCollection().getQuadraturePosition();
-		SmartDashboard.putNumber("encoder left", this.encoderLeft);
-		SmartDashboard.putNumber("encoder right", this.encoderRight);
+		this.encoders[0].setQuadraturePosition(0, 0);
+		this.encoders[1].setQuadraturePosition(0, 0);
 	}
-	public double measureEncoder(final WPI_TalonSRX encoderTalon)
+	public double[] returnRotation()
 	{
-		this.encoderValue = encoderTalon.getSensorCollection().getQuadraturePosition();
-		return this.encoderValue;
+		return new double[] {this.encoders[0].getQuadraturePosition(), this.encoders[1].getQuadraturePosition()};
 	}
 	@Override
-	public void initDefaultCommand()
+	protected void initDefaultCommand()
 	{
-		this.setDefaultCommand(new GetSensorData());
+		this.setDefaultCommand(null);
 	}
 }

@@ -6,6 +6,6 @@ public class Autonomous extends CommandGroup
 {
 	public Autonomous()
 	{
-		this.addSequential(new Move(24.0));
+		this.addSequential(new Move(12.0));
 	}
 }
