@@ -1,7 +1,9 @@
 //Package for all of our code.
 package org.usfirst.frc.team5338.robot;
 
+//Import of necessary subsystem.
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
+import org.usfirst.frc.team5338.robot.subsystems.ClawTilter;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5338.robot.subsystems.Sensors;
 
@@ -16,11 +18,12 @@ public class Robot extends IterativeRobot
 {
 	// Creates static subsystem and OI objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
+	public static final ClawTilter clawtilter = new ClawTilter();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
 	// Creates command for Auto
 	public static Command Auto;
-
+	
 	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void robotInit()
