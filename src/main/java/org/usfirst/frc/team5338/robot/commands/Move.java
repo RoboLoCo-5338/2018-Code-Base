@@ -48,38 +48,6 @@ public class Move extends Command
 			left = 0;
 		}
 		Robot.drivetrain.tankDrive(left, right);
-		// }
-		// SmartDashboard.putNumber("distanceFinal", this.distance);
-		// final double[] encoderData = Robot.sensors.distances();
-		// this.encoderLeft = encoderData[0];
-		// this.encoderRight = encoderData[1];
-		// System.out.print("Target: ");
-		// System.out.println(this.targetDistance);
-		// System.out.print("Current: ");
-		// System.out.println(Math.abs(this.encoderRight));
-		//
-		// double difference = this.encoderLeft - this.targetDistance;
-		// Math.abs(difference);
-		// if(difference > 0)
-		// {
-		// return;
-		// }
-		// difference = Math.abs(difference);
-		// final double distance1 = 3000;
-		// final double speedDifference = 0.20 / distance1;
-		// if(difference <= distance1)
-		// {
-		// Robot.drivetrain.drive(0.20 - (speedDifference * difference), 0);
-		// }
-		// else
-		// {
-		// Robot.drivetrain.drive(0.20, 0);
-		// }
-		// }
-		// else
-		// {
-		// Robot.drivetrain.drive(0, 0);
-		// }
 	}
 	@Override
 	protected boolean isFinished()
