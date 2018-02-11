@@ -3,42 +3,60 @@ package org.usfirst.frc.team5338.robot.commands;
 import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Move extends Command
 {
-	double distance, targetDistance, encoderLeft, encoderRight, numRotations;
+	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
 	double[] beginningEncoderData;
 	
-	public Move(final double distance1)
+	public Move(final double input)
 	{
 		super();
-		this.distance = distance1;
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
-		this.beginningEncoderData = Robot.sensors.returnRotation();
-		this.numRotations = (this.distance) / (6 * Math.PI);
-		this.targetDistance = 4000;// (this.numRotations * 4000);
+		this.distance = input;
+	}
+	@Override
+	protected void initialize()
+	{
+		super.initialize();
+		this.targetRotationsLeft = (this.distance);
+		this.targetRotationsRight = (this.distance);
+		Robot.sensors.zeroEncoders();
 	}
 	@Override
 	protected void execute()
 	{
-		SmartDashboard.putNumber("distanceFinal", this.distance);
-		final double[] encoderData = Robot.sensors.returnRotation();
-		this.encoderLeft = encoderData[0];
-		this.encoderRight = encoderData[1];
-		System.out.print("Target: ");
-		System.out.println(this.targetDistance);
-		System.out.print("Current: ");
-		System.out.println(Math.abs(this.encoderRight));
-		if(Math.abs(this.encoderRight) < this.targetDistance)
+		final double[] distanceTravelled = Robot.sensors.distances();
+		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
+		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
+		double right, left;
+		if(this.targetRotationsRight > 0)
 		{
-			Robot.drivetrain.drive(0.15, 0);
+			right = 0.165;
 		}
 		else
 		{
-			Robot.drivetrain.drive(0, 0);
+			right = 0;
 		}
+		if(this.targetRotationsLeft > 0)
+		{
+			left = 0.15;
+		}
+		else
+		{
+			left = 0;
+		}
+		Robot.drivetrain.tankDrive(left, right);
+		// }
+		// SmartDashboard.putNumber("distanceFinal", this.distance);
+		// final double[] encoderData = Robot.sensors.distances();
+		// this.encoderLeft = encoderData[0];
+		// this.encoderRight = encoderData[1];
+		// System.out.print("Target: ");
+		// System.out.println(this.targetDistance);
+		// System.out.print("Current: ");
+		// System.out.println(Math.abs(this.encoderRight));
 		//
 		// double difference = this.encoderLeft - this.targetDistance;
 		// Math.abs(difference);

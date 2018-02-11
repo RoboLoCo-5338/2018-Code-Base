@@ -4,7 +4,9 @@ import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
 
+import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -34,7 +36,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(5);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
 	private boolean shift;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -43,15 +45,31 @@ public class DriveTrain extends Subsystem
 		this.driveCompressor.start();
 		this.driveSolenoid.set(DoubleSolenoid.Value.kReverse);
 		this.shift = false;
+		this.DRIVEL1.configNeutralDeadband(0.001, 0);
+		this.DRIVER1.configNeutralDeadband(0.001, 0);
+		this.DRIVEL2.configNeutralDeadband(0.001, 0);
+		this.DRIVER2.configNeutralDeadband(0.001, 0);
+		this.DRIVEL1.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		this.DRIVEL1.setControlFramePeriod(ControlFrame.Control_3_General, 10);
+		this.DRIVER1.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		this.DRIVER1.setControlFramePeriod(ControlFrame.Control_3_General, 10);
+		this.DRIVEL2.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		this.DRIVEL2.setControlFramePeriod(ControlFrame.Control_3_General, 10);
+		this.DRIVER2.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		this.DRIVER2.setControlFramePeriod(ControlFrame.Control_3_General, 10);
 	}
 	public SensorCollection[] getEncoders()
 	{
-		return new SensorCollection[] {this.DRIVEL1.getSensorCollection(), this.DRIVER2.getSensorCollection()};
+		return new SensorCollection[] {this.DRIVER1.getSensorCollection(), this.DRIVEL1.getSensorCollection()};
 	}
-	// Uses arcade drive, currently deprecated
+	// Uses arcade drive
 	public void drive(final double front, final double rotate)
 	{
 		this.DRIVE.arcadeDrive(this.throttle * front, this.throttle * rotate, false);
+	}
+	public void tankDrive(final double left, final double right)
+	{
+		this.DRIVE.tankDrive(left, right, false);
 	}
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)

@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
 	// Creates command for Auto
-	public static final Command Auto = new Autonomous();
+	public static Command Auto;
 
 	// Public method that runs once at the beginning of autonomous.
 	@Override
@@ -31,8 +31,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void autonomousInit()
 	{
+		Robot.Auto = new Autonomous();
 		// Eventual autonomous choosing will occur here.
-		Robot.sensors.zeroEncoders();
 		Robot.Auto.start();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
