@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-//Class in which Robot calls to perform all functions: specifically Drive Train
+// Class in which Robot calls to perform all functions: specifically Drive Train
 public class DriveTrain extends Subsystem
 {
 	// Field variables that we will use
@@ -25,17 +25,21 @@ public class DriveTrain extends Subsystem
 	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(4);
 	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(3);
 	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(2);
-	// Objects used to control driving
+	// Contol-group objects used to move the left drive drive and right drive motors
+	// in sync (two drive motors per side)
 	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
 	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
+	// Creates a drive object that will define how the left and right motor sets are
+	// configured (currently as an arcade drive)
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
+	// general variables that will be passed in to define the motion of the robot at
+	// a given moment
 	private double throttle = 1.0;
-	private double speedPrimeLeft, turn, a;
-	int directionRight, directionLeft;
+	private double correctedPowerFromJoystick, turnIntensity;
 	// Objects that control the shift and compressor mechanism
 	private final Compressor driveCompressor = new Compressor(5);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
-	private boolean shift;
+	private boolean shiftedUp;
 	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
@@ -43,8 +47,8 @@ public class DriveTrain extends Subsystem
 		super();
 		this.driveCompressor.setClosedLoopControl(true);
 		this.driveCompressor.start();
-		this.driveSolenoid.set(DoubleSolenoid.Value.kReverse);
-		this.shift = false;
+		this.driveSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.shiftedUp = false;
 		this.DRIVEL1.configNeutralDeadband(0.001, 0);
 		this.DRIVER1.configNeutralDeadband(0.001, 0);
 		this.DRIVEL2.configNeutralDeadband(0.001, 0);
@@ -62,7 +66,8 @@ public class DriveTrain extends Subsystem
 	{
 		return new SensorCollection[] {this.DRIVER1.getSensorCollection(), this.DRIVEL1.getSensorCollection()};
 	}
-	// Uses arcade drive
+	// Runs the drive in arcade mode taking in the power magnitude toward the front
+	// and diagonal
 	public void drive(final double front, final double rotate)
 	{
 		this.DRIVE.arcadeDrive(this.throttle * front, this.throttle * rotate, false);
@@ -74,25 +79,8 @@ public class DriveTrain extends Subsystem
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)
 	{
-		// Speed cap
-		this.a = 0.5;
-		// Conditionals that changes throttle and direction based on Joystick Input
-		if((this.throttle * Robot.oi.getRight('X')) < 0)
-		{
-			this.directionRight = 1;
-		}
-		else
-		{
-			this.directionRight = -1;
-		}
-		if((this.throttle * Robot.oi.getLeft('Y')) < 0)
-		{
-			this.directionLeft = 1;
-		}
-		else
-		{
-			this.directionLeft = -1;
-		}
+		// Checks whether the user has inputted the 'slow' command, thus reducing the
+		// speed of all motions
 		if(Robot.oi.get(OI.Button.SLOW))
 		{
 			this.throttle = 0.5;
@@ -101,54 +89,65 @@ public class DriveTrain extends Subsystem
 		{
 			this.throttle = 1.0;
 		}
-		// speedPrimeRight = directionRight * (a * Math.pow(this.throttle *
-		// oi.getRight(),3) * (1-a)*(this.throttle * oi.getRight()));
-		// speedPrimeLeft = (a * Math.pow(this.throttle * oi.getLeft('Y'),2) *
-		// (1-a)*(this.throttle * oi.getLeft('Y')));
 		// Uses directions and input to create a turn coefficient
-		this.turn = oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
-		this.speedPrimeLeft = -this.directionLeft
-						* (this.a * Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - this.a) * (Robot.oi.getLeft('Y')));
-		// Unless the robot is driving straight, use curvature drive if throttle >= 0.6
-		// else use arcade drive
-		if(!oi.get(OI.Button.STRAIGHT))
+		this.turnIntensity = Robot.oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
+		// correctedPowerFromJoystick = -directionLeft * (a *
+		// Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - a) * (Robot.oi.getLeft('Y')));
+		this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getLeft('Y'), 3));
+		// If the robot is driving straight or, in case it isn't driving straight, has a
+		// throttle <= 0.6, use arcade drive
+		// else use curvature drive for better handling
+		if(!Robot.oi.get(OI.Button.STRAIGHT))
 		{
-			if(oi.getLeft('Y') >= 0.6)
+			if(Robot.oi.getLeft('Y') >= 0.6)
 			{
-				this.DRIVE.curvatureDrive(this.speedPrimeLeft, this.turn, false);
+				this.DRIVE.curvatureDrive(this.correctedPowerFromJoystick, this.turnIntensity, false);
 			}
 			else
 			{
-				this.DRIVE.arcadeDrive(this.speedPrimeLeft, this.turn, false);
+				this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, this.turnIntensity, false);
 			}
 		}
 		else
 		{
-			this.DRIVE.arcadeDrive(this.speedPrimeLeft, Robot.oi.getLeft('X'), false);
+			// this.DRIVE.arcadeDrive(correctedPowerFromJoystick, Robot.oi.getLeft('X'),
+			// false);
+			this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, 0, false);
 		}
-		// Deprecated drive
-		// drive(Robot.oi.getLeft('Y'), Robot.oi.getLeft('Z'));
-		// Shift-control system
-		if(this.shift)
+		/** Shift Control System **/
+		if(this.shiftedUp)
 		{
-			this.turn *= .7;
+			this.turnIntensity *= .7; // If the gear is shifted up, reduce turn variable to reduce
+										// over-turning/aggressive turning
 		}
-		// Logic to make sure that you can't shift down unless speed is less than 20%
-		if(oi.get(OI.Button.SHIFT_UP))
+		if(Robot.oi.get(OI.Button.SHIFT_UP))
 		{
+			// If the user has allowed the gear to shift up, then change the solenoid to
+			// allow for faster movement
 			this.driveSolenoid.set(DoubleSolenoid.Value.kReverse);
-			this.shift = true;
+			this.shiftedUp = true;
 		}
-		else if(oi.get(OI.Button.SHIFT_DOWN))
+		else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
 		{
+			// If user forces the gear to shift down, only do so if power is < 20%
 			if((Math.abs(this.m_left.get()) <= 0.20) && (Math.abs(this.m_right.get()) <= 0.20))
 			{
 				this.driveSolenoid.set(DoubleSolenoid.Value.kForward);
-				this.shift = false;
+				this.shiftedUp = false;
 			}
 		}
-		SmartDashboard.putBoolean("shift", this.shift);
+		/**
+		 * IMPORTANT: Due to motor mirroring Forward: Left = +, Right = - Backward: Left
+		 * = -, Right = +
+		 */
+		SmartDashboard.putBoolean("Is shifted Up", this.shiftedUp);
+		SmartDashboard.putNumber("Left Motor 1", this.DRIVEL1.getMotorOutputPercent());
+		SmartDashboard.putNumber("Left Motor 2", this.DRIVEL2.getMotorOutputPercent());
+		SmartDashboard.putNumber("Right Motor 1", this.DRIVER1.getMotorOutputPercent());
+		SmartDashboard.putNumber("Right Motor 2", this.DRIVER2.getMotorOutputPercent());
+		SmartDashboard.putData(this.DRIVE);
 	}
+	// Default drive command will be a general tank drive instead of arcade drive
 	@Override
 	public void initDefaultCommand()
 	{
