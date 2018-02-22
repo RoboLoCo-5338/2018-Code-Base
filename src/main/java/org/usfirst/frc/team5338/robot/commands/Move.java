@@ -8,12 +8,12 @@ public class Move extends Command
 {
 	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
 	double[] beginningEncoderData;
-	
+
 	public Move(final double input)
 	{
 		super();
 		this.requires(Robot.drivetrain);
-		this.requires(Robot.sensors);
+		// this.requires(Robot.sensors);
 		this.distance = input;
 	}
 	@Override
@@ -22,12 +22,12 @@ public class Move extends Command
 		super.initialize();
 		this.targetRotationsLeft = (this.distance);
 		this.targetRotationsRight = (this.distance);
-		Robot.sensors.zeroEncoders();
+		// Robot.sensors.zeroEncoders();
 	}
 	@Override
 	protected void execute()
 	{
-		final double[] distanceTravelled = Robot.sensors.distances();
+		final double[] distanceTravelled = new double[] {1.0, 1.0}; // Robot.sensors.distances();
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		double right, left;

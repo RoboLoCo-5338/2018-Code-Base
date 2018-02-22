@@ -22,9 +22,9 @@ public class DriveTrain extends Subsystem
 	// Field variables that we will use
 	// Talons: motor controllers that we use on the robot
 	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(1);
-	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(4);
+	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(2);
 	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(3);
-	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(2);
+	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(4);
 	// Contol-group objects used to move the left drive drive and right drive motors
 	// in sync (two drive motors per side)
 	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
@@ -37,8 +37,8 @@ public class DriveTrain extends Subsystem
 	private double throttle = 1.0;
 	private double correctedPowerFromJoystick, turnIntensity;
 	// Objects that control the shift and compressor mechanism
-	private final Compressor driveCompressor = new Compressor(5);
-	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(5, 0, 1);
+	private final Compressor driveCompressor = new Compressor(8);
+	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
 	
 	// Use constructor for any pre-start initialization
@@ -64,7 +64,7 @@ public class DriveTrain extends Subsystem
 	}
 	public SensorCollection[] getEncoders()
 	{
-		return new SensorCollection[] {this.DRIVER1.getSensorCollection(), this.DRIVEL1.getSensorCollection()};
+		return new SensorCollection[] {this.DRIVEL1.getSensorCollection(), this.DRIVER2.getSensorCollection()};
 	}
 	// Runs the drive in arcade mode taking in the power magnitude toward the front
 	// and diagonal
@@ -110,8 +110,6 @@ public class DriveTrain extends Subsystem
 		}
 		else
 		{
-			// this.DRIVE.arcadeDrive(correctedPowerFromJoystick, Robot.oi.getLeft('X'),
-			// false);
 			this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, 0, false);
 		}
 		/** Shift Control System **/
@@ -140,11 +138,7 @@ public class DriveTrain extends Subsystem
 		 * IMPORTANT: Due to motor mirroring Forward: Left = +, Right = - Backward: Left
 		 * = -, Right = +
 		 */
-		SmartDashboard.putBoolean("Is shifted Up", this.shiftedUp);
-		SmartDashboard.putNumber("Left Motor 1", this.DRIVEL1.getMotorOutputPercent());
-		SmartDashboard.putNumber("Left Motor 2", this.DRIVEL2.getMotorOutputPercent());
-		SmartDashboard.putNumber("Right Motor 1", this.DRIVER1.getMotorOutputPercent());
-		SmartDashboard.putNumber("Right Motor 2", this.DRIVER2.getMotorOutputPercent());
+		SmartDashboard.putBoolean("Shift", this.shiftedUp);
 		SmartDashboard.putData(this.DRIVE);
 	}
 	// Default drive command will be a general tank drive instead of arcade drive

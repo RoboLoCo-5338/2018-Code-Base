@@ -4,11 +4,11 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TiltClaw extends Command
+public class ControlClaw extends Command
 {
-	public TiltClaw()
+	public ControlClaw()
 	{
-		//this.requires(Robot.clawtilter);
+		this.requires(Robot.claw);
 	}
 	@Override
 	protected void end()
@@ -17,7 +17,7 @@ public class TiltClaw extends Command
 	@Override
 	protected void execute()
 	{
-		//Robot.clawtilter.tilt(Robot.oi);
+		Robot.claw.control(Robot.oi);
 	}
 	@Override
 	protected boolean isFinished()
