@@ -5,6 +5,7 @@ package org.usfirst.frc.team5338.robot;
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.Claw;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
 
 //Import of all essential WPILib classes.
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -15,8 +16,10 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
 {
-	// Creates static DriveTrain, OI, Sensors, and ClawTilter OI objects for use
+	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects for
+	// use
 	// elsewhere.
+	public static final VisionSystem visionSystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
 	public static final OI oi = new OI();

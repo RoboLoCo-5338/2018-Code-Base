@@ -11,12 +11,12 @@ public class CubeDetection extends Command
 {
 	public CubeDetection()
 	{
-		this.requires(Robot.visionsystem);
+		this.requires(Robot.visionSystem);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.visionsystem.track();
+		Robot.visionSystem.track();
 	}
 	@Override
 	protected boolean isFinished()
