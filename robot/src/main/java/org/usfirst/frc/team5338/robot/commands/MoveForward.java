@@ -4,17 +4,18 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Move extends Command
+public class MoveForward extends Command
 {
 	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
 	double[] beginningEncoderData;
 
-	public Move(final double input)
+	public MoveForward(final double input)
 	{
+		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
-		// this.requires(Robot.sensors);
-		this.distance = input;
+		this.requires(Robot.sensors);
+		this.distance = input / (6.0 * Math.PI);
 	}
 	@Override
 	protected void initialize()
@@ -22,7 +23,7 @@ public class Move extends Command
 		super.initialize();
 		this.targetRotationsLeft = (this.distance);
 		this.targetRotationsRight = (this.distance);
-		// Robot.sensors.zeroEncoders();
+		Robot.sensors.zeroEncoders();
 	}
 	@Override
 	protected void execute()

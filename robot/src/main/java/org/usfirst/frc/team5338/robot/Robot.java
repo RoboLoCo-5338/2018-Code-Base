@@ -5,6 +5,7 @@ package org.usfirst.frc.team5338.robot;
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.Claw;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5338.robot.subsystems.Sensors;
 import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
 
 //Import of all essential WPILib classes.
@@ -23,22 +24,23 @@ public class Robot extends IterativeRobot
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
 	public static final OI oi = new OI();
-	// public static final Sensors sensors = new Sensors();
-	// Creates command for Auto
+	public static final Sensors sensors = new Sensors();
+	// Instantiates command for Auto
 	public static Command Auto;
-	
-	// Public method that runs once at the beginning of autonomous.
+
+	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
 		LiveWindow.disableAllTelemetry();
 		// Eventual code to grab field status from FMS will occur here.
 	}
+	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void autonomousInit()
 	{
+		// Creates the autonomous with selection
 		Robot.Auto = new Autonomous();
-		// Eventual autonomous choosing will occur here.
 		Robot.Auto.start();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
@@ -47,7 +49,6 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 	}
-	// Public method that runs once on robot startup.
 	// Public method that runs once at the beginning of teleop.
 	@Override
 	public void teleopInit()

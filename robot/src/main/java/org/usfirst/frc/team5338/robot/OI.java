@@ -10,10 +10,10 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
-		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN, RAISE, LOWER, INTAKE, OUTTAKE, CLOSE, OPEN, OUTTAKE_FULL_POWER, EXTEND,
-		RETRACT
+		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN, RAISE_CLAW, LOWER_CLAW, INTAKE, OUTTAKE, CLOSE_CLAW, OPEN_CLAW,
+		OUTTAKE_FULL_POWER, EXTEND_TO_CLIMB, RETRACT_THE_CLIMB, TIP_HOOK
 	}
-	
+
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -28,11 +28,11 @@ public class OI
 		}
 		return value;
 	}
-	
+
 	// Creates private joystick objects for use.
 	private final Joystick joyL = new Joystick(0);
 	// private final Joystick joyR = new Joystick(1);
-	
+
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
@@ -47,9 +47,9 @@ public class OI
 				return this.joyL.getRawButton(12);
 			case SHIFT_UP:
 				return this.joyL.getRawButton(11);
-			case LOWER:
+			case LOWER_CLAW:
 				return this.joyL.getRawButton(5);
-			case RAISE:
+			case RAISE_CLAW:
 				return this.joyL.getRawButton(3);
 			case OUTTAKE_FULL_POWER:
 				return this.joyL.getRawButton(7);
@@ -57,13 +57,15 @@ public class OI
 				return this.joyL.getRawButton(4);
 			case INTAKE:
 				return this.joyL.getRawButton(6);
-			case CLOSE:
+			case CLOSE_CLAW:
 				return this.joyL.getRawButton(1);
-			case OPEN:
+			case OPEN_CLAW:
 				return this.joyL.getRawButton(2);
-			case EXTEND:
+			case TIP_HOOK:
+				return this.joyL.getRawButton(8);
+			case EXTEND_TO_CLIMB:
 				return this.joyL.getRawButton(10);
-			case RETRACT:
+			case RETRACT_THE_CLIMB:
 				return this.joyL.getRawButton(9);
 			default:
 				return false;

@@ -16,6 +16,7 @@ public class Claw extends Subsystem
 	private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(7);
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid bimba = new DoubleSolenoid(8, 1, 2);
+	private final DoubleSolenoid tipper = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
 	final double retractedValue = 65; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
@@ -40,11 +41,11 @@ public class Claw extends Subsystem
 	{
 		this.potValue = this.dartTalon.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
 																			// which the Dart Actuator runs
-		if(oi.get(OI.Button.CLOSE))
+		if(oi.get(OI.Button.CLOSE_CLAW))
 		{
 			this.grabber.set(DoubleSolenoid.Value.kReverse);
 		}
-		else if(oi.get(OI.Button.OPEN))
+		else if(oi.get(OI.Button.OPEN_CLAW))
 		{
 			this.grabber.set(DoubleSolenoid.Value.kForward);
 		}
@@ -52,15 +53,18 @@ public class Claw extends Subsystem
 		{
 			this.grabber.set(DoubleSolenoid.Value.kOff);
 		}
-		if(oi.get(OI.Button.EXTEND))
+		if(oi.get(OI.Button.TIP_HOOK))
+		{
+			this.tipper.set(DoubleSolenoid.Value.kForward);
+		}
+		if(oi.get(OI.Button.EXTEND_TO_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("EXTENDING");
 		}
-		else if(oi.get(OI.Button.RETRACT))
+		else if(oi.get(OI.Button.RETRACT_THE_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kForward);
-			System.out.println("RETRACTING");
+			this.tipper.set(DoubleSolenoid.Value.kReverse);
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
@@ -82,7 +86,7 @@ public class Claw extends Subsystem
 			this.leftMotor.set(0);
 			this.rightMotor.set(0);
 		}
-		if(oi.get(OI.Button.RAISE))
+		if(oi.get(OI.Button.RAISE_CLAW))
 		{
 			if(this.potValue < this.extendedValue)
 			{ // if the user wants to raise the claw and the claw hasn't hit its max yet
@@ -116,7 +120,7 @@ public class Claw extends Subsystem
 				// prevents jamming the actuator
 			}
 		}
-		else if(oi.get(OI.Button.LOWER))
+		else if(oi.get(OI.Button.LOWER_CLAW))
 		{
 			if(this.potValue > this.retractedValue)
 			{ // if the user wants to retract and the claw hasn't hit minimum value
