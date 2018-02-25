@@ -7,11 +7,11 @@ public class Autonomous extends CommandGroup
 {
 	private final String location = "CENTER"; // "LEFT" //"RIGHT"
 	private final boolean lineCrossOnly = true;
+	private final MoveForward tenFeetMove = new MoveForward(120.0);
 
 	public Autonomous()
 	{
 		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
-		System.out.println(side);
 		if(side == MatchData.OwnedSide.LEFT)
 		{
 			switch(this.location)
@@ -19,28 +19,38 @@ public class Autonomous extends CommandGroup
 				case "LEFT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						this.addSequential(new MoveForward(168.0));
+						this.addSequential(new Turn(90));
+						this.addSequential(new MoveForward(16));
+						// Eject cube
+						// this.addSequential(tenFeetMove);
 					}
 					break;
 				case "CENTER":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						this.addSequential(new Turn(-38));
+						this.addSequential(new MoveForward(215.0));
+						this.addSequential(new Turn(129));
+						// Eject cube
 					}
 					break;
 				case "RIGHT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						break;
 					}
 					break;
 				default:
@@ -54,28 +64,37 @@ public class Autonomous extends CommandGroup
 				case "LEFT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						break;
 					}
 					break;
 				case "CENTER":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						this.addSequential(new Turn(26));
+						this.addSequential(new MoveForward(189.0));
+						this.addSequential(new Turn(-154));
+						// Eject cube
 					}
 					break;
 				case "RIGHT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(new MoveForward(120.0));
+						this.addSequential(this.tenFeetMove);
 					}
 					else
 					{
+						this.addSequential(new MoveForward(168.0));
+						this.addSequential(new Turn(-90));
+						this.addSequential(new MoveForward(16));
+						// Eject cube
 					}
 					break;
 				default:
@@ -84,12 +103,12 @@ public class Autonomous extends CommandGroup
 		}
 		else
 		{
-			this.addSequential(new MoveForward(120.0));
+			this.addSequential(this.tenFeetMove);
 		}
 	}
-	// @Override
-	// protected void initialize()
-	// {
-	// this.move.initialize();
-	// }
+	@Override
+	protected void initialize()
+	{
+		this.tenFeetMove.initialize();
+	}
 }

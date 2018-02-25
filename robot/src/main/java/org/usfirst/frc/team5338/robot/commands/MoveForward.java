@@ -8,7 +8,7 @@ public class MoveForward extends Command
 {
 	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
 	double[] beginningEncoderData;
-
+	
 	public MoveForward(final double input)
 	{
 		// Input in inches to travel
@@ -23,37 +23,25 @@ public class MoveForward extends Command
 		super.initialize();
 		this.targetRotationsLeft = (this.distance);
 		this.targetRotationsRight = (this.distance);
-		Robot.sensors.zeroEncoders();
+		Robot.sensors.resetSensors();
 	}
 	@Override
 	protected void execute()
 	{
-		final double[] distanceTravelled = new double[] {1.0, 1.0}; // Robot.sensors.distances();
-		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
-		double right, left;
-		if(this.targetRotationsRight > 0)
-		{
-			right = 0.165;
-		}
-		else
-		{
-			right = 0;
-		}
-		if(this.targetRotationsLeft > 0)
-		{
-			left = 0.15;
-		}
-		else
-		{
-			left = 0;
-		}
-		Robot.drivetrain.tankDrive(left, right);
+		Robot.drivetrain.tankDrive(0.50, 0.50);
+		// final double[] distanceTravelled = Robot.sensors.distances();
+		// System.out.println(Arrays.toString(distanceTravelled));
+		// this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
+		// this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
+		// if((this.targetRotationsRight > 0) && (this.targetRotationsLeft > 0))
+		// {
+		// Robot.drivetrain.tankDrive(0.15, 0.165);
+		// }
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return false;
+		return false; // (this.targetRotationsLeft > 0) && (this.targetRotationsRight > 0);
 	}
 	@Override
 	protected void end()

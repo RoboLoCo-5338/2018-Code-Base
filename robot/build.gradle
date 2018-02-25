@@ -18,6 +18,10 @@ deploy {
         }
     }
 }
+wpi {
+    wpilibVersion = '2018.3.3'
+    ctreVersion = '5.2.2.0'
+}
 
 // Defines dependencies that gradle will pull in, updating them when needed,
 // and then compiling them for deployment alongside our code.

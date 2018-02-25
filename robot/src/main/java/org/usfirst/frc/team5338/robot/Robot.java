@@ -12,7 +12,6 @@ import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
@@ -32,7 +31,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit()
 	{
-		LiveWindow.disableAllTelemetry();
+		// LiveWindow.disableAllTelemetry();
 		// Eventual code to grab field status from FMS will occur here.
 	}
 	// Public method that runs once at the beginning of autonomous.

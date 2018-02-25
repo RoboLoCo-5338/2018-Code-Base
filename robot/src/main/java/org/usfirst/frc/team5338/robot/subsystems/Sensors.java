@@ -13,7 +13,7 @@ public class Sensors extends Subsystem
 	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
 	public static final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
-	
+
 	public Sensors()
 	{
 		super();
@@ -22,9 +22,9 @@ public class Sensors extends Subsystem
 		}
 		this.right_rotations = 0;
 		this.left_rotations = 0;
-		this.zeroEncoders();
+		this.resetSensors();
 	}
-	public void zeroEncoders()
+	public void resetSensors()
 	{
 		this.encoders[0].setQuadraturePosition(0, 0);
 		this.encoders[1].setQuadraturePosition(0, 0);
@@ -32,7 +32,7 @@ public class Sensors extends Subsystem
 		this.left_prev = 0;
 		this.right_current = 0;
 		this.left_current = 0;
-		System.out.println("Zeroed sensors");
+		Sensors.ahrs.reset();
 	}
 	private void updateEncoders() // NOTHING ELSE BUT DISTANCES CALL THIS!
 	{
