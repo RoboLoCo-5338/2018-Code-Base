@@ -1,6 +1,7 @@
 //Package for all of our code.
 package org.usfirst.frc.team5338.robot;
 
+import org.usfirst.frc.team5338.robot.subsystems.Dart;
 //Import all needed classes from our code.
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
@@ -11,21 +12,20 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
 {
-	// Creates static DriveTrain, OI, and VisionSystem objects for use elsewhere.
+	// Creates static DriveTrain, OI, and Dart objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
-
+	public static final Dart dart = new Dart();
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
-		// Eventual code to grab field status from FMS will occur here.
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void autonomousInit()
 	{
-		// Eventual autonomous choosing will occur here.
 	}
 	// Public method that runs continuously every 20ms during autonomous.
 	@Override
@@ -37,7 +37,6 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
-		// Eventual code to disable autonomous will occur here.
 	}
 	// Public method that runs continuously every 20ms during teleop.
 	@Override

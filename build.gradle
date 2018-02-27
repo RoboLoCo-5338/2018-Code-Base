@@ -4,7 +4,7 @@ plugins {
     // GradleRio is a plugin used to build and deploy code to robots, and is only
     // applied to the robot sub-project. This line can be used to also update
     // the plugin version automatically.
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.22" apply false
+    id "jaci.openrio.gradle.GradleRIO" version "2018.02.17" apply false
 }
 
 // Applies the idea plugin to allow easy integration with IntelliJ IDEA for our 

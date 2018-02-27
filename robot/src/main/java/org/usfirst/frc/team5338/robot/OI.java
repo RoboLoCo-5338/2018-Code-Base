@@ -43,14 +43,20 @@ public class OI
 			return null;
 		}
 	}
+	// Public method that returns the left joystick's deadzone-adjusted throttle
+	// value
+	public double getLeftThrottle()
+	{
+		return OI.joystickDeadZone(this.joyL.getRawAxis(3));
+	}
 	// Public method that returns the left joystick's deadzone-adjusted y-axis value
-	public double getLeft()
+	public double getLeftY()
 	{
 		return OI.joystickDeadZone(this.joyL.getRawAxis(1));
 	}
 	// Public method that returns the right joystick's deadzone-adjusted y-axis
 	// value
-	public double getRight()
+	public double getRightY()
 	{
 		return OI.joystickDeadZone(this.joyR.getRawAxis(1));
 	}
