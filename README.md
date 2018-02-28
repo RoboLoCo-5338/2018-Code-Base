@@ -1,5 +1,5 @@
 # 2018-Code-Base
-Our code for the 2018 FRC Season (Power Up!), Team 5338.
+Our demonstrations code for the 2018 FRC Season (Power Up!), Team 5338. This is *not* full code, and only runs a slowed down tank-drive as well.
 
 ## Installation
 Welcome new RoboLoCo programmer! To begin the installation process, first verify that on your Windows/macOS/Linux system you have the latest version of **JAVA 8** installed on your system. These following steps will **fail** if you do not have that exact version installed.
@@ -15,3 +15,4 @@ This will run for a bit and proceed to pull all the dependencies that you need t
 The above two steps will also be necessary any time and update to any dependencies or plugins will be done.
 
 For more information, including how to link to IntelliJ IDEA or Eclipse, please visit the [GradleRio Github repo](https://github.com/Open-RIO/GradleRIO). Feel free to ask any questions about setup during the meeting.
+

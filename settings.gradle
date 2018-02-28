@@ -1,2 +1,2 @@
-// Includes only the robot, no jetson.
+// Includes only the robot subproject, no jetson for demos.
 include "robot"
