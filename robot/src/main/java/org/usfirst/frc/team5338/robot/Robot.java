@@ -1,7 +1,6 @@
 //Package for all of our code.
 package org.usfirst.frc.team5338.robot;
 
-import org.usfirst.frc.team5338.robot.subsystems.Dart;
 //Import all needed classes from our code.
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 
@@ -15,8 +14,7 @@ public class Robot extends IterativeRobot
 	// Creates static DriveTrain, OI, and Dart objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
-	public static final Dart dart = new Dart();
-	
+
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()

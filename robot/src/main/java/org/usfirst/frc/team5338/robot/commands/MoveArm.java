@@ -1,14 +1,12 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import org.usfirst.frc.team5338.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveArm extends Command
 {
 	public MoveArm()
 	{
-		this.requires(Robot.dart);
+		// this.requires(Robot.dart);
 	}
 	@Override
 	protected void end()
@@ -17,7 +15,7 @@ public class MoveArm extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.dart.control(Robot.oi);
+		// Robot.dart.control(Robot.oi);
 	}
 	@Override
 	protected boolean isFinished()

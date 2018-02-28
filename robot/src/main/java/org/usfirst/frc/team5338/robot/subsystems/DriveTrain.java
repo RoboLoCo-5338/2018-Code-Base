@@ -38,6 +38,10 @@ public class DriveTrain extends Subsystem
 		this.driveCompressor.setClosedLoopControl(true);
 		this.driveCompressor.start();
 		this.driveSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.configureTalons();
+	}
+	public void configureTalons()
+	{
 		this.DRIVEL1.configNeutralDeadband(0.001, 0);
 		this.DRIVER1.configNeutralDeadband(0.001, 0);
 		this.DRIVEL2.configNeutralDeadband(0.001, 0);

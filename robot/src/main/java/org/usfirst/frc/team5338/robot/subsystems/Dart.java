@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.MoveArm;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -13,11 +12,11 @@ public class Dart extends Subsystem
 	private double potValue; // potentiometer value
 	final double retractedValue = 65; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
-		this.setDefaultCommand(new MoveArm());
+		// this.setDefaultCommand(new MoveArm());
 	}
 	public Dart()
 	{
