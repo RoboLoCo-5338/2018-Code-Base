@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Claw extends Subsystem
 {
-	private final WPI_TalonSRX dartTalon = new WPI_TalonSRX(5); // talon connected to the dart actuator
+	private final WPI_TalonSRX dartTalon = new WPI_TalonSRX(5);
 	private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(6);
 	private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(7);
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid bimba = new DoubleSolenoid(8, 1, 2);
 	private final DoubleSolenoid tipper = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
-	final double retractedValue = 65; // potentiometer value when the dart actuator is retracted
+	final double retractedValue = 45; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -55,6 +55,10 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.TIP_HOOK))
 		{
+			this.tipper.set(DoubleSolenoid.Value.kReverse);
+		}
+		else
+		{
 			this.tipper.set(DoubleSolenoid.Value.kForward);
 		}
 		if(oi.get(OI.Button.EXTEND_TO_CLIMB))
@@ -64,22 +68,22 @@ public class Claw extends Subsystem
 		else if(oi.get(OI.Button.RETRACT_THE_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kForward);
-			this.tipper.set(DoubleSolenoid.Value.kReverse);
+			this.tipper.set(DoubleSolenoid.Value.kForward);
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
-			this.leftMotor.set(0.50);
-			this.rightMotor.set(-0.50);
+			this.leftMotor.set(-0.50);
+			this.rightMotor.set(0.50);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_FULL_POWER))
 		{
-			this.leftMotor.set(-0.99);
-			this.rightMotor.set(0.99);
+			this.leftMotor.set(0.99);
+			this.rightMotor.set(-0.99);
 		}
 		else if(oi.get(OI.Button.INTAKE))
 		{
-			this.leftMotor.set(-0.50);
-			this.rightMotor.set(0.50);
+			this.leftMotor.set(0.50);
+			this.rightMotor.set(-0.50);
 		}
 		else
 		{
@@ -94,7 +98,7 @@ public class Claw extends Subsystem
 																							// extend to max
 				final int slowDownRange = 150; // declares that actuator will slow 150 points away from the actuator's
 												// maximum value
-				final double minSpeed = 0.10; // Speed to which the actuator will slow
+				final double minSpeed = 0.15; // Speed to which the actuator will slow
 				final double maxSpeed = 0.99;
 				if(distanceToMax <= slowDownRange)
 				{
@@ -127,7 +131,7 @@ public class Claw extends Subsystem
 				final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
 				final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
 												// value
-				final double lowSpeed = 0.10; // speed to which actuator slows
+				final double lowSpeed = 0.15; // speed to which actuator slows
 				final double maxSpeed = 0.99;
 				if(distanceToMin <= slowDownRange)
 				{
