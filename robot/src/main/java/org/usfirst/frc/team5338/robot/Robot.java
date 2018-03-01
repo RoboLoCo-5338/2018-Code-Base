@@ -31,8 +31,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void robotInit()
 	{
-		// LiveWindow.disableAllTelemetry();
-		// Eventual code to grab field status from FMS will occur here.
+		// Nothing happens here
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
@@ -59,6 +58,7 @@ public class Robot extends IterativeRobot
 		}
 		catch(final Exception e)
 		{
+			// No auto was enabled
 		}
 	}
 	// Public method that runs continuously every 20ms during autonomous.

@@ -20,7 +20,10 @@ public class Claw extends Subsystem
 	private double potValue; // potentiometer value
 	final double retractedValue = 45; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
-
+	private boolean hookTipped = false;
+	private boolean climberExtended = false;
+	private boolean clawOpen = false;
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -44,10 +47,12 @@ public class Claw extends Subsystem
 		if(oi.get(OI.Button.CLOSE_CLAW))
 		{
 			this.grabber.set(DoubleSolenoid.Value.kReverse);
+			this.clawOpen = false;
 		}
 		else if(oi.get(OI.Button.OPEN_CLAW))
 		{
 			this.grabber.set(DoubleSolenoid.Value.kForward);
+			this.clawOpen = true;
 		}
 		else
 		{
@@ -56,19 +61,22 @@ public class Claw extends Subsystem
 		if(oi.get(OI.Button.TIP_HOOK))
 		{
 			this.tipper.set(DoubleSolenoid.Value.kReverse);
+			this.hookTipped = true;
 		}
 		else
 		{
 			this.tipper.set(DoubleSolenoid.Value.kForward);
 		}
-		if(oi.get(OI.Button.EXTEND_TO_CLIMB))
+		if(oi.get(OI.Button.EXTEND_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kReverse);
+			this.climberExtended = true;
 		}
-		else if(oi.get(OI.Button.RETRACT_THE_CLIMB))
+		else if(oi.get(OI.Button.RETRACT_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kForward);
 			this.tipper.set(DoubleSolenoid.Value.kForward);
+			this.climberExtended = false;
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
@@ -98,7 +106,7 @@ public class Claw extends Subsystem
 																							// extend to max
 				final int slowDownRange = 150; // declares that actuator will slow 150 points away from the actuator's
 												// maximum value
-				final double minSpeed = 0.15; // Speed to which the actuator will slow
+				final double minSpeed = 0.125; // Speed to which the actuator will slow
 				final double maxSpeed = 0.99;
 				if(distanceToMax <= slowDownRange)
 				{
@@ -131,7 +139,7 @@ public class Claw extends Subsystem
 				final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
 				final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
 												// value
-				final double lowSpeed = 0.15; // speed to which actuator slows
+				final double lowSpeed = 0.125; // speed to which actuator slows
 				final double maxSpeed = 0.99;
 				if(distanceToMin <= slowDownRange)
 				{
@@ -166,6 +174,9 @@ public class Claw extends Subsystem
 			this.dartTalon.set(0);
 		}
 		// log the potentiometer value for testing purposes
-		SmartDashboard.putNumber("Pot value", this.potValue);
+		SmartDashboard.putNumber("Potentiometer Position", this.potValue);
+		SmartDashboard.putBoolean("Claw Status", this.clawOpen);
+		SmartDashboard.putBoolean("Hook Status", this.hookTipped);
+		SmartDashboard.putBoolean("Climber Status", this.climberExtended);
 	}
 }

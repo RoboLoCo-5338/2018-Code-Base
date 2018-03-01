@@ -13,6 +13,7 @@ public class ControlClaw extends Command
 	@Override
 	protected void end()
 	{
+		// Never ends control
 	}
 	@Override
 	protected void execute()

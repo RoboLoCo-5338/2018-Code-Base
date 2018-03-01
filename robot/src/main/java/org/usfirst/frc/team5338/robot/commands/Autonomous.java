@@ -7,8 +7,8 @@ public class Autonomous extends CommandGroup
 {
 	private final String location = "CENTER"; // "LEFT" //"RIGHT"
 	private final boolean lineCrossOnly = true;
-	private final MoveForward tenFeetMove = new MoveForward(120.0);
-
+	private final StraightDrive tenFeetMove = new StraightDrive(120.0);
+	
 	public Autonomous()
 	{
 		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
@@ -23,11 +23,10 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new MoveForward(168.0));
+						this.addSequential(new StraightDrive(168.0));
 						this.addSequential(new Turn(90));
-						this.addSequential(new MoveForward(16));
+						this.addSequential(new StraightDrive(16));
 						// Eject cube
-						// this.addSequential(tenFeetMove);
 					}
 					break;
 				case "CENTER":
@@ -38,7 +37,7 @@ public class Autonomous extends CommandGroup
 					else
 					{
 						this.addSequential(new Turn(-38));
-						this.addSequential(new MoveForward(215.0));
+						this.addSequential(new StraightDrive(215.0));
 						this.addSequential(new Turn(129));
 						// Eject cube
 					}
@@ -79,7 +78,7 @@ public class Autonomous extends CommandGroup
 					else
 					{
 						this.addSequential(new Turn(26));
-						this.addSequential(new MoveForward(189.0));
+						this.addSequential(new StraightDrive(189.0));
 						this.addSequential(new Turn(-154));
 						// Eject cube
 					}
@@ -91,9 +90,9 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new MoveForward(168.0));
+						this.addSequential(new StraightDrive(168.0));
 						this.addSequential(new Turn(-90));
-						this.addSequential(new MoveForward(16));
+						this.addSequential(new StraightDrive(16));
 						// Eject cube
 					}
 					break;

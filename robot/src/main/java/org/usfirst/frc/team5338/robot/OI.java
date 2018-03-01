@@ -10,10 +10,10 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button
 	{
-		SLOW, STRAIGHT, SHIFT_UP, SHIFT_DOWN, RAISE_CLAW, LOWER_CLAW, INTAKE, OUTTAKE, CLOSE_CLAW, OPEN_CLAW,
-		OUTTAKE_FULL_POWER, EXTEND_TO_CLIMB, RETRACT_THE_CLIMB, TIP_HOOK
+		SHIFT_UP, SHIFT_DOWN, RAISE_CLAW, LOWER_CLAW, INTAKE, OUTTAKE, CLOSE_CLAW, OPEN_CLAW, OUTTAKE_FULL_POWER,
+		EXTEND_CLIMB, RETRACT_CLIMB, TIP_HOOK
 	}
-
+	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -28,45 +28,40 @@ public class OI
 		}
 		return value;
 	}
-
+	
 	// Creates private joystick objects for use.
-	private final Joystick joyL = new Joystick(0);
-	// private final Joystick joyR = new Joystick(1);
-
+	private final Joystick joystick = new Joystick(0);
+	
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
 	{
 		switch(button)
 		{
-			case SLOW:
-				return this.joyL.getRawButton(1);
-			case STRAIGHT:
-				return this.joyL.getRawButton(2);
 			case SHIFT_DOWN:
-				return this.joyL.getRawButton(12);
+				return this.joystick.getRawButton(12);
 			case SHIFT_UP:
-				return this.joyL.getRawButton(11);
+				return this.joystick.getRawButton(11);
 			case LOWER_CLAW:
-				return this.joyL.getRawButton(5);
+				return this.joystick.getRawButton(5);
 			case RAISE_CLAW:
-				return this.joyL.getRawButton(3);
+				return this.joystick.getRawButton(3);
 			case OUTTAKE_FULL_POWER:
-				return this.joyL.getRawButton(7);
+				return this.joystick.getRawButton(7);
 			case OUTTAKE:
-				return this.joyL.getRawButton(4);
+				return this.joystick.getRawButton(4);
 			case INTAKE:
-				return this.joyL.getRawButton(6);
+				return this.joystick.getRawButton(6);
 			case CLOSE_CLAW:
-				return this.joyL.getRawButton(1);
+				return this.joystick.getRawButton(1);
 			case OPEN_CLAW:
-				return this.joyL.getRawButton(2);
+				return this.joystick.getRawButton(2);
 			case TIP_HOOK:
-				return this.joyL.getRawButton(8);
-			case EXTEND_TO_CLIMB:
-				return this.joyL.getRawButton(10);
-			case RETRACT_THE_CLIMB:
-				return this.joyL.getRawButton(9);
+				return this.joystick.getRawButton(8);
+			case EXTEND_CLIMB:
+				return this.joystick.getRawButton(10);
+			case RETRACT_CLIMB:
+				return this.joystick.getRawButton(9);
 			default:
 				return false;
 		}
@@ -77,7 +72,7 @@ public class OI
 	{
 		if(n == 0)
 		{
-			return this.joyL;
+			return this.joystick;
 		}
 		else if(n == 1)
 		{
@@ -88,31 +83,19 @@ public class OI
 			return null;
 		}
 	}
-	// Public method that returns the left joystick's deadzone-adjusted y-axis value
+	// Public method that returns the joystick's deadzone-adjusted values
 	public double getLeft(final char input)
 	{
 		switch(input)
 		{
 			case 'X': // Gets deadzone corrected x-axis position
-				return OI.joystickDeadZone(this.joyL.getRawAxis(0));
+				return OI.joystickDeadZone(this.joystick.getRawAxis(0));
 			case 'Y': // Gets deadzone corrected y-axis position
-				return -OI.joystickDeadZone(this.joyL.getRawAxis(1));
+				return -OI.joystickDeadZone(this.joystick.getRawAxis(1));
 			case 'Z': // Gets deadzone corrected z-axis (rotation) position
-				return OI.joystickDeadZone(this.joyL.getRawAxis(2));
+				return OI.joystickDeadZone(this.joystick.getRawAxis(2));
 			default: // Returns 0.0 is argument is unknown
 				return 0.0;
 		}
 	}
-	// Public method that returns the right joystick's deadzone-adjusted y-axis
-	// value
-	/*
-	 * public double getRight(final char input) { switch(input) { case 'X': // Gets
-	 * deadzone corrected x-axis position return
-	 * OI.joystickDeadZone(this.joyR.getRawAxis(0)); case 'Y': // Gets deadzone
-	 * corrected y-axis position return
-	 * -OI.joystickDeadZone(this.joyR.getRawAxis(1)); case 'Z': // Gets deadzone
-	 * corrected z-axis (rotation) position return
-	 * OI.joystickDeadZone(this.joyR.getRawAxis(2)); default: // Returns 0.0 is
-	 * argument is unknown return 0.0; } }
-	 */
 }

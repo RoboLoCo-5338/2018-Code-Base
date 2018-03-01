@@ -4,18 +4,20 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveForward extends Command
+public class StraightDrive extends Command
 {
 	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
-	double[] beginningEncoderData;
-	
-	public MoveForward(final double input)
+	// final double timeConstant = 0.0
+
+	public StraightDrive(final double input)
 	{
 		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
 		this.distance = input / (6.0 * Math.PI);
+		// Backup plan if need
+		// setTimeout(distance / timeConstant)
 	}
 	@Override
 	protected void initialize()
@@ -28,20 +30,16 @@ public class MoveForward extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.tankDrive(0.50, 0.50);
-		// final double[] distanceTravelled = Robot.sensors.distances();
-		// System.out.println(Arrays.toString(distanceTravelled));
-		// this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		// this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
-		// if((this.targetRotationsRight > 0) && (this.targetRotationsLeft > 0))
-		// {
-		// Robot.drivetrain.tankDrive(0.15, 0.165);
-		// }
+		final double[] distanceTravelled = Robot.sensors.distances();
+		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
+		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
+		Robot.drivetrain.drive(0.10, 0);
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return false; // (this.targetRotationsLeft > 0) && (this.targetRotationsRight > 0);
+		return (this.targetRotationsLeft > 0) && (this.targetRotationsRight > 0);
+		// return isTimedOut();
 	}
 	@Override
 	protected void end()

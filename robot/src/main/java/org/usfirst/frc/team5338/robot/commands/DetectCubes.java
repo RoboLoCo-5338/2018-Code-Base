@@ -7,9 +7,9 @@ import org.usfirst.frc.team5338.robot.Robot;
 //Import all needed classes from WPILib.
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CubeDetection extends Command
+public class DetectCubes extends Command
 {
-	public CubeDetection()
+	public DetectCubes()
 	{
 		this.requires(Robot.visionSystem);
 	}
