@@ -26,17 +26,18 @@ public class Turn extends Command
 	{
 		super.initialize();
 		Robot.sensors.resetSensors();
+		System.out.println("Initialzing");
 	}
 	@Override
 	protected void execute()
 	{
 		if(this.angle > 0)
 		{
-			Robot.drivetrain.drive(0.0, 0.10);
+			Robot.drivetrain.tankDrive(0.70, -0.70);
 		}
 		else
 		{
-			Robot.drivetrain.drive(0.0, -0.10);
+			Robot.drivetrain.tankDrive(-0.70, 0.70);
 		}
 	}
 	@Override

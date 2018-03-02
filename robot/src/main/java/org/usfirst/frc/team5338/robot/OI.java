@@ -49,9 +49,9 @@ public class OI
 			case OUTTAKE_FULL_POWER:
 				return this.joystick.getRawButton(7);
 			case OUTTAKE:
-				return this.joystick.getRawButton(4);
-			case INTAKE:
 				return this.joystick.getRawButton(6);
+			case INTAKE:
+				return this.joystick.getRawButton(4);
 			case CLOSE_CLAW:
 				return this.joystick.getRawButton(1);
 			case OPEN_CLAW:
@@ -59,9 +59,9 @@ public class OI
 			case TIP_HOOK:
 				return this.joystick.getRawButton(8);
 			case EXTEND_CLIMB:
-				return this.joystick.getRawButton(10);
-			case RETRACT_CLIMB:
 				return this.joystick.getRawButton(9);
+			case RETRACT_CLIMB:
+				return this.joystick.getRawButton(10);
 			default:
 				return false;
 		}

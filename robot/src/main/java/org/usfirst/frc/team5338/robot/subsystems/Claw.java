@@ -60,12 +60,8 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.TIP_HOOK))
 		{
-			this.tipper.set(DoubleSolenoid.Value.kReverse);
-			this.hookTipped = true;
-		}
-		else
-		{
 			this.tipper.set(DoubleSolenoid.Value.kForward);
+			this.hookTipped = true;
 		}
 		if(oi.get(OI.Button.EXTEND_CLIMB))
 		{
@@ -75,22 +71,22 @@ public class Claw extends Subsystem
 		else if(oi.get(OI.Button.RETRACT_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kForward);
-			this.tipper.set(DoubleSolenoid.Value.kForward);
+			this.tipper.set(DoubleSolenoid.Value.kReverse);
 			this.climberExtended = false;
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
-			this.leftMotor.set(-0.50);
+			this.leftMotor.set(0.50);
 			this.rightMotor.set(0.50);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_FULL_POWER))
 		{
 			this.leftMotor.set(0.99);
-			this.rightMotor.set(-0.99);
+			this.rightMotor.set(0.99);
 		}
 		else if(oi.get(OI.Button.INTAKE))
 		{
-			this.leftMotor.set(0.50);
+			this.leftMotor.set(-0.50);
 			this.rightMotor.set(-0.50);
 		}
 		else

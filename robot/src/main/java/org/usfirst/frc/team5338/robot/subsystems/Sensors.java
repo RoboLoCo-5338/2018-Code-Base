@@ -13,7 +13,7 @@ public class Sensors extends Subsystem
 	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
-	
+
 	public Sensors()
 	{
 		super();
@@ -41,10 +41,10 @@ public class Sensors extends Subsystem
 		this.right_current = Math.abs(this.encoders[0].getQuadraturePosition());
 		this.left_prev = this.left_current;
 		this.left_current = Math.abs(this.encoders[1].getQuadraturePosition());
-		System.out.print("right_current: ");
-		System.out.println(this.right_current);
-		System.out.print("left_current: ");
-		System.out.println(this.left_current);
+		// System.out.print("right_current: ");
+		// System.out.println(this.right_current);
+		// System.out.print("left_current: ");
+		// System.out.println(this.left_current);
 	}
 	public double[] distances()
 	{

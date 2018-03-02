@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(8);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -69,6 +69,10 @@ public class DriveTrain extends Subsystem
 	}
 	// Runs the drive in arcade mode taking in the power magnitude toward the front
 	// and diagonal
+	public void tankDrive(final double left, final double right)
+	{
+		this.DRIVE.tankDrive(left, right);
+	}
 	public void drive(final double front, final double rotate)
 	{
 		this.DRIVE.arcadeDrive(front, rotate, false);

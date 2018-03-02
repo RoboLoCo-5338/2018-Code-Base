@@ -7,8 +7,8 @@ public class Autonomous extends CommandGroup
 {
 	private final String location = "CENTER"; // "LEFT" //"RIGHT"
 	private final boolean lineCrossOnly = true;
-	private final StraightDrive tenFeetMove = new StraightDrive(120.0);
-	
+	private final StraightDrive nineFootDrive = new StraightDrive(11.0);
+
 	public Autonomous()
 	{
 		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
@@ -19,7 +19,7 @@ public class Autonomous extends CommandGroup
 				case "LEFT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						this.addSequential(this.nineFootDrive);
 					}
 					else
 					{
@@ -32,7 +32,12 @@ public class Autonomous extends CommandGroup
 				case "CENTER":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						// this.addSequential(new StraightDrive(11.0));
+						System.out.println("Loc1");
+						this.addSequential(new Turn(-90));
+						System.out.println("Loc2");
+						this.addSequential(new StraightDrive(11.0));
+						System.out.println("Loc3");
 					}
 					else
 					{
@@ -45,7 +50,7 @@ public class Autonomous extends CommandGroup
 				case "RIGHT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						this.addSequential(this.nineFootDrive);
 					}
 					else
 					{
@@ -63,7 +68,7 @@ public class Autonomous extends CommandGroup
 				case "LEFT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						this.addSequential(this.nineFootDrive);
 					}
 					else
 					{
@@ -73,7 +78,7 @@ public class Autonomous extends CommandGroup
 				case "CENTER":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						this.addSequential(this.nineFootDrive);
 					}
 					else
 					{
@@ -86,7 +91,7 @@ public class Autonomous extends CommandGroup
 				case "RIGHT":
 					if(this.lineCrossOnly)
 					{
-						this.addSequential(this.tenFeetMove);
+						this.addSequential(this.nineFootDrive);
 					}
 					else
 					{
@@ -102,12 +107,12 @@ public class Autonomous extends CommandGroup
 		}
 		else
 		{
-			this.addSequential(this.tenFeetMove);
+			this.addSequential(this.nineFootDrive);
 		}
 	}
 	@Override
 	protected void initialize()
 	{
-		this.tenFeetMove.initialize();
+		this.nineFootDrive.initialize();
 	}
 }
