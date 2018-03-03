@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Turn extends Command
 {
 	double angle, initalHeading, targetHeading;
-	// final double timeConstant = 0.0
-
+	
 	public Turn(final double input)
 	{
 		// Input in inches to travel
@@ -18,33 +17,29 @@ public class Turn extends Command
 		this.angle = input;
 		this.initalHeading = Robot.sensors.ahrs.getYaw();
 		this.targetHeading = this.initalHeading + this.angle;
-		// Backup plan if need
-		// setTimeout(angle / timeConstant)
 	}
 	@Override
 	protected void initialize()
 	{
 		super.initialize();
 		Robot.sensors.resetSensors();
-		System.out.println("Initialzing");
 	}
 	@Override
 	protected void execute()
 	{
-		if(this.angle > 0)
+		if(this.angle > Robot.sensors.ahrs.getYaw()) // To change back, just make this > 0 instead
 		{
-			Robot.drivetrain.tankDrive(0.70, -0.70);
+			Robot.drivetrain.tankDrive(0.65, -0.65);
 		}
 		else
 		{
-			Robot.drivetrain.tankDrive(-0.70, 0.70);
+			Robot.drivetrain.tankDrive(-0.65, 0.65);
 		}
 	}
 	@Override
 	protected boolean isFinished()
 	{
 		return Math.abs(Robot.sensors.ahrs.getYaw() - this.targetHeading) < 1.5;
-		// return isTimedOut();
 	}
 	@Override
 	protected void end()

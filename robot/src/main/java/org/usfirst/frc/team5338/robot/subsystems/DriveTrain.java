@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(8);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-	
+
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -81,14 +81,12 @@ public class DriveTrain extends Subsystem
 	public void drive(final OI oi)
 	{
 		// Uses directions and input to create a turn coefficient
-		this.turnIntensity = Robot.oi.getLeft('X') * Math.abs(Robot.oi.getLeft('X'));
-		// correctedPowerFromJoystick = -directionLeft * (a *
-		// Math.pow(Robot.oi.getLeft('Y'), 3) * (1 - a) * (Robot.oi.getLeft('Y')));
-		this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getLeft('Y'), 3));
+		this.turnIntensity = Robot.oi.getValues('X') * Math.abs(Robot.oi.getValues('X'));
+		this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getValues('Y'), 3));
 		// If the robot is driving straight or, in case it isn't driving straight, has a
 		// speed <= 0.6, use arcade drive
 		// else use curvature drive for better handling
-		if(Robot.oi.getLeft('Y') >= 0.6)
+		if(Robot.oi.getValues('Y') >= 0.6)
 		{
 			this.DRIVE.curvatureDrive(this.correctedPowerFromJoystick, this.turnIntensity, false);
 		}

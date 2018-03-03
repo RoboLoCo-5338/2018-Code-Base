@@ -4,6 +4,7 @@ package org.usfirst.frc.team5338.robot;
 //Import of necessary subsystem.
 import org.usfirst.frc.team5338.robot.commands.Autonomous;
 import org.usfirst.frc.team5338.robot.subsystems.Claw;
+import org.usfirst.frc.team5338.robot.subsystems.Climber;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5338.robot.subsystems.Sensors;
 import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
@@ -22,11 +23,12 @@ public class Robot extends IterativeRobot
 	public static final VisionSystem visionSystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
+	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
 	// Instantiates command for Auto
 	public static Command Auto;
-
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()

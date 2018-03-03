@@ -13,12 +13,13 @@ public class Sensors extends Subsystem
 	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
-
+	
 	public Sensors()
 	{
 		super();
 		while(this.ahrs.isCalibrating() || this.ahrs.isMagnetometerCalibrated())
 		{
+			// Calibrating NavX
 		}
 		this.right_rotations = 0;
 		this.left_rotations = 0;
@@ -35,7 +36,7 @@ public class Sensors extends Subsystem
 		this.ahrs.reset();
 		this.ahrs.zeroYaw();
 	}
-	private void updateEncoders() // NOTHING ELSE BUT DISTANCES CALL THIS!
+	private void updateEncoders()
 	{
 		this.right_prev = this.right_current;
 		this.right_current = Math.abs(this.encoders[0].getQuadraturePosition());

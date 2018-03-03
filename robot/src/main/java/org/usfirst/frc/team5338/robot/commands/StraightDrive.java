@@ -7,18 +7,14 @@ import edu.wpi.first.wpilibj.command.Command;
 public class StraightDrive extends Command
 {
 	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
-	final double timeConstant = 1;
-	private boolean reseting = false;
 
-	public StraightDrive(final double input) // Going 13 inches more.
+	public StraightDrive(final double input)
 	{
 		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
-		this.distance = input / (6.0 * Math.PI);
-		// Backup plan if need
-		// this.setTimeout(this.distance / this.timeConstant);
+		this.distance = (input + 13) / (6.0 * Math.PI); // Going 13 inches more.
 	}
 	@Override
 	protected void initialize()
@@ -30,15 +26,10 @@ public class StraightDrive extends Command
 	@Override
 	protected void execute()
 	{
-		if(!this.reseting)
-		{
-			Robot.sensors.resetSensors();
-			this.reseting = true;
-		}
 		final double[] distanceTravelled = Robot.sensors.distances();
-		System.out.print(this.targetRotationsLeft);
-		System.out.print(" ");
-		System.out.println(this.targetRotationsRight);
+		// System.out.print(this.targetRotationsLeft);
+		// System.out.print(" ");
+		// System.out.println(this.targetRotationsRight);
 		// // System.out.println(Arrays.toString(distanceTravelled));
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
@@ -48,7 +39,6 @@ public class StraightDrive extends Command
 	protected boolean isFinished()
 	{
 		return (this.targetRotationsLeft < 0) && (this.targetRotationsRight < 0);
-		// return this.isTimedOut();
 	}
 	@Override
 	protected void end()

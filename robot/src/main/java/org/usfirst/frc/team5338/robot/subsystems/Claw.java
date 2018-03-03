@@ -15,15 +15,11 @@ public class Claw extends Subsystem
 	private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(6);
 	private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(7);
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
-	private final DoubleSolenoid bimba = new DoubleSolenoid(8, 1, 2);
-	private final DoubleSolenoid tipper = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
 	final double retractedValue = 45; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
-	private boolean hookTipped = false;
-	private boolean climberExtended = false;
 	private boolean clawOpen = false;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -32,7 +28,12 @@ public class Claw extends Subsystem
 	public Claw()
 	{
 		super();
-	}// Default Constructor
+	}
+	public void setWheelSpeed(final double speed)
+	{
+		this.leftMotor.set(speed);
+		this.rightMotor.set(speed);
+	}
 	/**
 	 * Method: tilt
 	 *
@@ -57,22 +58,6 @@ public class Claw extends Subsystem
 		else
 		{
 			this.grabber.set(DoubleSolenoid.Value.kOff);
-		}
-		if(oi.get(OI.Button.TIP_HOOK))
-		{
-			this.tipper.set(DoubleSolenoid.Value.kForward);
-			this.hookTipped = true;
-		}
-		if(oi.get(OI.Button.EXTEND_CLIMB))
-		{
-			this.bimba.set(DoubleSolenoid.Value.kReverse);
-			this.climberExtended = true;
-		}
-		else if(oi.get(OI.Button.RETRACT_CLIMB))
-		{
-			this.bimba.set(DoubleSolenoid.Value.kForward);
-			this.tipper.set(DoubleSolenoid.Value.kReverse);
-			this.climberExtended = false;
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
@@ -172,7 +157,5 @@ public class Claw extends Subsystem
 		// log the potentiometer value for testing purposes
 		SmartDashboard.putNumber("Potentiometer Position", this.potValue);
 		SmartDashboard.putBoolean("Claw Status", this.clawOpen);
-		SmartDashboard.putBoolean("Hook Status", this.hookTipped);
-		SmartDashboard.putBoolean("Climber Status", this.climberExtended);
 	}
 }
