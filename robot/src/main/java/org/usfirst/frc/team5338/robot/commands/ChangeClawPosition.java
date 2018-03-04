@@ -4,18 +4,21 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EjectCube extends Command
+public class ChangeClawPosition extends Command
 {
-	public EjectCube()
+	private final int newPosition;
+	
+	public ChangeClawPosition(final int position)
 	{
 		super();
 		this.requires(Robot.claw);
 		this.setTimeout(1.5);
+		this.newPosition = position;
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setWheelSpeed(0.40);
+		Robot.claw.setDartPosition(this.newPosition);
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +28,6 @@ public class EjectCube extends Command
 	@Override
 	protected void end()
 	{
-		Robot.claw.setWheelSpeed(0.0);
+		// Nothing
 	}
 }

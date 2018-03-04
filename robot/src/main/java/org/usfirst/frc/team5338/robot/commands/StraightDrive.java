@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class StraightDrive extends Command
 {
-	double distance, targetRotationsLeft, targetRotationsRight, numRotations;
+	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
 
 	public StraightDrive(final double input)
 	{
@@ -14,14 +14,14 @@ public class StraightDrive extends Command
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
-		this.distance = (input + 13) / (6.0 * Math.PI); // Going 13 inches more.
+		this.rotations = (input - 13) / (6.0 * Math.PI);
 	}
 	@Override
 	protected void initialize()
 	{
 		super.initialize();
-		this.targetRotationsLeft = (this.distance);
-		this.targetRotationsRight = (this.distance);
+		this.targetRotationsLeft = (this.rotations);
+		this.targetRotationsRight = (this.rotations);
 	}
 	@Override
 	protected void execute()
@@ -33,7 +33,7 @@ public class StraightDrive extends Command
 		// // System.out.println(Arrays.toString(distanceTravelled));
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.tankDrive(0.60, 0.60);
+		Robot.drivetrain.tankDrive(0.50, 0.50);
 	}
 	@Override
 	protected boolean isFinished()

@@ -18,7 +18,9 @@ public class Claw extends Subsystem
 	private double potValue; // potentiometer value
 	final double retractedValue = 45; // potentiometer value when the dart actuator is retracted
 	final double extendedValue = 705; // potentiometer value when dart actuator is extended
+	final double middleValue = 275;
 	private boolean clawOpen = false;
+	private int dartPosition = 3;
 
 	@Override
 	protected void initDefaultCommand()
@@ -33,6 +35,149 @@ public class Claw extends Subsystem
 	{
 		this.leftMotor.set(speed);
 		this.rightMotor.set(speed);
+	}
+	public void setDartPosition(final int position)
+	{
+		this.dartPosition = position;
+		this.potValue = this.dartTalon.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
+		// which the Dart Actuator runs
+		switch(this.dartPosition)
+		{
+			case 3:
+				if(this.potValue > this.retractedValue)
+				{ // if the user wants to retract and the claw hasn't hit minimum value
+					final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
+					final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
+													// value
+					final double lowSpeed = 0.125; // speed to which actuator slows
+					final double maxSpeed = 0.99;
+					if(distanceToMin <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; // deceleration rate as
+																							// calculated in raising
+																							// portion
+																							// of code
+						// calculate new speed as was done in raising portion of code, but multiply by
+						// -1 to show direction change to lowering
+						final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// if we are beyond slow-down range, slow down at max speed
+						this.dartTalon.set(-1 * maxSpeed);
+					}
+				}
+				else
+				{
+					this.dartTalon.set(0);// stop the talon if the potentiometer value is less than the value for
+											// retraction.
+					// prevents jamming the actuator
+				}
+				break;
+			case 2:
+				if(this.potValue > this.middleValue)
+				{ // if the user wants to retract and the claw hasn't hit minimum value
+					final double distanceToMin = Math.abs(this.potValue - this.middleValue);
+					final int slowDownRange = 135; // declares that the actuator will slow 270 points away from minimum
+													// value
+					final double lowSpeed = 0.135; // speed to which actuator slows
+					final double maxSpeed = 0.99;
+					if(distanceToMin <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; // deceleration rate as
+																							// calculated in raising
+																							// portion
+																							// of code
+						// calculate new speed as was done in raising portion of code, but multiply by
+						// -1 to show direction change to lowering
+						final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// if we are beyond slow-down range, slow down at max speed
+						this.dartTalon.set(-1 * maxSpeed);
+					}
+				}
+				else if(this.potValue < this.middleValue)
+				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
+					final double distanceToMax = Math.abs(this.potValue - this.middleValue); // the amount needed to
+																								// extend to max
+					final int slowDownRange = 75; // declares that actuator will slow 150 points away from the
+													// actuator's
+													// maximum value
+					final double minSpeed = 0.125; // Speed to which the actuator will slow
+					final double maxSpeed = 0.99;
+					if(distanceToMax <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
+						final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// If we have more distance to the maximum than the 15 point limit, slow down
+						// the actuator at maximum speed until we need to decelerate
+						this.dartTalon.set(maxSpeed);
+					}
+				}
+				else
+				{
+					this.dartTalon.set(0);// stop the talon if the potentiometer value is less than the value for
+											// retraction.
+					// prevents jamming the actuator
+				}
+				break;
+			case 1:
+				if(this.potValue < this.extendedValue)
+				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
+					final double distanceToMax = Math.abs(this.potValue - this.extendedValue); // the amount needed to
+																								// extend to max
+					final int slowDownRange = 150; // declares that actuator will slow 150 points away from the
+													// actuator's
+													// maximum value
+					final double minSpeed = 0.125; // Speed to which the actuator will slow
+					final double maxSpeed = 0.99;
+					if(distanceToMax <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
+						final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// If we have more distance to the maximum than the 15 point limit, slow down
+						// the actuator at maximum speed until we need to decelerate
+						this.dartTalon.set(maxSpeed);
+					}
+				}
+				else
+				{
+					this.dartTalon.set(0); // stop the talon if the potentiometer value is greater than the value for
+											// extension.
+					// prevents jamming the actuator
+				}
+				break;
+			default:
+				break;
+		}
 	}
 	/**
 	 * Method: tilt
@@ -61,8 +206,8 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.OUTTAKE))
 		{
-			this.leftMotor.set(0.50);
-			this.rightMotor.set(0.50);
+			this.leftMotor.set(0.40);
+			this.rightMotor.set(0.40);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_FULL_POWER))
 		{
@@ -79,82 +224,155 @@ public class Claw extends Subsystem
 			this.leftMotor.set(0);
 			this.rightMotor.set(0);
 		}
-		if(oi.get(OI.Button.RAISE_CLAW))
+		if(oi.get(OI.Button.DART_LOW))
 		{
-			if(this.potValue < this.extendedValue)
-			{ // if the user wants to raise the claw and the claw hasn't hit its max yet
-				final double distanceToMax = Math.abs(this.potValue - this.extendedValue); // the amount needed to
-																							// extend to max
-				final int slowDownRange = 150; // declares that actuator will slow 150 points away from the actuator's
-												// maximum value
-				final double minSpeed = 0.125; // Speed to which the actuator will slow
-				final double maxSpeed = 0.99;
-				if(distanceToMax <= slowDownRange)
-				{
-					/**
-					 * model the slowing down of the actuator as y = mx + b if we are within
-					 * slow-down range
-					 **/
-					final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
-					final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
-					this.dartTalon.set(newSpeed);
+			this.dartPosition = 1;
+		}
+		else if(oi.get(OI.Button.DART_MIDDLE))
+		{
+			this.dartPosition = 2;
+		}
+		else if(oi.get(OI.Button.DART_HIGH))
+		{
+			this.dartPosition = 3;
+		}
+		switch(this.dartPosition)
+		{
+			case 3:
+				if(this.potValue > this.retractedValue)
+				{ // if the user wants to retract and the claw hasn't hit minimum value
+					final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
+					final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
+													// value
+					final double lowSpeed = 0.125; // speed to which actuator slows
+					final double maxSpeed = 0.99;
+					if(distanceToMin <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; // deceleration rate as
+																							// calculated in raising
+																							// portion
+																							// of code
+						// calculate new speed as was done in raising portion of code, but multiply by
+						// -1 to show direction change to lowering
+						final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// if we are beyond slow-down range, slow down at max speed
+						this.dartTalon.set(-1 * maxSpeed);
+					}
 				}
 				else
 				{
-					// If we have more distance to the maximum than the 15 point limit, slow down
-					// the actuator at maximum speed until we need to decelerate
-					this.dartTalon.set(maxSpeed);
+					this.dartTalon.set(0);// stop the talon if the potentiometer value is less than the value for
+											// retraction.
+					// prevents jamming the actuator
 				}
-			}
-			else
-			{
-				this.dartTalon.set(0); // stop the talon if the potentiometer value is greater than the value for
-										// extension.
-				// prevents jamming the actuator
-			}
-		}
-		else if(oi.get(OI.Button.LOWER_CLAW))
-		{
-			if(this.potValue > this.retractedValue)
-			{ // if the user wants to retract and the claw hasn't hit minimum value
-				final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
-				final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
-												// value
-				final double lowSpeed = 0.125; // speed to which actuator slows
-				final double maxSpeed = 0.99;
-				if(distanceToMin <= slowDownRange)
-				{
-					/**
-					 * model the slowing down of the actuator as y = mx + b if we are within
-					 * slow-down range
-					 **/
-					final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; // deceleration rate as
-																						// calculated in raising portion
-																						// of code
-					// calculate new speed as was done in raising portion of code, but multiply by
-					// -1 to show direction change to lowering
-					final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
-					this.dartTalon.set(newSpeed);
+				break;
+			case 2:
+				if(this.potValue > this.middleValue)
+				{ // if the user wants to retract and the claw hasn't hit minimum value
+					final double distanceToMin = Math.abs(this.potValue - this.middleValue);
+					final int slowDownRange = 135; // declares that the actuator will slow 270 points away from minimum
+													// value
+					final double lowSpeed = 0.125; // speed to which actuator slows
+					final double maxSpeed = 0.99;
+					if(distanceToMin <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - lowSpeed) / slowDownRange; // deceleration rate as
+																							// calculated in raising
+																							// portion
+																							// of code
+						// calculate new speed as was done in raising portion of code, but multiply by
+						// -1 to show direction change to lowering
+						final double newSpeed = (maxSpeed - (deceleration * (slowDownRange - distanceToMin))) * -1;
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// if we are beyond slow-down range, slow down at max speed
+						this.dartTalon.set(-1 * maxSpeed);
+					}
+				}
+				else if(this.potValue < this.middleValue)
+				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
+					final double distanceToMax = Math.abs(this.potValue - this.middleValue); // the amount needed to
+																								// extend to max
+					final int slowDownRange = 75; // declares that actuator will slow 150 points away from the
+													// actuator's
+													// maximum value
+					final double minSpeed = 0.125; // Speed to which the actuator will slow
+					final double maxSpeed = 0.99;
+					if(distanceToMax <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
+						final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// If we have more distance to the maximum than the 15 point limit, slow down
+						// the actuator at maximum speed until we need to decelerate
+						this.dartTalon.set(maxSpeed);
+					}
 				}
 				else
 				{
-					// if we are beyond slow-down range, slow down at max speed
-					this.dartTalon.set(-1 * maxSpeed);
+					this.dartTalon.set(0);// stop the talon if the potentiometer value is less than the value for
+											// retraction.
+					// prevents jamming the actuator
 				}
-			}
-			else
-			{
-				this.dartTalon.set(0);// stop the talon if the potentiometer value is less than the value for
-										// retraction.
-				// prevents jamming the actuator
-			}
+				break;
+			case 1:
+				if(this.potValue < this.extendedValue)
+				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
+					final double distanceToMax = Math.abs(this.potValue - this.extendedValue); // the amount needed to
+																								// extend to max
+					final int slowDownRange = 150; // declares that actuator will slow 150 points away from the
+													// actuator's
+													// maximum value
+					final double minSpeed = 0.125; // Speed to which the actuator will slow
+					final double maxSpeed = 0.99;
+					if(distanceToMax <= slowDownRange)
+					{
+						/**
+						 * model the slowing down of the actuator as y = mx + b if we are within
+						 * slow-down range
+						 **/
+						final double deceleration = (maxSpeed - minSpeed) / slowDownRange;
+						final double newSpeed = maxSpeed - (deceleration * (slowDownRange - distanceToMax));
+						this.dartTalon.set(newSpeed);
+					}
+					else
+					{
+						// If we have more distance to the maximum than the 15 point limit, slow down
+						// the actuator at maximum speed until we need to decelerate
+						this.dartTalon.set(maxSpeed);
+					}
+				}
+				else
+				{
+					this.dartTalon.set(0); // stop the talon if the potentiometer value is greater than the value for
+											// extension.
+					// prevents jamming the actuator
+				}
+				break;
+			default:
+				break;
 		}
-		else
-		{
-			// if the user doesn't want to raise or lower, stop the talon
-			this.dartTalon.set(0);
-		}
-		// log the potentiometer value for testing purposes
 		SmartDashboard.putNumber("Potentiometer Position", this.potValue);
 		SmartDashboard.putBoolean("Claw Status", this.clawOpen);
 	}

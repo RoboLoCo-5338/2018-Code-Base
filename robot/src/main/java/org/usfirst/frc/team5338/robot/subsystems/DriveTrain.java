@@ -32,7 +32,6 @@ public class DriveTrain extends Subsystem
 	// Creates a drive object that will define how the left and right motor sets are
 	// configured (currently as an arcade drive)
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
-	private double correctedPowerFromJoystick, turnIntensity;
 	// Objects that control the shift and compressor mechanism
 	private final Compressor driveCompressor = new Compressor(8);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
@@ -80,26 +79,32 @@ public class DriveTrain extends Subsystem
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)
 	{
-		// Uses directions and input to create a turn coefficient
-		this.turnIntensity = Robot.oi.getValues('X') * Math.abs(Robot.oi.getValues('X'));
-		this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getValues('Y'), 3));
-		// If the robot is driving straight or, in case it isn't driving straight, has a
-		// speed <= 0.6, use arcade drive
-		// else use curvature drive for better handling
-		if(Robot.oi.getValues('Y') >= 0.6)
-		{
-			this.DRIVE.curvatureDrive(this.correctedPowerFromJoystick, this.turnIntensity, false);
-		}
-		else
-		{
-			this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, this.turnIntensity, false);
-		}
-		/** Shift Control System **/
-		if(this.shiftedUp)
-		{
-			this.turnIntensity *= .7; // If the gear is shifted up, reduce turn variable to reduce
-										// over-turning/aggressive turning
-		}
+		// // Uses directions and input to create a turn coefficient
+		// this.turnIntensity = Robot.oi.getValues('X') *
+		// Math.abs(Robot.oi.getValues('X'));
+		// this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getValues('Y'), 3));
+		// // If the robot is driving straight or, in case it isn't driving straight,
+		// has a
+		// // speed <= 0.6, use arcade drive
+		// // else use curvature drive for better handling
+		// if(Robot.oi.getValues('Y') >= 0.6)
+		// {
+		// this.DRIVE.curvatureDrive(this.correctedPowerFromJoystick,
+		// this.turnIntensity, false);
+		// }
+		// else
+		// {
+		// this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, this.turnIntensity,
+		// false);
+		// }
+		// /** Shift Control System **/
+		// if(this.shiftedUp)
+		// {
+		// this.turnIntensity *= .7; // If the gear is shifted up, reduce turn variable
+		// to reduce
+		// // over-turning/aggressive turning
+		// }
+		this.DRIVE.tankDrive((oi.getLeftValues('Y') * 4) / 5, (oi.getRightValues('Y') * 4) / 5, false);
 		if(Robot.oi.get(OI.Button.SHIFT_UP))
 		{
 			// If the user has allowed the gear to shift up, then change the solenoid to
