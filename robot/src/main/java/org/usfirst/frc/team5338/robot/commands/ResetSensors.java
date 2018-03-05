@@ -4,18 +4,18 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EjectCube extends Command
+public class ResetSensors extends Command
 {
-	public EjectCube()
+	public ResetSensors()
 	{
 		super();
-		this.requires(Robot.claw);
-		this.setTimeout(1.5);
+		this.requires(Robot.sensors);
+		this.setTimeout(0.25);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setWheelSpeed(0.40);
+		Robot.sensors.resetSensors();
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +25,6 @@ public class EjectCube extends Command
 	@Override
 	protected void end()
 	{
-		Robot.claw.setWheelSpeed(0.0);
+		// Do nothing
 	}
 }

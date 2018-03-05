@@ -17,6 +17,7 @@ public class Turn extends Command
 		this.angle = input;
 		this.initalHeading = Robot.sensors.ahrs.getYaw();
 		this.targetHeading = this.initalHeading + this.angle;
+		this.setTimeout(3.0);
 	}
 	@Override
 	protected void initialize()
@@ -29,17 +30,17 @@ public class Turn extends Command
 	{
 		if(this.angle > Robot.sensors.ahrs.getYaw()) // To change back, just make this > 0 instead
 		{
-			Robot.drivetrain.tankDrive(0.65, -0.65);
+			Robot.drivetrain.tankDrive(0.70, -0.70);
 		}
 		else
 		{
-			Robot.drivetrain.tankDrive(-0.65, 0.65);
+			Robot.drivetrain.tankDrive(-0.70, 0.70);
 		}
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return Math.abs(Robot.sensors.ahrs.getYaw() - this.targetHeading) < 1.5;
+		return (Math.abs(Robot.sensors.ahrs.getYaw() - this.targetHeading) < 2) || this.isTimedOut();
 	}
 	@Override
 	protected void end()

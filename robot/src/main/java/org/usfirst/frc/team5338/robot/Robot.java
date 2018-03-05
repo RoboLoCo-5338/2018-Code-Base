@@ -28,17 +28,18 @@ public class Robot extends IterativeRobot
 	public static final Sensors sensors = new Sensors();
 	// Instantiates command for Auto
 	public static Command Auto;
-	
+
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
-		// Nothing happens here
+		Scheduler.getInstance().removeAll();
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void autonomousInit()
 	{
+		Scheduler.getInstance().removeAll();
 		// Creates the autonomous with selection
 		Robot.Auto = new Autonomous();
 		Robot.Auto.start();
@@ -53,6 +54,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
+		Scheduler.getInstance().removeAll();
 		// Eventual code to disable autonomous will occur here.
 		try
 		{

@@ -18,7 +18,7 @@ public class ControlClimber extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.claw.control(Robot.oi);
+		Robot.climber.control(Robot.oi);
 	}
 	@Override
 	protected boolean isFinished()
