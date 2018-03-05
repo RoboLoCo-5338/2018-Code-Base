@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class StraightDrive extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
-
+	
 	public StraightDrive(final double input)
 	{
 		// Input in inches to travel
