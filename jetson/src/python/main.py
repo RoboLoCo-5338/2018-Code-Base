@@ -1,17 +1,15 @@
-#Python source file that controls vision system
-#Make sure device has
 import cv2
 import numpy as np
 from multiprocessing import Pool
-from networktables import NetworkTables
 import logging
 import os
-import sys
 import signal
-
+from networktables import NetworkTablesInstance
 logging.basicConfig(level=logging.INFO)
 root_log = logging.getLogger()
 robo_log = root_log.getChild('roboloco')
+nt_log = root_log.getChild('nt')
+nt_log.setLevel(logging.DEBUG)
 log = robo_log.getChild('main')
 
 # Video capture device
@@ -19,10 +17,11 @@ log = robo_log.getChild('main')
 VCAP = 0
 
 # Roborio's IP address or hostname
-NT_SERVER = "10.53.38.2"
-
+NT_PORT = 5800
+TEAM = 5338
+NT_HOST = '10.53.38.2'
 # NetworkTables table
-NT_TABLE = 'SmartDashboard'
+NT_TABLE = 'vision'
 
 global keep_running
 keep_running = True
@@ -37,16 +36,22 @@ log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
 minw, minh = 0, 0
 
-log.debug("Init'ing network tables connection to %r", NT_SERVER)
-NetworkTables.initialize(server=NT_SERVER)
+nt_inst = NetworkTablesInstance.create()
+nt_inst.enableVerboseLogging()
+log.debug("Init'ing network tables connection to %r via %r", TEAM, NT_PORT)
+
+nt_inst.initialize(server=(NT_HOST, NT_PORT))
 
 log.debug("Getting table %r", NT_TABLE)
-table = NetworkTables.getTable(NT_TABLE)
+table = nt_inst.getTable(NT_TABLE)
 
+log.info("Network mode %r", nt_inst.getNetworkMode())
 
-def process_frame(frame, log_parent, frame_id):
-    log = log_parent.getChild('frame_proc.%d' % os.getpid())
+def process_frame(frame, frame_id):
+
+    log = logging.getLogger('roboloco.main.frame_%d.%d' % (frame_id, os.getpid()))
     log.debug("Working on frame %d", frame_id)
+
 
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
@@ -67,15 +72,22 @@ def process_frame(frame, log_parent, frame_id):
         if w > minw and h > minh:
             if w * h > max_size:
                 max_rect = rect
+    table.putBoolean("CubeDetected", False)
     if max_rect is not None:
         x, y, w, h = max_rect
-        table.putNumber('x', x)
-        table.putNumber('y', y)
-        table.putNumber('w', w)
-        table.putNumber('h', h)
-        return (x, y, w, h)
+        table.putBoolean("CubeDetected", True)
+        table.putNumber('XCoordinate', x)
+        table.putNumber('YCoordinate', y)
+        table.putNumber('Width', w)
+        table.putNumber('Height', h)
+        if frame_id % 30 == 0:
+            log.info("Table Keys %r", table.getKeys())
+            # log.info("Connection info %r", NetworkTables.getConnections())
+        if frame_id % 30 == 0:
+            log.debug(" ".join([str(i) for i in (x, y, w, h)]))
     else:
-        return None
+        if frame_id % 30 == 0:
+            log.info("Not found")
 
 
 def sigint_handler(signal, frame):
@@ -98,9 +110,7 @@ try:
         ret, frame = vid.read()
 
         log_frame.debug("Launching frame")
-        with Pool(processes=4) as pool:
-            result = pool.apply_async(process_frame, (frame, log_frame, frame_id))
-            # print(result.get())  # Avoid enabling this - will force async jobs to only run one at a time!
+        process_frame(frame, frame_id)
         log_frame.debug("Frame processing launched")
         frame_id += 1
     log.info("Exited loop")
@@ -111,3 +121,6 @@ except Exception as e:
 log.info("Releasing video device")
 vid.release()
 log.info("Video device released")
+
+nt_inst.flush()
+nt_inst.stopClient()

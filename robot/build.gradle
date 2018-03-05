@@ -1,0 +1,41 @@
+// Applies the GradleRio plugin from before.
+apply plugin: "jaci.openrio.gradle.GradleRIO"
+
+// On the deploy call
+deploy {
+    // Creates the roborio target to deploy code to and identifies our
+    // team number as 5338.
+    targets {
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = 5338
+        }
+    }
+    artifacts {
+        // Define my robot build artifact. The FRCJavaArtifact type
+        // is used so that the RoboRIO can detect and run our code.
+        artifact('robotCode', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+        }
+    }
+}
+wpi {
+    wpilibVersion = '2018.3.3'
+    ctreVersion = '5.3.1.0'
+}
+
+// Defines dependencies that gradle will pull in, updating them when needed,
+// and then compiling them for deployment alongside our code.
+dependencies {
+    // Currently using the WPILib, CTRE Phoenix, NavX, and openRio MatchData
+    // libraries for the season.
+    compile wpilib()
+    compile ctre()
+    compile navx()
+    compile openrio.powerup.matchData()
+}
+
+// Builds the jar needed by the RoboRio to run our code.
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest("org.usfirst.frc.team5338.robot.Robot")
+}
