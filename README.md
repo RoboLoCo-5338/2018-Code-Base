@@ -1,5 +1,5 @@
 # 2018-Code-Base
-Our code for the 2018 FRC Season (Power Up!), Team 5338.
+Our complete code for the 2018 FRC Season (Power Up!), Team 5338. This code has been validated as to the extent it was on *master* after the Week 1 District Event.
 
 ## Installation
 Welcome new RoboLoCo programmer! To begin the installation process, first verify that on your Windows/macOS/Linux system you have the latest version of **JAVA 8** installed on your system. These following steps will **fail** if you do not have that exact version installed.
