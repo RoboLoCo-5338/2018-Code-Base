@@ -29,11 +29,11 @@ public class Autonomous extends CommandGroup
 				case "CENTER":
 					this.addSequential(new StraightDrive(36.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-40.0));
+					this.addSequential(new Turn(-46.0));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new StraightDrive(108.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(40.0));
+					this.addSequential(new Turn(46));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new StraightDrive(36.0));
 					this.addSequential(new ChangeClawPosition(2));
