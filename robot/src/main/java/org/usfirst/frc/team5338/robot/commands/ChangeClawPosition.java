@@ -7,12 +7,12 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeClawPosition extends Command
 {
 	private final int newPosition;
-	
+
 	public ChangeClawPosition(final int position)
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(1.5);
+		this.setTimeout(3 - position);
 		this.newPosition = position;
 	}
 	@Override

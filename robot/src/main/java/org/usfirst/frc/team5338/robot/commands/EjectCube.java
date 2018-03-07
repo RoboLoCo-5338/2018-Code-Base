@@ -10,12 +10,12 @@ public class EjectCube extends Command
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(1.5);
+		this.setTimeout(1);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setWheelSpeed(0.40);
+		Robot.claw.setWheelSpeed(0.425);
 	}
 	@Override
 	protected boolean isFinished()
