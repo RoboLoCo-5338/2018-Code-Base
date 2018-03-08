@@ -16,14 +16,14 @@ public class Claw extends Subsystem
 	private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(7);
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
 	private double potValue; // potentiometer value
-	final double retractedValue = 45; // potentiometer value when the dart actuator is retracted
-	final double extendedValue = 705; // potentiometer value when dart actuator is extended
+	final double scaleValue = 45; // potentiometer value when the dart actuator is retracted
+	final double floorValue = 705; // potentiometer value when dart actuator is extended
 	final double switchValue = 275;
 	private boolean clawOpen = false;
 	private int dartPosition = 3;
-	private final double lowSpeed = 0.125; // speed to which actuator slows
+	private final double lowSpeed = 0.15; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -44,15 +44,19 @@ public class Claw extends Subsystem
 		this.potValue = this.dartTalon.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
 		this.changeDartPosition();
 	}
+	public int getDartPosition()
+	{
+		return this.dartPosition;
+	}
 	public void changeDartPosition()
 	{
 		// which the Dart Actuator runs
 		switch(this.dartPosition)
 		{
 			case 3:
-				if(this.potValue > this.retractedValue)
+				if(this.potValue > this.scaleValue)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
-					final double distanceToMin = Math.abs(this.potValue - this.retractedValue);
+					final double distanceToMin = Math.abs(this.potValue - this.scaleValue);
 					final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
@@ -144,10 +148,10 @@ public class Claw extends Subsystem
 				}
 				break;
 			case 1:
-				if(this.potValue < this.extendedValue)
+				if(this.potValue < this.floorValue)
 				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
-					final double distanceToMax = Math.abs(this.potValue - this.extendedValue); // the amount needed to
-																								// extend to max
+					final double distanceToMax = Math.abs(this.potValue - this.floorValue); // the amount needed to
+																							// extend to max
 					final int slowDownRange = 150; // declares that actuator will slow 150 points away from the
 													// actuator's
 													// maximum value
@@ -204,35 +208,35 @@ public class Claw extends Subsystem
 		{
 			this.grabber.set(DoubleSolenoid.Value.kOff);
 		}
-		if(oi.get(OI.Button.OUTTAKE))
+		if(oi.get(OI.Button.INTAKE_CUBE))
+		{
+			this.leftMotor.set(-0.50);
+			this.rightMotor.set(-0.50);
+		}
+		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
 			this.leftMotor.set(0.40);
 			this.rightMotor.set(0.40);
 		}
-		else if(oi.get(OI.Button.OUTTAKE_FULL_POWER))
+		else if(oi.get(OI.Button.SHOOT_CUBE))
 		{
 			this.leftMotor.set(0.99);
 			this.rightMotor.set(0.99);
-		}
-		else if(oi.get(OI.Button.INTAKE))
-		{
-			this.leftMotor.set(-0.50);
-			this.rightMotor.set(-0.50);
 		}
 		else
 		{
 			this.leftMotor.set(0);
 			this.rightMotor.set(0);
 		}
-		if(oi.get(OI.Button.DART_LOW))
+		if(oi.get(OI.Button.DART_FLOOR))
 		{
 			this.dartPosition = 1;
 		}
-		else if(oi.get(OI.Button.DART_MIDDLE))
+		else if(oi.get(OI.Button.DART_SWITCH))
 		{
 			this.dartPosition = 2;
 		}
-		else if(oi.get(OI.Button.DART_HIGH))
+		else if(oi.get(OI.Button.DART_SCALE))
 		{
 			this.dartPosition = 3;
 		}

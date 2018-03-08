@@ -38,10 +38,10 @@ public class Robot extends IterativeRobot
 		// Clears all commands
 		Scheduler.getInstance().removeAll();
 		// Creates SendableChooser to select Autonomous
-		Robot.autonomousChooser.addDefault("Center Autonomous\n (DEFAULT)", "CENTER");
+		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
 		Robot.autonomousChooser.addObject("Left Autonomous", "LEFT");
 		Robot.autonomousChooser.addObject("Right Autonomous", "RIGHT");
-		SmartDashboard.putData("Autonomous Chooser", Robot.autonomousChooser);
+		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override

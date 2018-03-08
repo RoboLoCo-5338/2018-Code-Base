@@ -36,7 +36,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor driveCompressor = new Compressor(8);
 	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -68,43 +68,14 @@ public class DriveTrain extends Subsystem
 	}
 	// Runs the drive in arcade mode taking in the power magnitude toward the front
 	// and diagonal
-	public void tankDrive(final double left, final double right)
+	public void drive(final double left, final double right)
 	{
 		this.DRIVE.tankDrive(left, right);
-	}
-	public void drive(final double front, final double rotate)
-	{
-		this.DRIVE.arcadeDrive(front, rotate, false);
 	}
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)
 	{
-		// // Uses directions and input to create a turn coefficient
-		// this.turnIntensity = Robot.oi.getValues('X') *
-		// Math.abs(Robot.oi.getValues('X'));
-		// this.correctedPowerFromJoystick = (Math.pow(Robot.oi.getValues('Y'), 3));
-		// // If the robot is driving straight or, in case it isn't driving straight,
-		// has a
-		// // speed <= 0.6, use arcade drive
-		// // else use curvature drive for better handling
-		// if(Robot.oi.getValues('Y') >= 0.6)
-		// {
-		// this.DRIVE.curvatureDrive(this.correctedPowerFromJoystick,
-		// this.turnIntensity, false);
-		// }
-		// else
-		// {
-		// this.DRIVE.arcadeDrive(this.correctedPowerFromJoystick, this.turnIntensity,
-		// false);
-		// }
-		// /** Shift Control System **/
-		// if(this.shiftedUp)
-		// {
-		// this.turnIntensity *= .7; // If the gear is shifted up, reduce turn variable
-		// to reduce
-		// // over-turning/aggressive turning
-		// }
-		this.DRIVE.tankDrive((oi.getLeftValues('Y') * 4) / 5, (oi.getRightValues('Y') * 4) / 5, false);
+		this.DRIVE.tankDrive((oi.getLeftJoystick('Y') * 4) / 5, (oi.getRightJoystick('Y') * 4) / 5, false);
 		if(Robot.oi.get(OI.Button.SHIFT_UP))
 		{
 			// If the user has allowed the gear to shift up, then change the solenoid to

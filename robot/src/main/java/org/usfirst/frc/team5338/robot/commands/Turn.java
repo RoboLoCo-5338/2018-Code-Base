@@ -28,13 +28,13 @@ public class Turn extends Command
 	@Override
 	protected void execute()
 	{
-		if(this.angle > Robot.sensors.ahrs.getYaw()) // To change back, just make this > 0 instead
+		if(this.angle > Robot.sensors.ahrs.getYaw())
 		{
-			Robot.drivetrain.tankDrive(0.70, -0.70);
+			Robot.drivetrain.drive(0.70, -0.70);
 		}
 		else
 		{
-			Robot.drivetrain.tankDrive(-0.70, 0.70);
+			Robot.drivetrain.drive(-0.70, 0.70);
 		}
 	}
 	@Override

@@ -10,10 +10,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Climber extends Subsystem
 {
 	private final DoubleSolenoid bimba = new DoubleSolenoid(8, 1, 2);
-	private final DoubleSolenoid tipper = new DoubleSolenoid(8, 0, 7);
-	private boolean hookTipped = false;
 	private boolean climberExtended = false;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -32,11 +30,6 @@ public class Climber extends Subsystem
 	 */
 	public void control(final OI oi)
 	{
-		if(oi.get(OI.Button.TIP_HOOK))
-		{
-			this.tipper.set(DoubleSolenoid.Value.kForward);
-			this.hookTipped = true;
-		}
 		if(oi.get(OI.Button.EXTEND_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kReverse);
@@ -45,11 +38,9 @@ public class Climber extends Subsystem
 		else if(oi.get(OI.Button.RETRACT_CLIMB))
 		{
 			this.bimba.set(DoubleSolenoid.Value.kForward);
-			this.tipper.set(DoubleSolenoid.Value.kReverse);
 			this.climberExtended = false;
 		}
-		// log the potentiometer value for testing purposes
-		SmartDashboard.putBoolean("Hook Status", this.hookTipped);
+		// log the status
 		SmartDashboard.putBoolean("Climber Status", this.climberExtended);
 	}
 }

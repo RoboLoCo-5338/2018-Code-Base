@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
-
+	
 	public Straight(final double input)
 	{
 		// Input in inches to travel
@@ -30,7 +30,7 @@ public class Straight extends Command
 		final double[] distanceTravelled = Robot.sensors.distances();
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.tankDrive(0.50, 0.50);
+		Robot.drivetrain.drive(0.50, 0.50);
 	}
 	@Override
 	protected boolean isFinished()

@@ -25,6 +25,6 @@ public class ResetSensors extends Command
 	@Override
 	protected void end()
 	{
-		// Do nothing
+		;// Do nothing
 	}
 }
