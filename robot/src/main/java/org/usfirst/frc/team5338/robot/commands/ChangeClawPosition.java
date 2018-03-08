@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeClawPosition extends Command
 {
 	private final int newPosition;
-
+	
 	public ChangeClawPosition(final int position)
 	{
 		super();
@@ -28,6 +28,6 @@ public class ChangeClawPosition extends Command
 	@Override
 	protected void end()
 	{
-		// Nothing
+		; // Do Nothing
 	}
 }

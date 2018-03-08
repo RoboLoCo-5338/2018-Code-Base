@@ -4,18 +4,21 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class EjectCube extends Command
+public class HandleCube extends Command
 {
-	public EjectCube()
+	public double clawSpeed;
+
+	public HandleCube(final double speed)
 	{
 		super();
 		this.requires(Robot.claw);
+		this.clawSpeed = speed;
 		this.setTimeout(1);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setWheelSpeed(0.425);
+		Robot.claw.setWheelSpeed(this.clawSpeed);
 	}
 	@Override
 	protected boolean isFinished()

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.ControlClaw;
+import org.usfirst.frc.team5338.robot.commands.ClawControl;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -27,7 +27,7 @@ public class Claw extends Subsystem
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
-		this.setDefaultCommand(new ControlClaw());
+		this.setDefaultCommand(new ClawControl());
 	}
 	public Claw()
 	{

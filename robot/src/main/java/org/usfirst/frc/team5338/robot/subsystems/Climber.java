@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.commands.ControlClimber;
+import org.usfirst.frc.team5338.robot.commands.ClimberControl;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,7 +17,7 @@ public class Climber extends Subsystem
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
-		this.setDefaultCommand(new ControlClimber());
+		this.setDefaultCommand(new ClimberControl());
 	}
 	public Climber()
 	{

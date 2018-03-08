@@ -23,7 +23,7 @@ public class Turn extends Command
 	protected void initialize()
 	{
 		super.initialize();
-		Robot.sensors.resetSensors();
+		Robot.sensors.resetEncoders();
 	}
 	@Override
 	protected void execute()

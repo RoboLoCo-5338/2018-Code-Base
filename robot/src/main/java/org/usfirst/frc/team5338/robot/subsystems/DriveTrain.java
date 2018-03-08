@@ -2,7 +2,7 @@ package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
 import org.usfirst.frc.team5338.robot.Robot;
-import org.usfirst.frc.team5338.robot.commands.TankDriveWithJoysticks;
+import org.usfirst.frc.team5338.robot.commands.JoystickControl;
 
 import com.ctre.phoenix.motorcontrol.ControlFrame;
 import com.ctre.phoenix.motorcontrol.SensorCollection;
@@ -132,6 +132,6 @@ public class DriveTrain extends Subsystem
 	@Override
 	public void initDefaultCommand()
 	{
-		this.setDefaultCommand(new TankDriveWithJoysticks());
+		this.setDefaultCommand(new JoystickControl());
 	}
 }

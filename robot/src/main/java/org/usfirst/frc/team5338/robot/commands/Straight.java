@@ -4,11 +4,11 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class StraightDrive extends Command
+public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
 
-	public StraightDrive(final double input)
+	public Straight(final double input)
 	{
 		// Input in inches to travel
 		super();

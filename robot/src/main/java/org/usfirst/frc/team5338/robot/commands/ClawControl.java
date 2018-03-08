@@ -4,16 +4,16 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ControlClaw extends Command
+public class ClawControl extends Command
 {
-	public ControlClaw()
+	public ClawControl()
 	{
 		this.requires(Robot.claw);
 	}
 	@Override
 	protected void end()
 	{
-		// Never ends control
+		; // Never ends control
 	}
 	@Override
 	protected void execute()
