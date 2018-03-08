@@ -2,12 +2,12 @@ package org.usfirst.frc.team5338.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import openrio.powerup.MatchData;
-
+//
 public class Autonomous extends CommandGroup
 {
 	// private final StraightDrive eleven = new StraightDrive(138.0);
 	// private final StraightDrive twoFeet = new StraightDrive(24.0);
-	private final String location = "LEFT"; // "RIGHT" "CENTER"
+	private final String location = "CENTER"; // "RIGHT" "CENTER"
 
 	public Autonomous()
 	{
@@ -29,13 +29,13 @@ public class Autonomous extends CommandGroup
 				case "CENTER":
 					this.addSequential(new StraightDrive(36.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-46.0));
+					this.addSequential(new Turn(-40.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new StraightDrive(108.0));
+					this.addSequential(new StraightDrive(75.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(46));
+					this.addSequential(new Turn(35.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new StraightDrive(36.0));
+					this.addSequential(new StraightDrive(34.0));
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new EjectCube());
 					break;
@@ -63,11 +63,11 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(40.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new StraightDrive(108.0));
+					this.addSequential(new StraightDrive(75.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-40.0));
+					this.addSequential(new Turn(-35.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new StraightDrive(36.0));
+					this.addSequential(new StraightDrive(34.0));
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new EjectCube());
 					break;

@@ -17,7 +17,7 @@ public class Turn extends Command
 		this.angle = input;
 		this.initalHeading = Robot.sensors.ahrs.getYaw();
 		this.targetHeading = this.initalHeading + this.angle;
-		this.setTimeout((1.5 * this.angle) / 90.0);
+		this.setTimeout((1.5 * Math.abs(this.angle)) / 90.0);
 	}
 	@Override
 	protected void initialize()

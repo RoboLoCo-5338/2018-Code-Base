@@ -2,6 +2,9 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 //Import all needed classes from our code.
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.commands.DetectCubes;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -24,7 +27,7 @@ public class VisionSystem extends Subsystem
 	public void track()
 	{
 		double x = this.table.getEntry("XCoordinate").getDouble(-1.0);
-		double y = this.table.getEntry("YCoordinate").getDouble(-1.0)
+		double y = this.table.getEntry("YCoordinate").getDouble(-1.0);
 		SmartDashboard.putBoolean("Jetson Connected", this.instance.isConnected());
 		SmartDashboard.putBoolean("Cube Found",
 				this.table.getEntry("CubeDetected").getBoolean(false));
@@ -36,15 +39,16 @@ public class VisionSystem extends Subsystem
 				this.table.getEntry("Height").getDouble(0.0));
 
 		double angle = 0;
-		if(x ! = 0){
+		if(x != 0){
 			angle = Math.toDegrees(Math.atan(y / x));
 			if(angle > 0){
 				angle = 90-angle;
 			}
 			else{
-				angle = 90 +angle
+				angle = 90 +angle;
 			}
 		}
 		SmartDashboard.putNumber("Cube Heading", angle);
 	}
 }
+
