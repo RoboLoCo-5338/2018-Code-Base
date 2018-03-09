@@ -29,8 +29,8 @@ public class Robot extends IterativeRobot
 	public static final Sensors sensors = new Sensors();
 	// Creates static Autonomous and SendableChooser objects for use elsewhere.
 	public static Command Auto;
-	public static SendableChooser<String> autonomousChooser;
-
+	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()

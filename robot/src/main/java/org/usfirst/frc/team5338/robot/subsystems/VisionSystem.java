@@ -27,27 +27,16 @@ public class VisionSystem extends Subsystem
 	}
 	public void track()
 	{
-		final double x = this.table.getEntry("XCoordinate").getDouble(-1.0);
-		final double y = this.table.getEntry("YCoordinate").getDouble(-1.0);
 		SmartDashboard.putBoolean("Jetson Connected", this.instance.isConnected());
-		SmartDashboard.putBoolean("Cube Found", this.table.getEntry("CubeDetected").getBoolean(false));
-		SmartDashboard.putNumber("X Coordinate", x);
-		SmartDashboard.putNumber("Y Coordinate", y);
-		SmartDashboard.putNumber("Width", this.table.getEntry("Width").getDouble(0.0));
-		SmartDashboard.putNumber("Height", this.table.getEntry("Height").getDouble(0.0));
-		double angle = 0;
-		if(x != 0)
+		final boolean cubePresent = this.table.getEntry("CubeDetected").getBoolean(false);
+		SmartDashboard.putBoolean("Cube Found", cubePresent);
+		if(cubePresent)
 		{
-			angle = Math.toDegrees(Math.atan(y / x));
-			if(angle > 0)
-			{
-				angle = 90 - angle;
-			}
-			else
-			{
-				angle = 90 + angle;
-			}
+			SmartDashboard.putNumber("Cube Heading", (this.table.getEntry("XCoordinate").getDouble(0.0) + 20) - 320);
 		}
-		SmartDashboard.putNumber("Heading to Face Cube", angle);
+		else
+		{
+			SmartDashboard.putNumber("Cube Heading", 0.0);
+		}
 	}
 }

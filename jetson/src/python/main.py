@@ -34,7 +34,7 @@ vid = cv2.VideoCapture(VCAP)
 
 log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
-minw, minh = 0, 0
+minw, minh = 100, 100
 
 nt_inst = NetworkTablesInstance.create()
 nt_inst.enableVerboseLogging()

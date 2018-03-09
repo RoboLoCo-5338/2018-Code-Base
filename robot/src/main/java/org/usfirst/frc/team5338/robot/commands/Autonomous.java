@@ -8,11 +8,11 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String location;
-
+	
 	public Autonomous()
 	{
 		// THIS IS DEFAULTING TO CENTER UNLESS DRIVER CHANGES IT!
-		this.location = Robot.autonomousChooser.getSelected();// "CENTER"; // "RIGHT" "CENTER" input;
+		this.location = Robot.autonomousChooser.getSelected();
 		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
 		if(side == MatchData.OwnedSide.LEFT)
 		{

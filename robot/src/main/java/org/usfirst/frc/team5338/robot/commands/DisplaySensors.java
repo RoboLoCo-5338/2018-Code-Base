@@ -16,7 +16,7 @@ public class DisplaySensors extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.sensors.displayData();
+		Robot.sensors.displayVoltage();
 	}
 	@Override
 	protected boolean isFinished()

@@ -17,7 +17,7 @@ public class Sensors extends Subsystem
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
 	private final PowerDistributionPanel pdp = new PowerDistributionPanel();
-	
+
 	public Sensors()
 	{
 		super();
@@ -54,9 +54,8 @@ public class Sensors extends Subsystem
 		this.left_rotations = (this.left_current - this.left_prev) / 4096.0; // 12 bit data
 		return new double[] {Math.abs(this.left_rotations), Math.abs(this.right_rotations)}; // Both inches measurements
 	}
-	public void displayData()
+	public void displayVoltage()
 	{
-		SmartDashboard.putNumber("Robot Orientation", this.ahrs.getYaw());
 		SmartDashboard.putNumber("System Voltage", this.pdp.getVoltage());
 	}
 	@Override
