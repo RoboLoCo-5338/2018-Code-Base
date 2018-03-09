@@ -15,6 +15,7 @@ public class Claw extends Subsystem
 	private final WPI_TalonSRX leftMotor = new WPI_TalonSRX(6);
 	private final WPI_TalonSRX rightMotor = new WPI_TalonSRX(7);
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
+	private final DoubleSolenoid shooter = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
 	final double scaleValue = 45; // potentiometer value when the dart actuator is retracted
 	final double floorValue = 705; // potentiometer value when dart actuator is extended
@@ -23,7 +24,7 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double lowSpeed = 0.15; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -218,7 +219,7 @@ public class Claw extends Subsystem
 			this.leftMotor.set(0.40);
 			this.rightMotor.set(0.40);
 		}
-		else if(oi.get(OI.Button.SHOOT_CUBE))
+		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
 			this.leftMotor.set(0.99);
 			this.rightMotor.set(0.99);

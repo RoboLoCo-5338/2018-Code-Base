@@ -10,10 +10,10 @@ public class OI
 	// Enum that represents all possible buttons in use.
 	public enum Button // Shoot
 	{
-		SHIFT_UP, SHIFT_DOWN, INTAKE_CUBE, OUTTAKE_CUBE, CLOSE_CLAW, OPEN_CLAW, SHOOT_CUBE, EXTEND_CLIMB, RETRACT_CLIMB,
-		DART_FLOOR, DART_SWITCH, DART_SCALE
+		SHIFT_UP, SHIFT_DOWN, INTAKE_CUBE, OUTTAKE_CUBE, CLOSE_CLAW, OPEN_CLAW, EXTEND_CLIMB, RETRACT_CLIMB, DART_FLOOR,
+		DART_SWITCH, DART_SCALE, POWER_SHOOTER, EXTEND_SHOOTER
 	}
-	
+
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -28,11 +28,11 @@ public class OI
 		}
 		return value;
 	}
-	
+
 	// Creates private joystick objects for use.
 	private final Joystick leftJoystick = new Joystick(0);
 	private final Joystick rightJoystick = new Joystick(1);
-	
+
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
@@ -47,8 +47,10 @@ public class OI
 				return this.rightJoystick.getRawButton(4);
 			case OUTTAKE_CUBE:
 				return this.rightJoystick.getRawButton(6);
-			case SHOOT_CUBE:
+			case POWER_SHOOTER:
 				return this.rightJoystick.getRawButton(5);
+			case EXTEND_SHOOTER:
+				return this.rightJoystick.getRawButton(3);
 			case EXTEND_CLIMB:
 				return this.rightJoystick.getRawButton(9);
 			case RETRACT_CLIMB:
