@@ -19,6 +19,8 @@ public class VisionSystem extends Subsystem
 		super();
 		this.instance.startServer("/tmp/networktables.persist", "0.0.0.0", 5800);
 		this.table = this.instance.getTable("vision");
+		this.instance.getEntry("/CameraPublisher/JetsonCamera/streams")
+						.setStringArray(new String[] {"mjpeg:http://" + "10.53.38.75:5805" + "/?action=stream"});
 	}
 	@Override
 	public void initDefaultCommand()
