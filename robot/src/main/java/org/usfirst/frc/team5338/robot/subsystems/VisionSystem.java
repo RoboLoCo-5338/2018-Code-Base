@@ -13,15 +13,15 @@ public class VisionSystem extends Subsystem
 {
 	private final NetworkTableInstance instance = NetworkTableInstance.create();
 	private final NetworkTable table;
-
+	
 	public VisionSystem()
 	{
 		super();
 		this.instance.startServer("/tmp/networktables.persist", "0.0.0.0", 5800);
 		this.table = this.instance.getTable("vision");
-		NetworkTableInstance.getDefault().setServer("CameraPublisher");
-		NetworkTableInstance.getDefault().getEntry("CameraPublisher/camera/streams")
-						.setStringArray(new String[] {"mjpeg:http://10.53.38.75:5805/index.html"});
+		// NetworkTableInstance.getDefault().setServer("/CameraPublisher");
+		// NetworkTableInstance.getDefault().getEntry("/CameraPublisher/camera/streams")
+		// .setStringArray(new String[] {"mjpeg:http://10.53.38.75:5805/index.html"});
 	}
 	@Override
 	public void initDefaultCommand()
@@ -35,7 +35,8 @@ public class VisionSystem extends Subsystem
 		SmartDashboard.putBoolean("Cube Found", cubePresent);
 		if(cubePresent)
 		{
-			SmartDashboard.putNumber("Cube Heading", (this.table.getEntry("XCoordinate").getDouble(0.0) + 20) - 320);
+			SmartDashboard.putNumber("Cube Heading",
+							-((this.table.getEntry("XCoordinate").getDouble(0.0) + 130) - 320));
 		}
 		else
 		{

@@ -11,7 +11,6 @@ public class Autonomous extends CommandGroup
 	
 	public Autonomous()
 	{
-		// THIS IS DEFAULTING TO CENTER UNLESS DRIVER CHANGES IT!
 		this.location = Robot.autonomousChooser.getSelected();
 		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
 		if(side == MatchData.OwnedSide.LEFT)
@@ -23,10 +22,10 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(80.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(24.0));
+					this.addSequential(new Straight(40.0));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.425));
+					this.addSequential(new HandleCube(0.25));
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -35,14 +34,16 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(75.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(35.00));
+					this.addSequential(new Turn(45.00));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.425));
+					this.addSequential(new HandleCube(0.25));
+					break;
+				case "BASELINE":
+					this.addSequential(new Straight(130.0));
 					break;
 				default:
-					this.addSequential(new Straight(138.0));
 					break;
 			}
 		}
@@ -55,10 +56,10 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(-80.0));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(24.0));
+					this.addSequential(new Straight(40.0));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.425));
+					this.addSequential(new HandleCube(0.25));
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -67,14 +68,16 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(75.00));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-35.00));
+					this.addSequential(new Turn(-45.00));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.425));
+					this.addSequential(new HandleCube(0.25));
+					break;
+				case "BASELINE":
+					this.addSequential(new Straight(130.0));
 					break;
 				default:
-					this.addSequential(new Straight(138.0));
 					break;
 			}
 		}

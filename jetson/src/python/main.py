@@ -5,26 +5,26 @@ import logging
 import os
 import signal
 from networktables import NetworkTablesInstance
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from socketserver import ThreadingMixIn
-import time
-from PIL import Image
-from io import StringIO, BytesIO
-import threading
+# from http.server import BaseHTTPRequestHandler, HTTPServer
+# from socketserver import ThreadingMixIn
+# import time
+# from PIL import Image
+# from io import StringIO, BytesIO
+# import threading
 
 logging.basicConfig(level=logging.INFO)
 root_log = logging.getLogger()
 robo_log = root_log.getChild('roboloco')
 nt_log = root_log.getChild('nt')
-nt_log.setLevel(logging.DEBUG)
+nt_log.setLevel(logging.INFO)
 log = robo_log.getChild('main')
 
 # Video capture device
 # Same as /dev/videoX
 VCAP = 0
 
-# Store latest image used by web server
-img = None
+# # Store latest image used by web server
+# img = None
 
 # Roborio's IP address or hostname
 NT_PORT = 5800
@@ -43,10 +43,11 @@ log.debug("Opening vcap %d", VCAP)
 vid = cv2.VideoCapture(VCAP)
 vid.set(3, 640)
 vid.set(4, 480)
+vid.set(cv2.CAP_PROP_FPS, 30)
 
 log.debug("Init'ing data storage")
 lower_col, upper_col = np.array([20, 100, 100]), np.array([80, 255, 255])
-minw, minh = 100, 100
+minw, minh = 90, 90
 
 nt_inst = NetworkTablesInstance.create()
 nt_inst.enableVerboseLogging()
@@ -92,17 +93,16 @@ def process_frame(frame, frame_id):
         table.putNumber('Width', w)
         table.putNumber('Height', h)
         if frame_id % 30 == 0:
-            log.info("Table Keys %r", table.getKeys())
+            log.info(" ".join([str(i) for i in (x, y, w, h)]))
+#             log.info(" ".join([str(i) for i in (x, y, w, h)]))
             # log.info("Connection info %r", NetworkTables.getConnections())
-        if frame_id % 30 == 0:
-            log.debug(" ".join([str(i) for i in (x, y, w, h)]))
     else:
         if frame_id % 30 == 0:
             log.info("Not found")
-    global img
-    imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    thumbnail = cv2.resize(imgRGB, (640 / 2, 320 / 2), interpolation=cv2.INTER_CUBIC)
-    img = Image.fromarray(frame)
+#     global img
+#     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+#     thumbnail = cv2.resize(imgRGB, (640 / 2, 320 / 2), interpolation=cv2.INTER_NEAREST)
+#     img = Image.fromarray(frame)
 
 
 def sigint_handler(signal, frame):
@@ -112,51 +112,51 @@ def sigint_handler(signal, frame):
     keep_running = False
 
 
-class CamHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        if self.path.endswith('.mjpg'):
-            self.send_response(200)
-            self.send_header('Content-type', 'multipart/x-mixed-replace; boundary=--jpgboundary')
-            self.end_headers()
-            while True:
-                try:
-                    tmpFile = BytesIO()
-                    img.save(tmpFile, 'JPEG')
-                    self.wfile.write(b"--jpgboundary")
-                    self.send_header('Content-type', 'image/jpeg')
-                    # self.send_header('Content-length',str(tmpFile.len))
-                    self.end_headers()
-                    img.save(self.wfile, 'JPEG')
-                    time.sleep(0.05)
-                except KeyboardInterrupt:
-                    break
-            return
-        if self.path.endswith('.html'):
-            self.send_response(200)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            self.wfile.write(b'<html><head></head><body>')
-            self.wfile.write(b'<img src="http://10.53.38.75:5805/cam.mjpg"/>')
-            self.wfile.write(b'</body></html>')
-            return
+# class CamHandler(BaseHTTPRequestHandler):
+#     def do_GET(self):
+#         if self.path.endswith('.mjpg'):
+#             self.send_response(200)
+#             self.send_header('Content-type', 'multipart/x-mixed-replace; boundary=--jpgboundary')
+#             self.end_headers()
+#             while True:
+#                 try:
+#                     tmpFile = BytesIO()
+#                     img.save(tmpFile, 'JPEG')
+#                     self.wfile.write(b"--jpgboundary")
+#                     self.send_header('Content-type', 'image/jpeg')
+#                     # self.send_header('Content-length',str(tmpFile.len))
+#                     self.end_headers()
+#                     img.save(self.wfile, 'JPEG')
+#                     time.sleep(0.05)
+#                 except KeyboardInterrupt:
+#                     break
+#             return
+#         if self.path.endswith('.html'):
+#             self.send_response(200)
+#             self.send_header('Content-type', 'text/html')
+#             self.end_headers()
+#             self.wfile.write(b'<html><head></head><body>')
+#             self.wfile.write(b'<img src="http://10.53.38.75:5805/cam.mjpg"/>')
+#             self.wfile.write(b'</body></html>')
+#             return
 
-
-class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
-    """Handle requests in a separate thread."""
-
-
-class WebServerThread(threading.Thread):
-    def run(self):
-        server = ThreadedHTTPServer(('0.0.0.0', 5805), CamHandler)
-        server.serve_forever()
+# 
+# class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+#     """Handle requests in a separate thread."""
+# 
+# 
+# class WebServerThread(threading.Thread):
+#     def run(self):
+#         server = ThreadedHTTPServer(('0.0.0.0', 5805), CamHandler)
+#         server.serve_forever()
 
 
 # Capture ctrl-c (aka SIGINT)
 log.info("Registered sigint handler")
 signal.signal(signal.SIGINT, sigint_handler)
-
-wt = WebServerThread(daemon=True)
-wt.start()
+# 
+# wt = WebServerThread(daemon=True)
+# wt.start()
 
 try:
     log.info("Starting main loop")

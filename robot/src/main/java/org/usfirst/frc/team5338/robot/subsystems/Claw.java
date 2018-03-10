@@ -21,10 +21,11 @@ public class Claw extends Subsystem
 	final double floorValue = 705; // potentiometer value when dart actuator is extended
 	final double switchValue = 275;
 	private boolean clawClosed = true;
+	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	private final double lowSpeed = 0.15; // speed to which actuator slows
+	private final double lowSpeed = 0.10; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -209,10 +210,20 @@ public class Claw extends Subsystem
 		{
 			this.grabber.set(DoubleSolenoid.Value.kOff);
 		}
+		if(oi.get(OI.Button.EXTEND_SHOOTER))
+		{
+			this.shooter.set(DoubleSolenoid.Value.kForward);
+			this.shooterPosition = true;
+		}
+		else
+		{
+			this.shooter.set(DoubleSolenoid.Value.kReverse);
+			this.shooterPosition = false;
+		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
-			this.leftMotor.set(-0.50);
-			this.rightMotor.set(-0.50);
+			this.leftMotor.set(-0.30);
+			this.rightMotor.set(-0.30);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
@@ -242,6 +253,7 @@ public class Claw extends Subsystem
 			this.dartPosition = 3;
 		}
 		this.changeDartPosition();
+		SmartDashboard.putBoolean("Shooter Status", this.shooterPosition);
 		SmartDashboard.putNumber("DART Position", this.potValue);
 		SmartDashboard.putBoolean("Claw Status", this.clawClosed);
 	}
