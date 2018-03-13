@@ -17,24 +17,24 @@ public class Turn extends Command
 		this.angle = input;
 		this.initalHeading = Robot.sensors.ahrs.getYaw();
 		this.targetHeading = this.initalHeading + this.angle;
-		this.setTimeout(3.0);
+		this.setTimeout((1.5 * Math.abs(this.angle)) / 90.0);
 	}
 	@Override
 	protected void initialize()
 	{
 		super.initialize();
-		Robot.sensors.resetSensors();
+		Robot.sensors.resetEncoders();
 	}
 	@Override
 	protected void execute()
 	{
-		if(this.angle > Robot.sensors.ahrs.getYaw()) // To change back, just make this > 0 instead
+		if(this.angle > Robot.sensors.ahrs.getYaw())
 		{
-			Robot.drivetrain.tankDrive(0.70, -0.70);
+			Robot.drivetrain.drive(0.70, -0.70);
 		}
 		else
 		{
-			Robot.drivetrain.tankDrive(-0.70, 0.70);
+			Robot.drivetrain.drive(-0.70, 0.70);
 		}
 	}
 	@Override

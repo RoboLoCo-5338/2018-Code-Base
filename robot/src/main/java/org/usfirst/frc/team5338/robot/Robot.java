@@ -13,32 +13,43 @@ import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
 {
 	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects for
-	// use
-	// elsewhere.
+	// use elsewhere.
 	public static final VisionSystem visionSystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
 	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
-	// Instantiates command for Auto
+	// Creates static Autonomous and SendableChooser objects for use elsewhere.
 	public static Command Auto;
+	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
 
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
+		// Clears all commands
 		Scheduler.getInstance().removeAll();
+		// Creates SendableChooser to select Autonomous
+		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
+		Robot.autonomousChooser.addObject("Left Autonomous", "LEFT");
+		Robot.autonomousChooser.addObject("Right Autonomous", "RIGHT");
+		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
+		Robot.autonomousChooser.addObject("NO AUTONOMOUS", "NOTHING");
+		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void autonomousInit()
 	{
+		// Clears all commands
 		Scheduler.getInstance().removeAll();
 		// Creates the autonomous with selection
 		Robot.Auto = new Autonomous();
@@ -54,6 +65,7 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
+		// Clears all commands
 		Scheduler.getInstance().removeAll();
 		// Eventual code to disable autonomous will occur here.
 		try

@@ -8,21 +8,21 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI
 {
 	// Enum that represents all possible buttons in use.
-	public enum Button
+	public enum Button // Shoot
 	{
-		SHIFT_UP, SHIFT_DOWN, INTAKE, OUTTAKE, CLOSE_CLAW, OPEN_CLAW, OUTTAKE_FULL_POWER, EXTEND_CLIMB, RETRACT_CLIMB,
-		TIP_HOOK, DART_LOW, DART_MIDDLE, DART_HIGH
+		SHIFT_UP, SHIFT_DOWN, INTAKE_CUBE, OUTTAKE_CUBE, CLOSE_CLAW, OPEN_CLAW, EXTEND_CLIMB, RETRACT_CLIMB, DART_FLOOR,
+		DART_SWITCH, DART_SCALE, POWER_SHOOTER, EXTEND_SHOOTER
 	}
 
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
 	{
-		if(value > 0.05)
+		if(value > 0.025)
 		{
 			return (value - 0.025) / 0.975;
 		}
-		else if(value < -0.05)
+		else if(value < -0.025)
 		{
 			return (value + 0.025) / 0.975;
 		}
@@ -43,14 +43,14 @@ public class OI
 				return this.rightJoystick.getRawButton(1);
 			case OPEN_CLAW:
 				return this.rightJoystick.getRawButton(2);
-			case INTAKE:
+			case INTAKE_CUBE:
 				return this.rightJoystick.getRawButton(4);
-			case OUTTAKE:
+			case OUTTAKE_CUBE:
 				return this.rightJoystick.getRawButton(6);
-			case OUTTAKE_FULL_POWER:
+			case POWER_SHOOTER:
 				return this.rightJoystick.getRawButton(5);
-			case TIP_HOOK:
-				return this.rightJoystick.getRawButton(8);
+			case EXTEND_SHOOTER:
+				return this.rightJoystick.getRawButton(3);
 			case EXTEND_CLIMB:
 				return this.rightJoystick.getRawButton(9);
 			case RETRACT_CLIMB:
@@ -59,23 +59,18 @@ public class OI
 				return this.rightJoystick.getRawButton(11);
 			case SHIFT_DOWN:
 				return this.rightJoystick.getRawButton(12);
-			case DART_LOW:
-				return this.leftJoystick.getRawButton(2); //
-			case DART_MIDDLE:
-				return this.leftJoystick.getRawButton(3);//
-			case DART_HIGH:
-				return this.leftJoystick.getRawButton(5);//
+			case DART_FLOOR:
+				return this.leftJoystick.getRawButton(2);
+			case DART_SWITCH:
+				return this.leftJoystick.getRawButton(3);
+			case DART_SCALE:
+				return this.leftJoystick.getRawButton(5);
 			default:
 				return false;
 		}
 	}
-	// // Public method that returns the joystick object
-	// public Joystick getJoystick()
-	// {
-	// return this.leftJoystick;
-	// }
-	// Public method that returns the joystick's deadzone-adjusted values
-	public double getLeftValues(final char input)
+	// Public method that returns the left joystick's deadzone-adjusted values
+	public double getLeftJoystick(final char input)
 	{
 		switch(input)
 		{
@@ -89,7 +84,8 @@ public class OI
 				return 0.0;
 		}
 	}
-	public double getRightValues(final char input)
+	// Public method that returns the right joystick's deadzone-adjusted values
+	public double getRightJoystick(final char input)
 	{
 		switch(input)
 		{

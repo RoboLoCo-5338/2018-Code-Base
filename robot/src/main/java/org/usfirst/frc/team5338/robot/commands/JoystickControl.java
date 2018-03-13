@@ -4,16 +4,16 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class TankDriveWithJoysticks extends Command
+public class JoystickControl extends Command
 {
-	public TankDriveWithJoysticks()
+	public JoystickControl()
 	{
 		this.requires(Robot.drivetrain);
 	}
 	@Override
 	protected void end()
 	{
-		Robot.drivetrain.drive(0.0, 0.0);
+		; // Never end control
 	}
 	@Override
 	protected void execute()

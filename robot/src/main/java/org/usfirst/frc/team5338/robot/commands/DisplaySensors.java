@@ -7,16 +7,16 @@ import org.usfirst.frc.team5338.robot.Robot;
 //Import all needed classes from WPILib.
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DetectCubes extends Command
+public class DisplaySensors extends Command
 {
-	public DetectCubes()
+	public DisplaySensors()
 	{
-		this.requires(Robot.visionSystem);
+		this.requires(Robot.sensors);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.visionSystem.track();
+		Robot.sensors.displayVoltage();
 	}
 	@Override
 	protected boolean isFinished()

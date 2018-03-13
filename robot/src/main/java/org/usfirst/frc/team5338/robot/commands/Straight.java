@@ -4,17 +4,18 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class StraightDrive extends Command
+public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
 	
-	public StraightDrive(final double input)
+	public Straight(final double input)
 	{
 		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
 		this.rotations = (input - 13) / (6.0 * Math.PI);
+		this.setTimeout((6.0 * input) / 138.0);
 	}
 	@Override
 	protected void initialize()
@@ -27,18 +28,14 @@ public class StraightDrive extends Command
 	protected void execute()
 	{
 		final double[] distanceTravelled = Robot.sensors.distances();
-		// System.out.print(this.targetRotationsLeft);
-		// System.out.print(" ");
-		// System.out.println(this.targetRotationsRight);
-		// // System.out.println(Arrays.toString(distanceTravelled));
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.tankDrive(0.50, 0.50);
+		Robot.drivetrain.drive(0.50, 0.50);
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return (this.targetRotationsLeft < 0) && (this.targetRotationsRight < 0);
+		return ((this.targetRotationsLeft < 0) && (this.targetRotationsRight < 0)) || this.isTimedOut();
 	}
 	@Override
 	protected void end()

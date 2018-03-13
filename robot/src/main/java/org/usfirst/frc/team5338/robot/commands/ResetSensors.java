@@ -10,12 +10,12 @@ public class ResetSensors extends Command
 	{
 		super();
 		this.requires(Robot.sensors);
-		this.setTimeout(0.25);
+		this.setTimeout(0.250);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.sensors.resetSensors();
+		Robot.sensors.resetEncoders();
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +25,6 @@ public class ResetSensors extends Command
 	@Override
 	protected void end()
 	{
-		// Do nothing
+		;// Do nothing
 	}
 }
