@@ -23,9 +23,10 @@ public class Claw extends Subsystem
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	private final double lowSpeed = 0.10; // speed to which actuator slows
+	// TWEAK BASED ON NEW DART RATIO
+	private final double lowSpeed = 0.25; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -59,7 +60,7 @@ public class Claw extends Subsystem
 				if(this.potValue > this.scaleValue)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
 					final double distanceToMin = Math.abs(this.potValue - this.scaleValue);
-					final int slowDownRange = 270; // declares that the actuator will slow 270 points away from minimum
+					final int slowDownRange = 135; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
 					{
@@ -154,7 +155,7 @@ public class Claw extends Subsystem
 				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
 					final double distanceToMax = Math.abs(this.potValue - this.floorValue); // the amount needed to
 																							// extend to max
-					final int slowDownRange = 150; // declares that actuator will slow 150 points away from the
+					final int slowDownRange = 75; // declares that actuator will slow 150 points away from the
 													// actuator's
 													// maximum value
 					if(distanceToMax <= slowDownRange)
@@ -222,16 +223,19 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
+			// CHANGE BASED ON NEW GEARBOXES
 			this.leftMotor.set(-0.30);
 			this.rightMotor.set(-0.30);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
+			// CHANGE BASED ON NEW GEARBOXES
 			this.leftMotor.set(0.40);
 			this.rightMotor.set(0.40);
 		}
 		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
+			// CHANGE BASED ON NEW GEARBOXES
 			this.leftMotor.set(0.99);
 			this.rightMotor.set(0.99);
 		}

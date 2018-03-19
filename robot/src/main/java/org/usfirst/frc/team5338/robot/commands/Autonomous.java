@@ -8,7 +8,7 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String location;
-	
+
 	public Autonomous()
 	{
 		this.location = Robot.autonomousChooser.getSelected();
@@ -25,7 +25,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new Straight(40.0));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.25));
+					this.addSequential(new HandleCube(0.25)); // CHANGE BASED ON NEW GEARBOXES
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -38,7 +38,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.25));
+					this.addSequential(new HandleCube(0.25)); // CHANGE BASED ON NEW GEARBOXES
 					break;
 				case "BASELINE":
 					this.addSequential(new Straight(130.0));
@@ -59,7 +59,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new Straight(40.0));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.25));
+					this.addSequential(new HandleCube(0.25)); // CHANGE BASED ON NEW GEARBOXES
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -72,7 +72,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
-					this.addSequential(new HandleCube(0.25));
+					this.addSequential(new HandleCube(0.25)); // CHANGE BASED ON NEW GEARBOXES
 					break;
 				case "BASELINE":
 					this.addSequential(new Straight(130.0));
