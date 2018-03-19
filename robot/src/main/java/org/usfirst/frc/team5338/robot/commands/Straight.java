@@ -15,7 +15,7 @@ public class Straight extends Command
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
 		this.rotations = (input - 13) / (6.0 * Math.PI);
-		this.setTimeout((6.0 * input) / 138.0);
+		this.setTimeout((6.0 * Math.abs(input)) / 138.0);
 	}
 	@Override
 	protected void initialize()
@@ -28,14 +28,24 @@ public class Straight extends Command
 	protected void execute()
 	{
 		final double[] distanceTravelled = Robot.sensors.distances();
-		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
-		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.drive(0.50, 0.50);
+		if(this.rotations > 0)
+		{
+			this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
+			this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
+			Robot.drivetrain.drive(0.50, 0.50);
+		}
+		else
+		{
+			this.targetRotationsLeft += Math.abs(distanceTravelled[0]);
+			this.targetRotationsRight += Math.abs(distanceTravelled[1]);
+			Robot.drivetrain.drive(-0.50, -0.50);
+		}
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return ((this.targetRotationsLeft < 0) && (this.targetRotationsRight < 0)) || this.isTimedOut();
+		return ((Math.abs(this.targetRotationsLeft) < 0) && (Math.abs(this.targetRotationsRight) < 0))
+						|| this.isTimedOut();
 	}
 	@Override
 	protected void end()

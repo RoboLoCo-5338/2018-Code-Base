@@ -4,11 +4,11 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class HandleCube extends Command
+public class DepositCube extends Command
 {
 	public double clawSpeed;
 
-	public HandleCube(final double speed)
+	public DepositCube(final double speed)
 	{
 		super();
 		this.requires(Robot.claw);

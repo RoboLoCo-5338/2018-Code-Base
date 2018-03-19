@@ -38,12 +38,7 @@ public class Robot extends IterativeRobot
 		// Clears all commands
 		Scheduler.getInstance().removeAll();
 		// Creates SendableChooser to select Autonomous
-		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
-		Robot.autonomousChooser.addObject("Left Autonomous", "LEFT");
-		Robot.autonomousChooser.addObject("Right Autonomous", "RIGHT");
-		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
-		Robot.autonomousChooser.addObject("NO AUTONOMOUS", "NOTHING");
-		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
+		Robot.createAutonomousChooser();
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
@@ -82,5 +77,16 @@ public class Robot extends IterativeRobot
 	public void teleopPeriodic()
 	{
 		Scheduler.getInstance().run();
+	}
+	private static void createAutonomousChooser()
+	{
+		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
+		Robot.autonomousChooser.addObject("Left Autonomous (Scale Priority)", "LEFTSCALESWITCH");
+		Robot.autonomousChooser.addObject("Left Autonomous (Switch Priority)", "LEFTSWITCHSCALE");
+		Robot.autonomousChooser.addObject("Right Autonomous (Scale Priority)", "RIGHTSCALESWITCH");
+		Robot.autonomousChooser.addObject("Right Autonomous (Switch Priority)", "RIGHTSWITCHSCALE");
+		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
+		Robot.autonomousChooser.addObject("NO AUTONOMOUS", "NOTHING");
+		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 }

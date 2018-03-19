@@ -23,9 +23,9 @@ public class Claw extends Subsystem
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	private final double lowSpeed = 0.10; // speed to which actuator slows
+	private final double lowSpeed = 0.25; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -39,6 +39,10 @@ public class Claw extends Subsystem
 	{
 		this.leftMotor.set(speed);
 		this.rightMotor.set(speed);
+	}
+	public void shoot()
+	{
+		this.shooter.set(DoubleSolenoid.Value.kForward);
 	}
 	public void setDartPosition(final int position)
 	{
@@ -69,8 +73,7 @@ public class Claw extends Subsystem
 						 **/
 						final double deceleration = (this.maxSpeed - this.lowSpeed) / slowDownRange; // deceleration
 																										// rate as
-						// calculated in raising
-						// portion
+						// calculated in raising portion
 						// of code
 						// calculate new speed as was done in raising portion of code, but multiply by
 						// -1 to show direction change to lowering
