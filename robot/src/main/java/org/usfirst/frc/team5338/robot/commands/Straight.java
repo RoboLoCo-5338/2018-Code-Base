@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
-	
+
 	public Straight(final double input)
 	{
 		// Input in inches to travel
@@ -15,7 +15,7 @@ public class Straight extends Command
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
 		this.rotations = (input - 13) / (6.0 * Math.PI);
-		this.setTimeout((6.0 * Math.abs(input)) / 138.0);
+		this.setTimeout((5.75 * Math.abs(input)) / 138.0);
 	}
 	@Override
 	protected void initialize()

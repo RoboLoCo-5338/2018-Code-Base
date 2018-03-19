@@ -7,13 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DepositCube extends Command
 {
 	public double clawSpeed;
-
+	
 	public DepositCube(final double speed)
 	{
 		super();
 		this.requires(Robot.claw);
 		this.clawSpeed = speed;
-		this.setTimeout(1);
+		this.setTimeout(0.75);
 	}
 	@Override
 	protected void execute()
