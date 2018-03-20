@@ -27,7 +27,7 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double MIN_DART_SPEED = 0.25; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.99;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -44,11 +44,11 @@ public class Claw extends Subsystem
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
 		talon.configPeakCurrentLimit(100, 0);
-		talon.configPeakCurrentDuration(5, 0);
-		talon.configContinuousCurrentLimit(80, 10);
+		talon.configPeakCurrentDuration(3, 0);
+		talon.configContinuousCurrentLimit(80, 0);
 		talon.enableCurrentLimit(true);
 		talon.configNeutralDeadband(0.001, 0);
-		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, 0);
 		talon.setControlFramePeriod(ControlFrame.Control_3_General, 5);
 	}
 	public void setWheelSpeed(final double speed)
@@ -103,7 +103,7 @@ public class Claw extends Subsystem
 				else
 				{
 					this.DART.set(0);// stop the talon if the potentiometer value is less than the value for
-											// retraction.
+										// retraction.
 					// prevents jamming the actuator
 				}
 				break;
@@ -163,7 +163,7 @@ public class Claw extends Subsystem
 				else
 				{
 					this.DART.set(0);// stop the talon if the potentiometer value is less than the value for
-											// retraction.
+										// retraction.
 					// prevents jamming the actuator
 				}
 				break;
@@ -195,7 +195,7 @@ public class Claw extends Subsystem
 				else
 				{
 					this.DART.set(0); // stop the talon if the potentiometer value is greater than the value for
-											// extension.
+										// extension.
 					// prevents jamming the actuator
 				}
 				break;
@@ -213,7 +213,7 @@ public class Claw extends Subsystem
 	public void control(final OI oi)
 	{
 		this.potValue = this.DART.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
-																			// which the Dart Actuator runs
+																		// which the Dart Actuator runs
 		if(oi.get(OI.Button.CLOSE_CLAW))
 		{
 			this.GRABBER.set(DoubleSolenoid.Value.kReverse);
