@@ -26,7 +26,7 @@ public class Claw extends Subsystem
 	// TWEAK BASED ON NEW DART RATIO
 	private final double lowSpeed = 0.25; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{ // default command required by Subsystem class. Not being modified
@@ -60,7 +60,7 @@ public class Claw extends Subsystem
 				if(this.potValue > this.scaleValue)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
 					final double distanceToMin = Math.abs(this.potValue - this.scaleValue);
-					final int slowDownRange = 135; // declares that the actuator will slow 270 points away from minimum
+					final int slowDownRange = 125; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
 					{
@@ -95,7 +95,7 @@ public class Claw extends Subsystem
 				if(this.potValue > this.switchValue)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
 					final double distanceToMin = Math.abs(this.potValue - this.switchValue);
-					final int slowDownRange = 135; // declares that the actuator will slow 270 points away from minimum
+					final int slowDownRange = 125; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
 					{
