@@ -14,16 +14,20 @@ public class Robot extends IterativeRobot
 	// Creates static DriveTrain, OI, and Dart objects for use elsewhere.
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final OI oi = new OI();
-
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
+		// Clears all commands
+		Scheduler.getInstance().removeAll();
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
 	public void autonomousInit()
 	{
+		// Clears all commands
+		Scheduler.getInstance().removeAll();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
 	@Override
@@ -35,6 +39,8 @@ public class Robot extends IterativeRobot
 	@Override
 	public void teleopInit()
 	{
+		// Clears all commands
+		Scheduler.getInstance().removeAll();
 	}
 	// Public method that runs continuously every 20ms during teleop.
 	@Override

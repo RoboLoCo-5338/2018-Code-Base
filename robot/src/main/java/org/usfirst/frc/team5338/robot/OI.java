@@ -11,7 +11,7 @@ public class OI
 	// 3D Pro Joystick only.
 	private final Joystick joyL = new Joystick(0);
 	private final Joystick joyR = new Joystick(1);
-	
+
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -42,12 +42,6 @@ public class OI
 		{
 			return null;
 		}
-	}
-	// Public method that returns the left joystick's deadzone-adjusted throttle
-	// value
-	public double getLeftThrottle()
-	{
-		return OI.joystickDeadZone(this.joyL.getRawAxis(3));
 	}
 	// Public method that returns the left joystick's deadzone-adjusted y-axis value
 	public double getLeftY()

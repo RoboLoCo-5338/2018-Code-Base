@@ -17,43 +17,37 @@ public class DriveTrain extends Subsystem
 {
 	// Field variables that we will use
 	// Talons: motor controllers that we use on the robot
-	private final WPI_TalonSRX DRIVEL1 = new WPI_TalonSRX(1);
-	public final WPI_TalonSRX DRIVEL2 = new WPI_TalonSRX(2);
-	public final WPI_TalonSRX DRIVER1 = new WPI_TalonSRX(3);
-	public final WPI_TalonSRX DRIVER2 = new WPI_TalonSRX(4);
+	private final WPI_TalonSRX LEFT_1 = new WPI_TalonSRX(1);
+	public final WPI_TalonSRX LEFT_2 = new WPI_TalonSRX(2);
+	public final WPI_TalonSRX RIGHT_1 = new WPI_TalonSRX(3);
+	public final WPI_TalonSRX RIGHT_2 = new WPI_TalonSRX(4);
 	// Contol-group objects used to move the left drive drive and right drive motors
 	// in sync (two drive motors per side)
-	private final SpeedControllerGroup m_left = new SpeedControllerGroup(this.DRIVEL1, this.DRIVEL2);
-	private final SpeedControllerGroup m_right = new SpeedControllerGroup(this.DRIVER1, this.DRIVER2);
+	private final SpeedControllerGroup LEFTSIDE = new SpeedControllerGroup(this.LEFT_1, this.LEFT_2);
+	private final SpeedControllerGroup RIGHTSIDE = new SpeedControllerGroup(this.RIGHT_1, this.RIGHT_2);
 	// Creates a drive object that will define how the left and right motor sets are
 	// configured (currently as an arcade drive)
-	private final DifferentialDrive DRIVE = new DifferentialDrive(this.m_left, this.m_right);
+	private final DifferentialDrive DRIVE = new DifferentialDrive(this.LEFTSIDE, this.RIGHTSIDE);
 	// Objects that control the shift and compressor mechanism
-	private final Compressor driveCompressor = new Compressor(8);
-	private final DoubleSolenoid driveSolenoid = new DoubleSolenoid(8, 3, 4);
-
+	private final Compressor COMPRESSOR = new Compressor(8);
+	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
+	
 	public DriveTrain()
 	{
 		super();
-		this.driveCompressor.setClosedLoopControl(true);
-		this.driveCompressor.start();
-		this.driveSolenoid.set(DoubleSolenoid.Value.kForward);
-		this.configureTalons();
+		this.COMPRESSOR.setClosedLoopControl(true);
+		this.COMPRESSOR.start();
+		this.SHIFTER.set(DoubleSolenoid.Value.kForward);
+		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.LEFT_1, this.LEFT_2, this.RIGHT_1, this.RIGHT_2})
+		{
+			DriveTrain.configureTalon(talon);
+		}
 	}
-	public void configureTalons()
+	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		this.DRIVEL1.configNeutralDeadband(0.001, 0);
-		this.DRIVER1.configNeutralDeadband(0.001, 0);
-		this.DRIVEL2.configNeutralDeadband(0.001, 0);
-		this.DRIVER2.configNeutralDeadband(0.001, 0);
-		this.DRIVEL1.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
-		this.DRIVEL1.setControlFramePeriod(ControlFrame.Control_3_General, 10);
-		this.DRIVER1.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
-		this.DRIVER1.setControlFramePeriod(ControlFrame.Control_3_General, 10);
-		this.DRIVEL2.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
-		this.DRIVEL2.setControlFramePeriod(ControlFrame.Control_3_General, 10);
-		this.DRIVER2.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
-		this.DRIVER2.setControlFramePeriod(ControlFrame.Control_3_General, 10);
+		talon.configNeutralDeadband(0.001, 0);
+		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 10, 0);
+		talon.setControlFramePeriod(ControlFrame.Control_3_General, 5);
 	}
 	public void drive(final double left, final double right)
 	{
