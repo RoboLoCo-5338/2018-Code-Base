@@ -64,7 +64,7 @@ public class Autonomous extends CommandGroup
 				} else if(scaleSide == MatchData.OwnedSide.RIGHT) {
 					this.addSequential(new SpinWheels(-0.30, 0.5));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Staright(281.8));
+					this.addSequential(new Staright(251.8));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(-80.0));
 					this.addSequential(new ResetSensors());
@@ -82,7 +82,7 @@ public class Autonomous extends CommandGroup
 				if(scaleSide == MatchData.OwnedSide.RIGHT) {
 					this.addSequential(new SpinWheels(-0.30, 0.5));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Staright(281.8));
+					this.addSequential(new Staright(251.8));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(-80.0));
 					this.addSequential(new ResetSensors());
@@ -116,7 +116,7 @@ public class Autonomous extends CommandGroup
 				} else if(scaleSide == MatchData.OwnedSide.LEFT) {
 					this.addSequential(new SpinWheels(-0.30, 0.5));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Staright(281.8));
+					this.addSequential(new Staright(251.8));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(80.0));
 					this.addSequential(new ResetSensors());
@@ -134,7 +134,7 @@ public class Autonomous extends CommandGroup
 				if(scaleSide == MatchData.OwnedSide.LEFT) {
 					this.addSequential(new SpinWheels(-0.30, 0.5));
 					this.addSequential(new ResetSensors());
-					this.addSequential(new Staright(281.8));
+					this.addSequential(new Staright(251.8));
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Turn(80.0));
 					this.addSequential(new ResetSensors());
