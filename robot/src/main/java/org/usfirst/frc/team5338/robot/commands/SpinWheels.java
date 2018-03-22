@@ -18,7 +18,7 @@ public class SpinWheels extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setWheelSpeed(wheelSpeed);
+		Robot.claw.setWheelSpeed(this.wheelSpeed);
 	}
 	@Override
 	protected boolean isFinished()
@@ -28,6 +28,6 @@ public class SpinWheels extends Command
 	@Override
 	protected void end()
 	{
-		; // Do Nothing
+		Robot.claw.setWheelSpeed(0.0);
 	}
 }
