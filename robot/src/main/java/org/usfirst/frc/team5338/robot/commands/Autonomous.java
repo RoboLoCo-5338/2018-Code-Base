@@ -13,6 +13,7 @@ public class Autonomous extends CommandGroup
 	{
 		this.autonomous = Robot.autonomousChooser.getSelected();
 		final MatchData.OwnedSide switchSide = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
+		final MatchData.OwnedSide scaleSide = MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
 		MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
 		switch(this.autonomous)
 		{
@@ -52,10 +53,56 @@ public class Autonomous extends CommandGroup
 				}
 				// Make sure to reuse code that we know works
 			case "RIGHTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
-				// unfavorable
+				if(switchSide == MatchData.OwnedSide.RIGHT) {
+					this.addSequential(new Straight(138.0))
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Turn(-80.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Straight(24.0));
+					this.addSequential(new ChangeClawPosition(2));
+					this.addSequential(new DepositCube(0.25));
+				} else if(scaleSide = MatchData.OwnedSide.RIGHT) {
+					this.addSequential(new SpinWheels(-0.30, 0.5));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Staright(281.8));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Turn(-80.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Straight(-24.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new ChangeClawPosition(3));
+					this.addSequential(new SpinWheels(0.99, 4.0));
+					this.addSequential(new Shoot());
+				} else {
+					this.addSequential(new Straight(126.0));
+				}
+
 				break;
 			case "RIGHTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
-				// unfavorable
+				if(scaleSide = MatchData.OwnedSide.RIGHT) {
+					this.addSequential(new SpinWheels(-0.30, 0.5));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Staright(281.8));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Turn(-80.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Straight(-24.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new ChangeClawPosition(3));
+					this.addSequential(new SpinWheels(0.99, 4.0));
+					this.addSequential(new Shoot());
+				} else if(switchSide == MatchData.OwnedSide.RIGHT) {
+					this.addSequential(new Straight(138.0))
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Turn(-80.0));
+					this.addSequential(new ResetSensors());
+					this.addSequential(new Straight(24.0));
+					this.addSequential(new ChangeClawPosition(2));
+					this.addSequential(new DepositCube(0.25));
+				} else {
+					this.addSequential(new Straight(126.0));
+				}
+
 				break;
 			case "LEFTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
 									// unfavorable
