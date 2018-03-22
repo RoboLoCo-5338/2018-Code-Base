@@ -7,20 +7,22 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
-
+	
 	public Straight(final double input)
 	{
 		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
-		if(input < 0) {
-            correctionFactor = -13;
-        } else {
-		    correctionFactor = 13;
-        }
-
-		this.rotations = (input - correctionFactor) / (6.0 * Math.PI));
+		if(input < 0)
+		{
+			this.correctionFactor = -13;
+		}
+		else
+		{
+			this.correctionFactor = 13;
+		}
+		this.rotations = (input + this.correctionFactor) / (6.0 * Math.PI);
 		this.setTimeout((5.75 * Math.abs(input)) / 138.0);
 	}
 	@Override

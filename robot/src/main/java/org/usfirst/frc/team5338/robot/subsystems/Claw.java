@@ -43,6 +43,14 @@ public class Claw extends Subsystem
 	public void shoot()
 	{
 		this.shooter.set(DoubleSolenoid.Value.kForward);
+		this.leftMotor.set(0.99);
+		this.rightMotor.set(0.99);
+	}
+	public void resetShooter()
+	{
+		this.shooter.set(DoubleSolenoid.Value.kReverse);
+		this.leftMotor.set(0);
+		this.rightMotor.set(0);
 	}
 	public void setDartPosition(final int position)
 	{

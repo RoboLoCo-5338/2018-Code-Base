@@ -6,12 +6,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Shoot extends Command
 {
-	
 	public Shoot()
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(0.5);
+		this.setTimeout(0.50);
 	}
 	@Override
 	protected void execute()
@@ -26,6 +25,6 @@ public class Shoot extends Command
 	@Override
 	protected void end()
 	{
-		; // Do Nothing
+		Robot.claw.resetShooter();
 	}
 }

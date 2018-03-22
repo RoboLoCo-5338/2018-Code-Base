@@ -13,15 +13,12 @@ public class VisionSystem extends Subsystem
 {
 	private final NetworkTableInstance instance = NetworkTableInstance.create();
 	private final NetworkTable table;
-	
+
 	public VisionSystem()
 	{
 		super();
 		this.instance.startServer("/tmp/networktables.persist", "0.0.0.0", 5800);
 		this.table = this.instance.getTable("vision");
-		// NetworkTableInstance.getDefault().setServer("/CameraPublisher");
-		// NetworkTableInstance.getDefault().getEntry("/CameraPublisher/camera/streams")
-		// .setStringArray(new String[] {"mjpeg:http://10.53.38.75:5805/index.html"});
 	}
 	@Override
 	public void initDefaultCommand()

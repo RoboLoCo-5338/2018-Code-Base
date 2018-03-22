@@ -4,15 +4,15 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class SpinWheels extends Command
+public class SetClawSpeed extends Command
 {
-	private final int wheelSpeed;
+	private final double wheelSpeed;
 	
-	public SpinWheels(double wheelSpeed, double timeOut)
+	public SetClawSpeed(final double wheelSpeed)
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(timeOut);
+		this.setTimeout(0.25);
 		this.wheelSpeed = wheelSpeed;
 	}
 	@Override
