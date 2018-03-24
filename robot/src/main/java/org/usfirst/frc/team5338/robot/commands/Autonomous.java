@@ -1,7 +1,5 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import org.usfirst.frc.team5338.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import openrio.powerup.MatchData;
 
@@ -11,12 +9,16 @@ public class Autonomous extends CommandGroup
 
 	public Autonomous()
 	{
-		this.autonomous = Robot.autonomousChooser.getSelected();
+		this.autonomous = "TESTING";// Robot.autonomousChooser.getSelected(); //THIS IS TEMPORARY ONLY, PLEASE FIX
+									// ME!!
 		final MatchData.OwnedSide switchSide = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
 		final MatchData.OwnedSide scaleSide = MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
 		MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
 		switch(this.autonomous)
 		{
+			case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
+				// Tests go here
+				break;
 			case "BASELINE":
 				this.addSequential(new Straight(126.0));
 				break;
@@ -72,8 +74,9 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(-40.0));
 					this.addSequential(new SetClawSpeed(0.99));
-					this.addSequential(new Delay(2.5));
-					this.addSequential(new Shoot());
+					this.addSequential(new Delay(2));
+					this.addSequential(new LaunchCube());
+					this.addSequential(new SetClawSpeed(0));
 				}
 				else
 				{
@@ -90,8 +93,9 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(-40.0));
 					this.addSequential(new SetClawSpeed(0.99));
-					this.addSequential(new Delay(2.5));
-					this.addSequential(new Shoot());
+					this.addSequential(new Delay(2));
+					this.addSequential(new LaunchCube());
+					this.addSequential(new SetClawSpeed(0));
 				}
 				else if(switchSide == MatchData.OwnedSide.RIGHT)
 				{
@@ -127,8 +131,9 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(-40.0));
 					this.addSequential(new SetClawSpeed(0.99));
-					this.addSequential(new Delay(2.5));
-					this.addSequential(new Shoot());
+					this.addSequential(new Delay(2));
+					this.addSequential(new LaunchCube());
+					this.addSequential(new SetClawSpeed(0));
 				}
 				else
 				{
@@ -144,8 +149,9 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new Straight(-40.0));
 					this.addSequential(new SetClawSpeed(0.99));
-					this.addSequential(new Delay(2.5));
-					this.addSequential(new Shoot());
+					this.addSequential(new Delay(2));
+					this.addSequential(new LaunchCube());
+					this.addSequential(new SetClawSpeed(0));
 				}
 				else if(switchSide == MatchData.OwnedSide.LEFT)
 				{

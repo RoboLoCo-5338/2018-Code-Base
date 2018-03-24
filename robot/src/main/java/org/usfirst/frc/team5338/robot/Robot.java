@@ -29,8 +29,9 @@ public class Robot extends IterativeRobot
 	public static final Sensors sensors = new Sensors();
 	// Creates static Autonomous and SendableChooser objects for use elsewhere.
 	public static Command Auto;
+	@SuppressWarnings("unused")
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
-
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
@@ -86,7 +87,7 @@ public class Robot extends IterativeRobot
 		Robot.autonomousChooser.addObject("Right Autonomous (Scale Priority)", "RIGHTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Right Autonomous (Switch Priority)", "RIGHTSWITCHSCALE");
 		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
-		Robot.autonomousChooser.addObject("NO AUTONOMOUS", "NOTHING");
+		Robot.autonomousChooser.addObject("NO AUTONOMOUS (DANGER)", "NOTHING");
 		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 }

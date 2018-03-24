@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetClawSpeed extends Command
 {
 	private final double wheelSpeed;
-	
+
 	public SetClawSpeed(final double wheelSpeed)
 	{
 		super();
@@ -28,6 +28,6 @@ public class SetClawSpeed extends Command
 	@Override
 	protected void end()
 	{
-		Robot.claw.setWheelSpeed(0.0);
+		;
 	}
 }

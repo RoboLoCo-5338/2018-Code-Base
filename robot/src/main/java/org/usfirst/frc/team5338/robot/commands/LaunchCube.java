@@ -4,9 +4,9 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class Shoot extends Command
+public class LaunchCube extends Command
 {
-	public Shoot()
+	public LaunchCube()
 	{
 		super();
 		this.requires(Robot.claw);
