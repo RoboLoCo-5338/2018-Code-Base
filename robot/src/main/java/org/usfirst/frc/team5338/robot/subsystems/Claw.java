@@ -17,8 +17,8 @@ public class Claw extends Subsystem
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid shooter = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
-	final double scaleValue = 45; // potentiometer value when the dart actuator is retracted
-	final double floorValue = 705; // potentiometer value when dart actuator is extended
+	final double scaleValue = 50; // potentiometer value when the dart actuator is retracted
+	final double floorValue = 700; // potentiometer value when dart actuator is extended
 	final double switchValue = 275;
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
@@ -26,10 +26,10 @@ public class Claw extends Subsystem
 	// TWEAK BASED ON NEW DART RATIO
 	private final double lowSpeed = 0.25; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
-	{ // default command required by Subsystem class. Not being modified
+	{
 		this.setDefaultCommand(new ClawControl());
 	}
 	public Claw()
@@ -224,25 +224,21 @@ public class Claw extends Subsystem
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
 			// CHANGE BASED ON NEW GEARBOXES
-			this.leftMotor.set(-0.30);
-			this.rightMotor.set(-0.30);
+			this.setWheelSpeed(-0.30);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
 			// CHANGE BASED ON NEW GEARBOXES
-			this.leftMotor.set(0.40);
-			this.rightMotor.set(0.40);
+			this.setWheelSpeed(0.40);
 		}
 		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
 			// CHANGE BASED ON NEW GEARBOXES
-			this.leftMotor.set(0.99);
-			this.rightMotor.set(0.99);
+			this.setWheelSpeed(0.99);
 		}
 		else
 		{
-			this.leftMotor.set(0);
-			this.rightMotor.set(0);
+			this.setWheelSpeed(0);
 		}
 		if(oi.get(OI.Button.DART_FLOOR))
 		{
