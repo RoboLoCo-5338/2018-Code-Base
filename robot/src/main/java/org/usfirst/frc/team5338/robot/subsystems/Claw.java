@@ -43,7 +43,7 @@ public class Claw extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		talon.configPeakCurrentLimit(100, 0);
+		talon.configPeakCurrentLimit(95, 0);
 		talon.configPeakCurrentDuration(3, 0);
 		talon.configContinuousCurrentLimit(80, 0);
 		talon.enableCurrentLimit(true);
@@ -240,23 +240,19 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
-			this.LEFT.set(-0.30);
-			this.RIGHT.set(-0.30);
+			this.setWheelSpeed(-0.30);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
-			this.LEFT.set(0.40);
-			this.RIGHT.set(0.40);
+			this.setWheelSpeed(0.40);
 		}
 		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
-			this.LEFT.set(0.99);
-			this.RIGHT.set(0.99);
+			this.setWheelSpeed(0.99);
 		}
 		else
 		{
-			this.LEFT.set(0);
-			this.RIGHT.set(0);
+			this.setWheelSpeed(0);
 		}
 		if(oi.get(OI.Button.DART_FLOOR))
 		{
