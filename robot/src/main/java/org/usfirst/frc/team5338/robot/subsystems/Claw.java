@@ -23,10 +23,9 @@ public class Claw extends Subsystem
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	// TWEAK BASED ON NEW DART RATIO
-	private final double lowSpeed = 0.25; // speed to which actuator slows
+	private final double lowSpeed = 0.15; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -223,18 +222,15 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
-			// CHANGE BASED ON NEW GEARBOXES
-			this.setWheelSpeed(-0.30);
+			this.setWheelSpeed(-0.30); // Check
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
-			// CHANGE BASED ON NEW GEARBOXES
-			this.setWheelSpeed(0.40);
+			this.setWheelSpeed(0.30); // Check
 		}
 		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
-			// CHANGE BASED ON NEW GEARBOXES
-			this.setWheelSpeed(0.99);
+			this.setWheelSpeed(0.99); // Check
 		}
 		else
 		{
