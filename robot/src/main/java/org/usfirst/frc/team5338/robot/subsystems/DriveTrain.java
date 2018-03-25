@@ -36,7 +36,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor COMPRESSOR = new Compressor(8);
 	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-	
+
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -53,14 +53,14 @@ public class DriveTrain extends Subsystem
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
 		talon.configPeakCurrentLimit(100, 0);
-		talon.configPeakCurrentDuration(3, 0);
+		talon.configPeakCurrentDuration(1, 0);
 		talon.configContinuousCurrentLimit(80, 0);
 		talon.enableCurrentLimit(true);
 		talon.configNeutralDeadband(0.001, 0);
 		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, 0);
 		talon.setControlFramePeriod(ControlFrame.Control_3_General, 5);
 	}
-	public void shiftUp(final boolean state)
+	public void shift(final boolean state)
 	{
 		if(state)
 		{

@@ -18,7 +18,7 @@ public class ChangeGear extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.drivetrain.shiftUp(this.shiftState);
+		Robot.drivetrain.shift(this.shiftState);
 	}
 	@Override
 	protected boolean isFinished()

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Sensors extends Subsystem
 {
-	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
+	private final SensorCollection[] ENCODERS = Robot.drivetrain.getEncoders();
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
 	private final PowerDistributionPanel PDP = new PowerDistributionPanel();
@@ -33,8 +33,8 @@ public class Sensors extends Subsystem
 	}
 	public void resetEncoders()
 	{
-		this.encoders[0].setQuadraturePosition(0, 0);
-		this.encoders[1].setQuadraturePosition(0, 0);
+		this.ENCODERS[0].setQuadraturePosition(0, 0);
+		this.ENCODERS[1].setQuadraturePosition(0, 0);
 		this.right_prev = 0;
 		this.left_prev = 0;
 		this.right_current = 0;
@@ -43,9 +43,9 @@ public class Sensors extends Subsystem
 	private void updateEncoders()
 	{
 		this.right_prev = this.right_current;
-		this.right_current = Math.abs(this.encoders[0].getQuadraturePosition());
+		this.right_current = Math.abs(this.ENCODERS[0].getQuadraturePosition());
 		this.left_prev = this.left_current;
-		this.left_current = Math.abs(this.encoders[1].getQuadraturePosition());
+		this.left_current = Math.abs(this.ENCODERS[1].getQuadraturePosition());
 	}
 	public double[] distances()
 	{

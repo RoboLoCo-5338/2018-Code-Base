@@ -10,7 +10,7 @@ public class ResetSensors extends Command
 	{
 		super();
 		this.requires(Robot.sensors);
-		this.setTimeout(0.250);
+		this.setTimeout(0.25);
 	}
 	@Override
 	protected void execute()

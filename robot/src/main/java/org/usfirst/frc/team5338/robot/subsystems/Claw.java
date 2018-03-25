@@ -27,7 +27,7 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double MIN_DART_SPEED = 0.125; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.99;
-	
+
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -43,9 +43,9 @@ public class Claw extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		talon.configPeakCurrentLimit(110, 0);
-		talon.configPeakCurrentDuration(3, 0);
-		talon.configContinuousCurrentLimit(90, 0);
+		talon.configPeakCurrentLimit(100, 0);
+		talon.configPeakCurrentDuration(1, 0);
+		talon.configContinuousCurrentLimit(80, 0);
 		talon.enableCurrentLimit(true);
 		talon.configNeutralDeadband(0.001, 0);
 		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, 0);
