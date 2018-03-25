@@ -30,11 +30,11 @@ public class Turn extends Command
 	{
 		if(this.angle > Robot.sensors.ahrs.getYaw())
 		{
-			Robot.drivetrain.drive(0.70, -0.70);
+			Robot.drivetrain.drive(0.70, -0.70); // MUST BE CHANGED FOR NEW DEFAULT GEARING
 		}
 		else
 		{
-			Robot.drivetrain.drive(-0.70, 0.70);
+			Robot.drivetrain.drive(-0.70, 0.70); // MUST BE CHANGED FOR NEW DEFAULT GEARING
 		}
 	}
 	@Override
