@@ -17,15 +17,15 @@ public class Claw extends Subsystem
 	private final DoubleSolenoid grabber = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid shooter = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
-	final double scaleValue = 50; // potentiometer value when the dart actuator is retracted
+	final double scaleValue = 40; // potentiometer value when the dart actuator is retracted
 	final double floorValue = 700; // potentiometer value when dart actuator is extended
 	final double switchValue = 275;
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	private final double lowSpeed = 0.15; // speed to which actuator slows
+	private final double lowSpeed = 0.125; // speed to which actuator slows
 	private final double maxSpeed = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -222,15 +222,15 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
-			this.setWheelSpeed(-0.30); // Check
+			this.setWheelSpeed(-0.30);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
-			this.setWheelSpeed(0.30); // Check
+			this.setWheelSpeed(0.30);
 		}
 		else if(oi.get(OI.Button.POWER_SHOOTER))
 		{
-			this.setWheelSpeed(0.99); // Check
+			this.setWheelSpeed(0.99);
 		}
 		else
 		{
