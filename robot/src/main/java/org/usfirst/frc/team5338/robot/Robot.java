@@ -21,24 +21,25 @@ public class Robot extends IterativeRobot
 {
 	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects for
 	// use elsewhere.
-	public static final VisionSystem visionSystem = new VisionSystem();
+	public static final VisionSystem visionsystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
 	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
-	// Creates static Autonomous and SendableChooser objects for use elsewhere.
+	// Creates SendableChooser objects for use elsewhere.
 	public static Command Auto;
+	@SuppressWarnings("unused")
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
-	
+
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
 	{
 		// Clears all commands
 		Scheduler.getInstance().removeAll();
-		// Creates SendableChooser to select Autonomous
-		Robot.createAutonomousChooser();
+		// Configures SendableChooser to select Autonomous
+		Robot.setupAutonomous();
 	}
 	// Public method that runs once at the beginning of autonomous.
 	@Override
@@ -62,7 +63,6 @@ public class Robot extends IterativeRobot
 	{
 		// Clears all commands
 		Scheduler.getInstance().removeAll();
-		// Eventual code to disable autonomous will occur here.
 		try
 		{
 			Robot.Auto.cancel();
@@ -78,7 +78,7 @@ public class Robot extends IterativeRobot
 	{
 		Scheduler.getInstance().run();
 	}
-	private static void createAutonomousChooser()
+	private static void setupAutonomous()
 	{
 		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
 		Robot.autonomousChooser.addObject("Left Autonomous", "LEFT");

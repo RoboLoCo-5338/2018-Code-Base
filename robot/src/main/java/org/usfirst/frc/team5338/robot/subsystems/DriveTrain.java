@@ -27,24 +27,24 @@ public class DriveTrain extends Subsystem
 	public final WPI_TalonSRX RIGHT_2 = new WPI_TalonSRX(4);
 	// Contol-group objects used to move the left drive drive and right drive motors
 	// in sync (two drive motors per side)
-	private final SpeedControllerGroup LEFTSIDE = new SpeedControllerGroup(this.LEFT_1, this.LEFT_2);
-	private final SpeedControllerGroup RIGHTSIDE = new SpeedControllerGroup(this.RIGHT_1, this.RIGHT_2);
+	private final SpeedControllerGroup LEFT_SIDE = new SpeedControllerGroup(this.LEFT_1, this.LEFT_2);
+	private final SpeedControllerGroup RIGHT_SIDE = new SpeedControllerGroup(this.RIGHT_1, this.RIGHT_2);
 	// Creates a drive object that will define how the left and right motor sets are
 	// configured (currently as an arcade drive)
-	private final DifferentialDrive DRIVE = new DifferentialDrive(this.LEFTSIDE, this.RIGHTSIDE);
+	private final DifferentialDrive DRIVE = new DifferentialDrive(this.LEFT_SIDE, this.RIGHT_SIDE);
 	// Objects that control the shift and compressor mechanism
 	private final Compressor COMPRESSOR = new Compressor(8);
 	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
 		super();
 		this.COMPRESSOR.setClosedLoopControl(true);
 		this.COMPRESSOR.start();
-		this.SHIFTER.set(DoubleSolenoid.Value.kReverse);
-		this.shiftedUp = true;
+		this.SHIFTER.set(DoubleSolenoid.Value.kForward);
+		this.shiftedUp = false;
 		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.LEFT_1, this.LEFT_2, this.RIGHT_1, this.RIGHT_2})
 		{
 			DriveTrain.configureTalon(talon);
@@ -52,13 +52,26 @@ public class DriveTrain extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		talon.configPeakCurrentLimit(95, 0);
+		talon.configPeakCurrentLimit(100, 0);
 		talon.configPeakCurrentDuration(3, 0);
 		talon.configContinuousCurrentLimit(80, 0);
 		talon.enableCurrentLimit(true);
 		talon.configNeutralDeadband(0.001, 0);
 		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, 0);
 		talon.setControlFramePeriod(ControlFrame.Control_3_General, 5);
+	}
+	public void shiftUp(final boolean state)
+	{
+		if(state)
+		{
+			this.SHIFTER.set(DoubleSolenoid.Value.kReverse);
+			this.shiftedUp = true;
+		}
+		else
+		{
+			this.SHIFTER.set(DoubleSolenoid.Value.kForward);
+			this.shiftedUp = false;
+		}
 	}
 	public SensorCollection[] getEncoders()
 	{
@@ -91,7 +104,7 @@ public class DriveTrain extends Subsystem
 		else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
 		{
 			// If user forces the gear to shift down, only do so if power is < 20%
-			if((Math.abs(this.LEFTSIDE.get()) <= 0.20) && (Math.abs(this.RIGHTSIDE.get()) <= 0.20))
+			if((Math.abs(this.LEFT_SIDE.get()) <= 0.20) && (Math.abs(this.RIGHT_SIDE.get()) <= 0.20))
 			{
 				this.SHIFTER.set(DoubleSolenoid.Value.kForward);
 				this.shiftedUp = false;

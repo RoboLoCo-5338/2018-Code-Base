@@ -30,7 +30,7 @@ public class Straight extends Command
 		final double[] distanceTravelled = Robot.sensors.distances();
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.drive(0.50, 0.50); // MUST BE CHANGED FOR NEW GEARING
+		Robot.drivetrain.drive(0.50, 0.50);
 	}
 	@Override
 	protected boolean isFinished()

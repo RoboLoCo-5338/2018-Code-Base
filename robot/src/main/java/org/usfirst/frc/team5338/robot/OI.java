@@ -13,7 +13,7 @@ public class OI
 		SHIFT_UP, SHIFT_DOWN, INTAKE_CUBE, OUTTAKE_CUBE, CLOSE_CLAW, OPEN_CLAW, EXTEND_CLIMB, RETRACT_CLIMB, DART_FLOOR,
 		DART_SWITCH, DART_SCALE, POWER_SHOOTER, EXTEND_SHOOTER
 	}
-
+	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -28,11 +28,11 @@ public class OI
 		}
 		return value;
 	}
-
-	// Creates private joystick objects for use.
+	
+	// Creates private joysticks objects for use.
 	private final Joystick leftJoystick = new Joystick(0);
 	private final Joystick rightJoystick = new Joystick(1);
-
+	
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)

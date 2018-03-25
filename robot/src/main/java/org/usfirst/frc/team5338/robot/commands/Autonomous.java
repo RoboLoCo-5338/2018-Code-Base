@@ -26,6 +26,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new HandleCube(0.20));
+					this.addSequential(new ChangeGear(true));
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -39,9 +40,11 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new HandleCube(0.20));
+					this.addSequential(new ChangeGear(true));
 					break;
 				case "BASELINE":
-					this.addSequential(new Straight(130.0));
+					this.addSequential(new Straight(126.0));
+					this.addSequential(new ChangeGear(true));
 					break;
 				default:
 					break;
@@ -60,6 +63,7 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new ResetSensors());
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new HandleCube(0.20));
+					this.addSequential(new ChangeGear(true));
 					break;
 				case "CENTER":
 					this.addSequential(new Straight(36.0));
@@ -73,9 +77,10 @@ public class Autonomous extends CommandGroup
 					this.addSequential(new Straight(34.0));
 					this.addSequential(new ChangeClawPosition(2));
 					this.addSequential(new HandleCube(0.20));
+					this.addSequential(new ChangeGear(true));
 					break;
 				case "BASELINE":
-					this.addSequential(new Straight(130.0));
+					this.addSequential(new Straight(126.0));
 					break;
 				default:
 					break;

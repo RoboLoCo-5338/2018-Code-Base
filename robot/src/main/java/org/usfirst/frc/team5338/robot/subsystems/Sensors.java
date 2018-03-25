@@ -16,7 +16,7 @@ public class Sensors extends Subsystem
 	private final SensorCollection[] encoders = Robot.drivetrain.getEncoders();
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
-	private final PowerDistributionPanel pdp = new PowerDistributionPanel();
+	private final PowerDistributionPanel PDP = new PowerDistributionPanel();
 	
 	public Sensors()
 	{
@@ -56,7 +56,7 @@ public class Sensors extends Subsystem
 	}
 	public void displayVoltage()
 	{
-		SmartDashboard.putNumber("System Voltage", this.pdp.getVoltage());
+		SmartDashboard.putNumber("System Voltage", this.PDP.getVoltage());
 	}
 	@Override
 	protected void initDefaultCommand()

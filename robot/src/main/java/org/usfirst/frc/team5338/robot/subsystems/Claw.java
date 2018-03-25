@@ -27,7 +27,7 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double MIN_DART_SPEED = 0.125; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.99;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -43,9 +43,9 @@ public class Claw extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		talon.configPeakCurrentLimit(95, 0);
+		talon.configPeakCurrentLimit(110, 0);
 		talon.configPeakCurrentDuration(3, 0);
-		talon.configContinuousCurrentLimit(80, 0);
+		talon.configContinuousCurrentLimit(90, 0);
 		talon.enableCurrentLimit(true);
 		talon.configNeutralDeadband(0.001, 0);
 		talon.setStatusFramePeriod(StatusFrame.Status_1_General, 5, 0);
@@ -74,7 +74,7 @@ public class Claw extends Subsystem
 			case 3:
 				if(this.potValue > this.SCALE_VALUE)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
-          final double distanceToMin = Math.abs(this.potValue - this.SCALE_VALUE);
+					final double distanceToMin = Math.abs(this.potValue - this.SCALE_VALUE);
 					final int slowDownRange = 125; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
@@ -110,7 +110,7 @@ public class Claw extends Subsystem
 			case 2:
 				if(this.potValue > this.SWITCH_VALUE)
 				{ // if the user wants to retract and the claw hasn't hit minimum value
-          final double distanceToMin = Math.abs(this.potValue - this.SWITCH_VALUE);
+					final double distanceToMin = Math.abs(this.potValue - this.SWITCH_VALUE);
 					final int slowDownRange = 125; // declares that the actuator will slow 270 points away from minimum
 													// value
 					if(distanceToMin <= slowDownRange)
@@ -171,8 +171,9 @@ public class Claw extends Subsystem
 				if(this.potValue < this.FLOOR_VALUE)
 				{ // if the user wants to raise the claw and the claw hasn't hit its max yet
 					final double distanceToMax = Math.abs(this.potValue - this.FLOOR_VALUE); // the amount needed to
-																							// extend to max
-					final int slowDownRange = 75; // declares that actuator will slow 150 points away from the actuator's maximum value
+																								// extend to max
+					final int slowDownRange = 75; // declares that actuator will slow 150 points away from the
+													// actuator's maximum value
 					if(distanceToMax <= slowDownRange)
 					{
 						/**
@@ -238,7 +239,7 @@ public class Claw extends Subsystem
 		}
 		if(oi.get(OI.Button.INTAKE_CUBE))
 		{
-			this.setWheelSpeed(-0.30);
+			this.setWheelSpeed(-0.35);
 		}
 		else if(oi.get(OI.Button.OUTTAKE_CUBE))
 		{
