@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot
 	// use elsewhere.
 	public static final VisionSystem visionsystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
-	public static final Claw claw = new Claw();
+	public static final Claw claw = null;//= new Claw();
 	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();

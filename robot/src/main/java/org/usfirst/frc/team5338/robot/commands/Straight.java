@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,6 +32,7 @@ public class Straight extends Command
 		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
 		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
 		Robot.drivetrain.drive(0.50, 0.50);
+		SmartDashboard.putNumberArray("Distances travelled", distanceTravelled);
 	}
 	@Override
 	protected boolean isFinished()

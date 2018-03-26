@@ -19,7 +19,7 @@ public class Claw extends Subsystem
 	private final DoubleSolenoid GRABBER = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid SHOOTER = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
-	private final double SCALE_VALUE = 40; // potentiometer value when the dart actuator is retracted
+	private final double SCALE_VALUE = 30; // potentiometer value when the dart actuator is retracted
 	private final double FLOOR_VALUE = 705; // potentiometer value when dart actuator is extended
 	private final double SWITCH_VALUE = 275;
 	private boolean clawClosed = true;
@@ -36,10 +36,10 @@ public class Claw extends Subsystem
 	public Claw()
 	{
 		super();
-		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.DART, this.LEFT, this.RIGHT})
-		{
-			Claw.configureTalon(talon);
-		}
+//		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.DART, this.LEFT, this.RIGHT})
+//		{
+//			Claw.configureTalon(talon);
+//		}
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
