@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5338.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -7,7 +8,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
-	
 	public Straight(final double input)
 	{
 		// Input in inches to travel
