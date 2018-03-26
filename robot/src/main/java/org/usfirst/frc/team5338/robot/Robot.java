@@ -19,19 +19,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //Main class that is called by the FMS.
 public class Robot extends IterativeRobot
 {
-	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects for
-	// use elsewhere.
+	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects
 	public static final VisionSystem visionsystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
-	public static final Claw claw = null;//= new Claw();
+	public static final Claw claw = null;// = new Claw();
 	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
-	// Creates SendableChooser objects for use elsewhere.
-	public static Command Auto;
+	// Creates SendableChooser objects
 	@SuppressWarnings("unused")
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
-	
+	// Defines Command object for Auto
+	public static Command autonomous;
+
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
@@ -48,8 +48,8 @@ public class Robot extends IterativeRobot
 		// Clears all commands
 		Scheduler.getInstance().removeAll();
 		// Creates the autonomous with selection
-		Robot.Auto = new Autonomous();
-		Robot.Auto.start();
+		Robot.autonomous = new Autonomous();
+		Robot.autonomous.start();
 	}
 	// Public method that runs continuously every 20ms during autonomous.
 	@Override
@@ -65,11 +65,11 @@ public class Robot extends IterativeRobot
 		Scheduler.getInstance().removeAll();
 		try
 		{
-			Robot.Auto.cancel();
+			Robot.autonomous.cancel();
 		}
 		catch(final Exception e)
 		{
-			// No auto was enabled
+			// No auto was enabled to be cancelled
 		}
 	}
 	// Public method that runs continuously every 20ms during autonomous.
@@ -80,13 +80,14 @@ public class Robot extends IterativeRobot
 	}
 	private static void setupAutonomous()
 	{
-    Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
+		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
 		Robot.autonomousChooser.addObject("Left Autonomous (Scale Priority)", "LEFTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Left Autonomous (Switch Priority)", "LEFTSWITCHSCALE");
 		Robot.autonomousChooser.addObject("Right Autonomous (Scale Priority)", "RIGHTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Right Autonomous (Switch Priority)", "RIGHTSWITCHSCALE");
 		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
-		Robot.autonomousChooser.addObject("NO AUTONOMOUS (DANGER)", "NOTHING");
+		Robot.autonomousChooser.addObject("NO AUTONOMOUS (DANGER)!!!", "NOTHING");
+		Robot.autonomousChooser.addObject("TESTING (DANGER)!!!", "NOTHING");
 		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 }

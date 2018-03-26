@@ -77,8 +77,7 @@ public class DriveTrain extends Subsystem
 	{
 		return new SensorCollection[] {this.LEFT_1.getSensorCollection(), this.RIGHT_2.getSensorCollection()};
 	}
-	// Runs the drive in arcade mode taking in the power magnitude toward the front
-	// and diagonal
+	// Runs the drive in tank mode
 	public void drive(final double left, final double right)
 	{
 		this.DRIVE.tankDrive(left, right);
@@ -103,8 +102,8 @@ public class DriveTrain extends Subsystem
 		}
 		else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
 		{
-			// If user forces the gear to shift down, only do so if power is < 20%
-			if((Math.abs(this.LEFT_SIDE.get()) <= 0.20) && (Math.abs(this.RIGHT_SIDE.get()) <= 0.20))
+			// If user forces the gear to shift down, only do so if power is < 25%
+			if((Math.abs(this.LEFT_SIDE.get()) <= 0.25) && (Math.abs(this.RIGHT_SIDE.get()) <= 0.25))
 			{
 				this.SHIFTER.set(DoubleSolenoid.Value.kForward);
 				this.shiftedUp = false;

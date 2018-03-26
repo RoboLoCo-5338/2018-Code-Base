@@ -23,12 +23,12 @@ public class Climber extends Subsystem
 	}
 	public void control(final OI oi)
 	{
-		if(oi.get(OI.Button.EXTEND_CLIMB))
+		if(oi.get(OI.Button.EXTEND))
 		{
 			this.CLIMBER.set(DoubleSolenoid.Value.kReverse);
 			this.climberExtended = true;
 		}
-		else if(oi.get(OI.Button.RETRACT_CLIMB))
+		else if(oi.get(OI.Button.RETRACT))
 		{
 			this.CLIMBER.set(DoubleSolenoid.Value.kForward);
 			this.climberExtended = false;

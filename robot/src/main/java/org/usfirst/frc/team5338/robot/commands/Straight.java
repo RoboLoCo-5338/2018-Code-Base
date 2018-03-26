@@ -1,6 +1,5 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -8,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
+	
 	public Straight(final double input)
 	{
 		// Input in inches to travel
@@ -23,7 +23,7 @@ public class Straight extends Command
 			this.correctionFactor = 13;
 		}
 		this.rotations = (input + this.correctionFactor) / (6.0 * Math.PI);
-		this.setTimeout((5.75 * Math.abs(input)) / 138.0);
+		this.setTimeout((6 * Math.abs(input)) / 138.0);
 	}
 	@Override
 	protected void initialize()

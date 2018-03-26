@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5338.robot.commands;
 
+import org.usfirst.frc.team5338.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import openrio.powerup.MatchData;
 
@@ -9,8 +11,7 @@ public class Autonomous extends CommandGroup
 	
 	public Autonomous()
 	{
-		this.autonomous = "TESTING";// Robot.autonomousChooser.getSelected(); //THIS IS TEMPORARY ONLY, PLEASE FIX
-									// ME!!
+		this.autonomous = Robot.autonomousChooser.getSelected();
 		try
 		{
 			final MatchData.OwnedSide switchSide = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
@@ -36,7 +37,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(34.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 						break;
 					}
 					else if(switchSide == MatchData.OwnedSide.RIGHT)
@@ -52,7 +53,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(34.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 						break;
 					}
 					break;
@@ -67,7 +68,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.RIGHT)
 					{
@@ -77,15 +78,15 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(-40.0));
 						this.addSequential(new SetClawSpeed(0.99));
-						this.addSequential(new Delay(2));
+						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
 						this.addSequential(new SetClawSpeed(0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else
 					{
 						this.addSequential(new Straight(126.0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					break;
 				case "RIGHTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
@@ -98,10 +99,10 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(-40.0));
 						this.addSequential(new SetClawSpeed(0.99));
-						this.addSequential(new Delay(2));
+						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
 						this.addSequential(new SetClawSpeed(0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else if(switchSide == MatchData.OwnedSide.RIGHT)
 					{
@@ -112,12 +113,12 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else
 					{
 						this.addSequential(new Straight(126.0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					break;
 				case "LEFTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
@@ -130,7 +131,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.LEFT)
 					{
@@ -140,15 +141,15 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(-40.0));
 						this.addSequential(new SetClawSpeed(0.99));
-						this.addSequential(new Delay(2));
+						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
 						this.addSequential(new SetClawSpeed(0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else
 					{
 						this.addSequential(new Straight(126.0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					break;
 				case "LEFTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
@@ -160,10 +161,10 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(-40.0));
 						this.addSequential(new SetClawSpeed(0.99));
-						this.addSequential(new Delay(2));
+						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
 						this.addSequential(new SetClawSpeed(0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else if(switchSide == MatchData.OwnedSide.LEFT)
 					{
@@ -174,24 +175,24 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
 						this.addSequential(new DepositCube(0.20));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					else
 					{
 						this.addSequential(new Straight(126.0));
-            this.addSequential(new ChangeGear(true));
+						this.addSequential(new ChangeGear(true));
 					}
 					break;
 				default:
 					this.addSequential(new Straight(126.0));
-          this.addSequential(new ChangeGear(true));
+					this.addSequential(new ChangeGear(true));
 					break;
 			}
 		}
-		catch(final Exception e) //In case the FMS screws up and something weird happens to game data
+		catch(final Exception e) // The FMS may screw up
 		{
 			this.addSequential(new Straight(126.0));
-      this.addSequential(new ChangeGear(true));
+			this.addSequential(new ChangeGear(true));
 		}
 	}
 }

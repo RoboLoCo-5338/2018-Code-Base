@@ -17,7 +17,7 @@ public class Sensors extends Subsystem
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
 	private final PowerDistributionPanel PDP = new PowerDistributionPanel();
-	
+
 	public Sensors()
 	{
 		super();
@@ -50,8 +50,8 @@ public class Sensors extends Subsystem
 	public double[] distances()
 	{
 		this.updateEncoders();
-		this.right_rotations = (this.right_current - this.right_prev) / 4096.0; // 12 bit data
-		this.left_rotations = (this.left_current - this.left_prev) / 4096.0; // 12 bit data
+		this.right_rotations = (Math.abs(this.right_current) - Math.abs(this.right_prev)) / 4096.0; // 12 bit data
+		this.left_rotations = (Math.abs(this.left_current) - Math.abs(this.left_prev)) / 4096.0; // 12 bit data
 		return new double[] {Math.abs(this.left_rotations), Math.abs(this.right_rotations)}; // Both inches measurements
 	}
 	public void displayVoltage()

@@ -27,6 +27,7 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double MIN_DART_SPEED = 0.125; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.99;
+	
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -35,10 +36,10 @@ public class Claw extends Subsystem
 	public Claw()
 	{
 		super();
-//		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.DART, this.LEFT, this.RIGHT})
-//		{
-//			Claw.configureTalon(talon);
-//		}
+		for(final WPI_TalonSRX talon : new WPI_TalonSRX[] {this.DART, this.LEFT, this.RIGHT})
+		{
+			Claw.configureTalon(talon);
+		}
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
@@ -57,16 +58,15 @@ public class Claw extends Subsystem
 	}
 	public void shoot()
 	{
-		this.shooter.set(DoubleSolenoid.Value.kForward);
+		this.SHOOTER.set(DoubleSolenoid.Value.kForward);
 	}
 	public void resetShooter()
 	{
-		this.shooter.set(DoubleSolenoid.Value.kReverse);
+		this.SHOOTER.set(DoubleSolenoid.Value.kReverse);
 	}
 	public void setDartPosition(final int position)
 	{
 		this.dartPosition = position;
-		this.potValue = this.DART.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
 		this.changeDartPosition();
 	}
 	public int getDartPosition()
@@ -75,6 +75,7 @@ public class Claw extends Subsystem
 	}
 	public void changeDartPosition()
 	{
+		this.potValue = this.DART.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
 		// which the Dart Actuator runs
 		switch(this.dartPosition)
 		{
@@ -127,11 +128,8 @@ public class Claw extends Subsystem
 						 * slow-down range
 						 **/
 						final double deceleration = (this.MAX_DART_SPEED - this.MIN_DART_SPEED) / slowDownRange; // deceleration
-						// rate as
-						// calculated in raising
-						// portion
-						// of code
-						// calculate new speed as was done in raising portion of code, but multiply by
+						// rate as calculated in raising portion of code calculate new speed as was done
+						// in raising portion of code, but multiply by
 						// -1 to show direction change to lowering
 						final double newSpeed =
 										(this.MAX_DART_SPEED - (deceleration * (slowDownRange - distanceToMin))) * -1;
@@ -209,23 +207,14 @@ public class Claw extends Subsystem
 				break;
 		}
 	}
-	/**
-	 * Method: tilt
-	 *
-	 * @param oi
-	 *            Action: takes in the OI and takes care of all claw tilting actions
-	 *            based on Operator Input
-	 */
 	public void control(final OI oi)
 	{
-		this.potValue = this.DART.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
-																		// which the Dart Actuator runs
-		if(oi.get(OI.Button.CLOSE_CLAW))
+		if(oi.get(OI.Button.CLOSE))
 		{
 			this.GRABBER.set(DoubleSolenoid.Value.kReverse);
 			this.clawClosed = true;
 		}
-		else if(oi.get(OI.Button.OPEN_CLAW))
+		else if(oi.get(OI.Button.OPEN))
 		{
 			this.GRABBER.set(DoubleSolenoid.Value.kForward);
 			this.clawClosed = false;
@@ -234,25 +223,25 @@ public class Claw extends Subsystem
 		{
 			this.GRABBER.set(DoubleSolenoid.Value.kOff);
 		}
-		if(oi.get(OI.Button.EXTEND_SHOOTER))
+		if(oi.get(OI.Button.SHOOT))
 		{
-			this.SHOOTER.set(DoubleSolenoid.Value.kForward);
+			this.shoot();
 			this.shooterPosition = true;
 		}
 		else
 		{
-			this.SHOOTER.set(DoubleSolenoid.Value.kReverse);
+			this.resetShooter();
 			this.shooterPosition = false;
 		}
-		if(oi.get(OI.Button.INTAKE_CUBE))
+		if(oi.get(OI.Button.INTAKE))
 		{
 			this.setWheelSpeed(-0.35);
 		}
-		else if(oi.get(OI.Button.OUTTAKE_CUBE))
+		else if(oi.get(OI.Button.OUTTAKE))
 		{
 			this.setWheelSpeed(0.30);
 		}
-		else if(oi.get(OI.Button.POWER_SHOOTER))
+		else if(oi.get(OI.Button.SPIN_UP))
 		{
 			this.setWheelSpeed(0.99);
 		}
@@ -260,19 +249,20 @@ public class Claw extends Subsystem
 		{
 			this.setWheelSpeed(0);
 		}
-		if(oi.get(OI.Button.DART_FLOOR))
+		if(oi.get(OI.Button.FLOOR))
 		{
 			this.dartPosition = 1;
 		}
-		else if(oi.get(OI.Button.DART_SWITCH))
+		else if(oi.get(OI.Button.SWITCH))
 		{
 			this.dartPosition = 2;
 		}
-		else if(oi.get(OI.Button.DART_SCALE))
+		else if(oi.get(OI.Button.SCALE))
 		{
 			this.dartPosition = 3;
 		}
 		this.changeDartPosition();
+		// log the status
 		SmartDashboard.putBoolean("Shooter Status", this.shooterPosition);
 		SmartDashboard.putNumber("DART Position", this.potValue);
 		SmartDashboard.putBoolean("Claw Status", this.clawClosed);
