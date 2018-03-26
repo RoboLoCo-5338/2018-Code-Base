@@ -1,91 +1,197 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import org.usfirst.frc.team5338.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import openrio.powerup.MatchData;
 
 public class Autonomous extends CommandGroup
 {
-	private final String location;
+	private final String autonomous;
 	
 	public Autonomous()
 	{
-		this.location = Robot.autonomousChooser.getSelected();
-		final MatchData.OwnedSide side = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
-		if(side == MatchData.OwnedSide.LEFT)
+		this.autonomous = "TESTING";// Robot.autonomousChooser.getSelected(); //THIS IS TEMPORARY ONLY, PLEASE FIX
+									// ME!!
+		try
 		{
-			switch(this.location)
+			final MatchData.OwnedSide switchSide = MatchData.getOwnedSide(MatchData.GameFeature.SWITCH_NEAR);
+			final MatchData.OwnedSide scaleSide = MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
+			switch(this.autonomous)
 			{
-				case "LEFT":
-					this.addSequential(new Straight(138.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(80.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(40.0));
-					this.addSequential(new ResetSensors());
-					// this.addSequential(new ChangeClawPosition(2));
-					// this.addSequential(new HandleCube(0.20));
-					// this.addSequential(new ChangeGear(true));
+				case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
+					// Tests go here
+					break;
+				case "NOTHING":
 					break;
 				case "CENTER":
-					this.addSequential(new Straight(36.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-40.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(75.00));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(45.00));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(34.0));
-					// this.addSequential(new ChangeClawPosition(2));
-					// this.addSequential(new HandleCube(0.20));
-					// this.addSequential(new ChangeGear(true));
+					if(switchSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(36.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-40.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(75.00));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(45.00));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(34.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+						break;
+					}
+					else if(switchSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(36.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(40.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(75.00));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-45.00));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(34.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+						break;
+					}
 					break;
-				case "BASELINE":
-					this.addSequential(new Straight(126.0));
-					// this.addSequential(new ChangeGear(true));
+				case "RIGHTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
+											// unfavorable
+					if(switchSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(40.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+					}
+					else if(scaleSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(260));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(-40.0));
+						this.addSequential(new SetClawSpeed(0.99));
+						this.addSequential(new Delay(2));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+            this.addSequential(new ChangeGear(true));
+					}
+					else
+					{
+						this.addSequential(new Straight(126.0));
+            this.addSequential(new ChangeGear(true));
+					}
+					break;
+				case "RIGHTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
+											// unfavorable
+					if(scaleSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(260));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(-40.0));
+						this.addSequential(new SetClawSpeed(0.99));
+						this.addSequential(new Delay(2));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+            this.addSequential(new ChangeGear(true));
+					}
+					else if(switchSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(40.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+					}
+					else
+					{
+						this.addSequential(new Straight(126.0));
+            this.addSequential(new ChangeGear(true));
+					}
+					break;
+				case "LEFTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
+					if(switchSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(40.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+					}
+					else if(scaleSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(260));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(-40.0));
+						this.addSequential(new SetClawSpeed(0.99));
+						this.addSequential(new Delay(2));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+            this.addSequential(new ChangeGear(true));
+					}
+					else
+					{
+						this.addSequential(new Straight(126.0));
+            this.addSequential(new ChangeGear(true));
+					}
+					break;
+				case "LEFTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
+					if(scaleSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(260));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(-40.0));
+						this.addSequential(new SetClawSpeed(0.99));
+						this.addSequential(new Delay(2));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+            this.addSequential(new ChangeGear(true));
+					}
+					else if(switchSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(40.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.20));
+            this.addSequential(new ChangeGear(true));
+					}
+					else
+					{
+						this.addSequential(new Straight(126.0));
+            this.addSequential(new ChangeGear(true));
+					}
 					break;
 				default:
+					this.addSequential(new Straight(126.0));
+          this.addSequential(new ChangeGear(true));
 					break;
 			}
 		}
-		else if(side == MatchData.OwnedSide.RIGHT)
+		catch(final Exception e) //In case the FMS screws up and something weird happens to game data
 		{
-			switch(this.location)
-			{
-				case "RIGHT":
-					this.addSequential(new Straight(138.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-80.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(40.0));
-					this.addSequential(new ResetSensors());
-					// this.addSequential(new ChangeClawPosition(2));
-					// this.addSequential(new HandleCube(0.20));
-					// this.addSequential(new ChangeGear(true));
-					break;
-				case "CENTER":
-					this.addSequential(new Straight(36.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(40.0));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(75.00));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Turn(-45.00));
-					this.addSequential(new ResetSensors());
-					this.addSequential(new Straight(34.0));
-					// this.addSequential(new ChangeClawPosition(2));
-					// this.addSequential(new HandleCube(0.20));
-					// this.addSequential(new ChangeGear(true));
-					break;
-				case "BASELINE":
-					this.addSequential(new Straight(126.0));
-					break;
-				default:
-					break;
-			}
+			this.addSequential(new Straight(126.0));
+      this.addSequential(new ChangeGear(true));
 		}
 	}
 }
-//

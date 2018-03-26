@@ -7,16 +7,23 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class Straight extends Command
 {
-	double rotations, targetRotationsLeft, targetRotationsRight, numRotations;
-
+	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
 	public Straight(final double input)
 	{
 		// Input in inches to travel
 		super();
 		this.requires(Robot.drivetrain);
 		this.requires(Robot.sensors);
-		this.rotations = (input - 13) / (6.0 * Math.PI);
-		this.setTimeout((6.0 * input) / 138.0);
+		if(input < 0)
+		{
+			this.correctionFactor = -13;
+		}
+		else
+		{
+			this.correctionFactor = 13;
+		}
+		this.rotations = (input + this.correctionFactor) / (6.0 * Math.PI);
+		this.setTimeout((5.75 * Math.abs(input)) / 138.0);
 	}
 	@Override
 	protected void initialize()
@@ -29,15 +36,24 @@ public class Straight extends Command
 	protected void execute()
 	{
 		final double[] distanceTravelled = Robot.sensors.distances();
-		this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
-		this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
-		Robot.drivetrain.drive(0.50, 0.50);
-		SmartDashboard.putNumberArray("Distances travelled", distanceTravelled);
+		if(this.rotations > 0)
+		{
+			this.targetRotationsLeft -= Math.abs(distanceTravelled[0]);
+			this.targetRotationsRight -= Math.abs(distanceTravelled[1]);
+			Robot.drivetrain.drive(0.50, 0.50);
+		}
+		else
+		{
+			this.targetRotationsLeft += Math.abs(distanceTravelled[0]);
+			this.targetRotationsRight += Math.abs(distanceTravelled[1]);
+			Robot.drivetrain.drive(-0.50, -0.50);
+		}
 	}
 	@Override
 	protected boolean isFinished()
 	{
-		return ((this.targetRotationsLeft < 0) && (this.targetRotationsRight < 0)) || this.isTimedOut();
+		return ((Math.abs(this.targetRotationsLeft) < 0) && (Math.abs(this.targetRotationsRight) < 0))
+						|| this.isTimedOut();
 	}
 	@Override
 	protected void end()

@@ -13,7 +13,7 @@ public class VisionSystem extends Subsystem
 {
 	private final NetworkTableInstance instance = NetworkTableInstance.create();
 	private final NetworkTable table;
-	
+
 	public VisionSystem()
 	{
 		super();

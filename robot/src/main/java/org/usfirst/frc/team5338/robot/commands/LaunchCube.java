@@ -4,21 +4,18 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ChangeClawPosition extends Command
+public class LaunchCube extends Command
 {
-	private final int newPosition;
-	
-	public ChangeClawPosition(final int position)
+	public LaunchCube()
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(0.75 * Math.abs(position - Robot.claw.getDartPosition()));
-		this.newPosition = position;
+		this.setTimeout(0.50);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.claw.setDartPosition(this.newPosition);
+		Robot.claw.shoot();
 	}
 	@Override
 	protected boolean isFinished()
@@ -28,6 +25,6 @@ public class ChangeClawPosition extends Command
 	@Override
 	protected void end()
 	{
-		; // Do Nothing
+		Robot.claw.resetShooter();
 	}
 }

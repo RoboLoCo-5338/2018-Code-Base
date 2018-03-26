@@ -27,7 +27,6 @@ public class Claw extends Subsystem
 	private int dartPosition = 3;
 	private final double MIN_DART_SPEED = 0.125; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.99;
-
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -55,6 +54,14 @@ public class Claw extends Subsystem
 	{
 		this.LEFT.set(speed);
 		this.RIGHT.set(speed);
+	}
+	public void shoot()
+	{
+		this.shooter.set(DoubleSolenoid.Value.kForward);
+	}
+	public void resetShooter()
+	{
+		this.shooter.set(DoubleSolenoid.Value.kReverse);
 	}
 	public void setDartPosition(final int position)
 	{
