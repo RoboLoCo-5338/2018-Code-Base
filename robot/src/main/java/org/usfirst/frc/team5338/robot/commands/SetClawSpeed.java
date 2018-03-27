@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class SetClawSpeed extends Command
 {
 	private final double newWheelSpeed;
-	
+
 	public SetClawSpeed(final double wheelSpeed)
 	{
 		super();
@@ -23,6 +23,7 @@ public class SetClawSpeed extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		// TODO CHECK TIMEOUT IS ENOUGH AND FUNCTIONALITY
 		return this.isTimedOut();
 	}
 	@Override

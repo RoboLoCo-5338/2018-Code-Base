@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeClawPosition extends Command
 {
 	private final int newPosition;
-	
+
 	public ChangeClawPosition(final int position)
 	{
 		super();
@@ -23,6 +23,7 @@ public class ChangeClawPosition extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		// TODO CHECK TIMEOUT IS ENOUGH
 		return this.isTimedOut();
 	}
 	@Override

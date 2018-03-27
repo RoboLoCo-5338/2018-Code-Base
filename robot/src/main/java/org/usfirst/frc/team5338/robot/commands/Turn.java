@@ -40,6 +40,7 @@ public class Turn extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		// TODO CHECK ANGLE AND DIRECTION ARE CORRECT AND TIMEOUT IS ENOUGH
 		return (Math.abs(Robot.sensors.ahrs.getYaw() - this.targetHeading) < 2) || this.isTimedOut();
 	}
 	@Override

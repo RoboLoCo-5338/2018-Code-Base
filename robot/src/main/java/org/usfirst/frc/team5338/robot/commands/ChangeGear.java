@@ -23,6 +23,7 @@ public class ChangeGear extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		// TODO CHECK TIMEOUT IS ENOUGH AND FUNCTIONALITY
 		return this.isTimedOut();
 	}
 	@Override

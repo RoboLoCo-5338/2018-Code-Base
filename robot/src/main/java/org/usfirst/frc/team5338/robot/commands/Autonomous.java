@@ -8,7 +8,10 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String autonomous;
-	
+
+	// TODO CHECK EVERYTHING
+	// TODO CHECK EVERYTHING AGAIN
+	// TODO CHECK EVERYTHING ONE MORE TIME
 	public Autonomous()
 	{
 		this.autonomous = Robot.autonomousChooser.getSelected();

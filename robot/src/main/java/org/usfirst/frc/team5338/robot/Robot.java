@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
 	// Defines Command object for Auto
 	public static Command autonomous;
-
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
@@ -80,6 +80,7 @@ public class Robot extends IterativeRobot
 	}
 	private static void setupAutonomous()
 	{
+		// TODO CHECK FUNCTIONALITY
 		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
 		Robot.autonomousChooser.addObject("Left Autonomous (Scale Priority)", "LEFTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Left Autonomous (Switch Priority)", "LEFTSWITCHSCALE");

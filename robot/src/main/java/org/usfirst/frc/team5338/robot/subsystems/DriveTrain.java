@@ -52,6 +52,7 @@ public class DriveTrain extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
+		// TODO CHECK CONSTANTS FOR CURRENT LIMITING
 		talon.configPeakCurrentLimit(100, 0);
 		talon.configPeakCurrentDuration(1, 0);
 		talon.configContinuousCurrentLimit(80, 0);
@@ -85,6 +86,7 @@ public class DriveTrain extends Subsystem
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)
 	{
+		// TODO CHECK CONTROLABILITY WITH SETTINGS
 		if(this.shiftedUp)
 		{
 			this.DRIVE.tankDrive((oi.getLeftJoystick('Y') * 3) / 5, (oi.getRightJoystick('Y') * 3) / 5, false);

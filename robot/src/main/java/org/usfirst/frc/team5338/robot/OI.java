@@ -12,7 +12,7 @@ public class OI
 	{
 		SHIFT_UP, SHIFT_DOWN, INTAKE, OUTTAKE, CLOSE, OPEN, EXTEND, RETRACT, FLOOR, SWITCH, SCALE, SPIN_UP, SHOOT
 	}
-
+	
 	// Private method that returns a deadzone-adjusted value for a joystick value
 	// input.
 	private static double joystickDeadZone(final double value)
@@ -27,15 +27,16 @@ public class OI
 		}
 		return value;
 	}
-
+	
 	// Creates private joysticks objects for use.
 	private final Joystick leftJoystick = new Joystick(0);
 	private final Joystick rightJoystick = new Joystick(1);
-
+	
 	// Public method that returns the state of a particular button based on the
 	// Button enum.
 	public boolean get(final Button button)
 	{
+		// TODO CHECK CONTROL SCHEME WORKS
 		switch(button)
 		{
 			case CLOSE:

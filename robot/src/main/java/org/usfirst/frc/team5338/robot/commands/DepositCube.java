@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DepositCube extends Command
 {
 	public double clawSpeed;
-	
+
 	public DepositCube(final double speed)
 	{
 		super();
@@ -23,6 +23,7 @@ public class DepositCube extends Command
 	@Override
 	protected boolean isFinished()
 	{
+		// TODO CHECK TIMEOUT IS ENOUGH
 		return this.isTimedOut();
 	}
 	@Override
