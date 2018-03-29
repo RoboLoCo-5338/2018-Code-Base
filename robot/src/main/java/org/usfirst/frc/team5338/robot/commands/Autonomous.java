@@ -8,7 +8,7 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String autonomous;
-
+	
 	// TODO CHECK EVERYTHING
 	// TODO CHECK EVERYTHING AGAIN
 	// TODO CHECK EVERYTHING ONE MORE TIME
@@ -39,7 +39,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(34.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 						break;
 					}
@@ -55,7 +55,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(34.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 						break;
 					}
@@ -70,7 +70,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.RIGHT)
@@ -115,7 +115,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 					}
 					else
@@ -133,7 +133,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.LEFT)
@@ -177,7 +177,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.20));
+						this.addSequential(new DepositCube(0.25));
 						this.addSequential(new ChangeGear(true));
 					}
 					else

@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot
 	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects
 	public static final VisionSystem visionsystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
-	public static final Claw claw = null;// = new Claw();
+	public static final Claw claw = new Claw();
 	public static final Climber climber = new Climber();
 	public static final OI oi = new OI();
 	public static final Sensors sensors = new Sensors();
@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
 	// Defines Command object for Auto
 	public static Command autonomous;
-	
+
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()
