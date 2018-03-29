@@ -17,13 +17,13 @@ public class OI
 	// input.
 	private static double joystickDeadZone(final double value)
 	{
-		if(value > 0.025)
+		if(value > 0.075)
 		{
-			return (value - 0.025) / 0.975;
+			return (value - 0.075) / 0.925;
 		}
-		else if(value < -0.025)
+		else if(value < -0.075)
 		{
-			return (value + 0.025) / 0.975;
+			return (value + 0.075) / 0.925;
 		}
 		return value;
 	}
