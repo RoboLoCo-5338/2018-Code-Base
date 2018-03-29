@@ -4,6 +4,8 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+import java.util.Arrays;
+
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
@@ -47,7 +49,9 @@ public class Straight extends Command
 			this.targetRotationsLeft += Math.abs(distanceTravelled[0]);
 			this.targetRotationsRight += Math.abs(distanceTravelled[1]);
 			Robot.drivetrain.drive(-0.50, -0.50);
+			System.out.println(Arrays.toString(distanceTravelled));
 		}
+
 	}
 	@Override
 	protected boolean isFinished()
