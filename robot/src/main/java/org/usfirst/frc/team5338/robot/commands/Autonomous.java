@@ -21,9 +21,9 @@ public class Autonomous extends CommandGroup
 			final MatchData.OwnedSide scaleSide = MatchData.getOwnedSide(MatchData.GameFeature.SCALE);
 			switch(this.autonomous)
 			{
-				case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
-					// Tests go here
-					break;
+//				case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
+//
+//					break;
 				case "NOTHING":
 					break;
 				case "CENTER":
@@ -68,18 +68,21 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(-80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(40.0));
+						this.addSequential(new Straight(35.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.25));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
 						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.RIGHT)
 					{
-						this.addSequential(new Straight(260));
+						this.addSequential(new Straight(245));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(-80.0));
+						this.addSequential(new Turn(-88.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(-40.0));
+						this.addSequential(new Straight(-24.0));
 						this.addSequential(new SetClawSpeed(0.99));
 						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
@@ -96,11 +99,12 @@ public class Autonomous extends CommandGroup
 											// unfavorable
 					if(scaleSide == MatchData.OwnedSide.RIGHT)
 					{
-						this.addSequential(new Straight(260));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(-80.0));
+						this.addSequential(new Straight(245));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(-40.0));
+						this.addSequential(new Turn(-88.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(-24.0));
 						this.addSequential(new SetClawSpeed(0.99));
 						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
@@ -115,7 +119,10 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.25));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
 						this.addSequential(new ChangeGear(true));
 					}
 					else
@@ -131,18 +138,21 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(40.0));
+						this.addSequential(new Straight(24.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.25));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
 						this.addSequential(new ChangeGear(true));
 					}
 					else if(scaleSide == MatchData.OwnedSide.LEFT)
 					{
-						this.addSequential(new Straight(260));
+						this.addSequential(new Straight(245));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(80.0));
+						this.addSequential(new Turn(86.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(-40.0));
+						this.addSequential(new Straight(-24.0));
 						this.addSequential(new SetClawSpeed(0.99));
 						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
@@ -158,11 +168,11 @@ public class Autonomous extends CommandGroup
 				case "LEFTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
 					if(scaleSide == MatchData.OwnedSide.LEFT)
 					{
-						this.addSequential(new Straight(260));
+						this.addSequential(new Straight(245));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(80.0));
+						this.addSequential(new Turn(86.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(-40.0));
+						this.addSequential(new Straight(-24.0));
 						this.addSequential(new SetClawSpeed(0.99));
 						this.addSequential(new Delay(1.5));
 						this.addSequential(new LaunchCube());
@@ -177,7 +187,10 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(40.0));
 						this.addSequential(new ChangeClawPosition(2));
-						this.addSequential(new DepositCube(0.25));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
 						this.addSequential(new ChangeGear(true));
 					}
 					else
