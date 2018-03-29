@@ -10,7 +10,7 @@ public class LaunchCube extends Command
 	{
 		super();
 		this.requires(Robot.claw);
-		this.setTimeout(0.75);
+		this.setTimeout(0.50);
 	}
 	@Override
 	protected void execute()

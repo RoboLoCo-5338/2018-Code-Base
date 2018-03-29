@@ -88,7 +88,7 @@ public class Robot extends IterativeRobot
 		Robot.autonomousChooser.addObject("Right Autonomous (Switch Priority)", "RIGHTSWITCHSCALE");
 		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
 		Robot.autonomousChooser.addObject("NO AUTONOMOUS (DANGER)!!!", "NOTHING");
-		//Robot.autonomousChooser.addObject("TESTING (DANGER)!!!", "NOTHING");
+		Robot.autonomousChooser.addObject("TESTING (DANGER)!!!", "TESTING");
 		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 }

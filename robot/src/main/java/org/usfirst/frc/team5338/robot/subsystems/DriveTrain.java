@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5338.robot.subsystems;
 
 import org.usfirst.frc.team5338.robot.OI;
-import org.usfirst.frc.team5338.robot.Robot;
 import org.usfirst.frc.team5338.robot.commands.JoystickControl;
 
 import com.ctre.phoenix.motorcontrol.ControlFrame;
@@ -36,7 +35,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor COMPRESSOR = new Compressor(8);
 	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
 	private boolean shiftedUp;
-	
+
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -49,6 +48,7 @@ public class DriveTrain extends Subsystem
 		{
 			DriveTrain.configureTalon(talon);
 		}
+		this.SHIFTER.set(DoubleSolenoid.Value.kForward);
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
@@ -95,22 +95,23 @@ public class DriveTrain extends Subsystem
 		{
 			this.DRIVE.tankDrive((oi.getLeftJoystick('Y') * 3) / 4, (oi.getRightJoystick('Y') * 3) / 4, false);
 		}
-		if(Robot.oi.get(OI.Button.SHIFT_UP))
-		{
-			// If the user has allowed the gear to shift up, then change the solenoid to
-			// allow for faster movement
-			this.SHIFTER.set(DoubleSolenoid.Value.kReverse);
-			this.shiftedUp = true;
-		}
-		else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
-		{
-			// If user forces the gear to shift down, only do so if power is < 25%
-			if((Math.abs(this.LEFT_SIDE.get()) <= 0.25) && (Math.abs(this.RIGHT_SIDE.get()) <= 0.25))
-			{
-				this.SHIFTER.set(DoubleSolenoid.Value.kForward);
-				this.shiftedUp = false;
-			}
-		}
+		// if(Robot.oi.get(OI.Button.SHIFT_UP))
+		// {
+		// // If the user has allowed the gear to shift up, then change the solenoid to
+		// // allow for faster movement
+		// this.SHIFTER.set(DoubleSolenoid.Value.kReverse);
+		// this.shiftedUp = true;
+		// }
+		// else if(Robot.oi.get(OI.Button.SHIFT_DOWN))
+		// {
+		// // If user forces the gear to shift down, only do so if power is < 25%
+		// if((Math.abs(this.LEFT_SIDE.get()) <= 0.25) &&
+		// (Math.abs(this.RIGHT_SIDE.get()) <= 0.25))
+		// {
+		// this.SHIFTER.set(DoubleSolenoid.Value.kForward);
+		// this.shiftedUp = false;
+		// }
+		// }
 		/**
 		 * IMPORTANT: Due to motor mirroring Forward: Left = +, Right = - Backward: Left
 		 * = -, Right = +
