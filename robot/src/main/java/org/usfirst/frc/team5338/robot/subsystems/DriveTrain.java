@@ -33,7 +33,7 @@ public class DriveTrain extends Subsystem
 	private final DifferentialDrive DRIVE = new DifferentialDrive(this.LEFT_SIDE, this.RIGHT_SIDE);
 	// Objects that control the shift and compressor mechanism
 	private final Compressor COMPRESSOR = new Compressor(8);
-	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
+	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 1, 2);
 	private boolean shiftedUp;
 
 	// Use constructor for any pre-start initialization
