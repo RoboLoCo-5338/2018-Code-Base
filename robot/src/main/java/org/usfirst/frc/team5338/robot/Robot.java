@@ -84,11 +84,13 @@ public class Robot extends IterativeRobot
 		Robot.autonomousChooser.addDefault("Center Autonomous (DEFAULT)", "CENTER");
 		Robot.autonomousChooser.addObject("Left Autonomous (Scale Priority)", "LEFTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Left Autonomous (Switch Priority)", "LEFTSWITCHSCALE");
+		Robot.autonomousChooser.addObject("Left Autonomous (Switch Only)", "LEFTSWITCHONLY");
 		Robot.autonomousChooser.addObject("Right Autonomous (Scale Priority)", "RIGHTSCALESWITCH");
 		Robot.autonomousChooser.addObject("Right Autonomous (Switch Priority)", "RIGHTSWITCHSCALE");
+		Robot.autonomousChooser.addObject("Right Autonomous (Switch Only)", "RIGHTSWITCHONLY");
 		Robot.autonomousChooser.addObject("Baseline Cross Autonomous", "BASELINE");
 		Robot.autonomousChooser.addObject("NO AUTONOMOUS (DANGER)!!!", "NOTHING");
-		Robot.autonomousChooser.addObject("TESTING (DANGER)!!!", "TESTING");
+		// Robot.autonomousChooser.addObject("TESTING (DANGER)!!!", "TESTING");
 		SmartDashboard.putData("Autonomous Choice", Robot.autonomousChooser);
 	}
 }

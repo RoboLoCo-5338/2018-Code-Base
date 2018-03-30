@@ -8,7 +8,7 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String autonomous;
-	
+
 	// TODO CHECK EVERYTHING
 	// TODO CHECK EVERYTHING AGAIN
 	// TODO CHECK EVERYTHING ONE MORE TIME
@@ -23,13 +23,8 @@ public class Autonomous extends CommandGroup
 			this.addSequential(new ChangeGear(false));
 			switch(this.autonomous)
 			{
-				case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
-					this.addSequential(new Straight(-24.0));
-					this.addSequential(new SetClawSpeed(0.99));
-					this.addSequential(new Delay(1.5));
-					this.addSequential(new LaunchCube());
-					this.addSequential(new SetClawSpeed(0));
-					break;
+				// case "TESTING": // THIS IS TEMPORARY ONLY, PLEASE REMOVE ME!!
+				// break;
 				case "NOTHING":
 					break;
 				case "CENTER":
@@ -92,7 +87,7 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new Straight(126.0));
+						this.addSequential(new Straight(120.0));
 					}
 					break;
 				case "RIGHTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
@@ -115,7 +110,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(-80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(40.0));
+						this.addSequential(new Straight(35.0));
 						this.addSequential(new SetClawSpeed(0.30));
 						this.addSequential(new Delay(0.5));
 						this.addSequential(new LaunchCube());
@@ -123,7 +118,25 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new Straight(126.0));
+						this.addSequential(new Straight(120.0));
+					}
+					break;
+				case "RIGHTSWITCHONLY": // Will do switch if favorable, else will do baseline
+					if(switchSide == MatchData.OwnedSide.RIGHT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(-80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(35.0));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+					}
+					else
+					{
+						this.addSequential(new Straight(120.0));
 					}
 					break;
 				case "LEFTSWITCHSCALE": // Will do scale only if switch unfavorable, will do baseline if both
@@ -153,7 +166,7 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new Straight(126.0));
+						this.addSequential(new Straight(120.0));
 					}
 					break;
 				case "LEFTSCALESWITCH": // Will do switch only if scale unfavorable, will do baseline if both
@@ -183,17 +196,35 @@ public class Autonomous extends CommandGroup
 					}
 					else
 					{
-						this.addSequential(new Straight(126.0));
+						this.addSequential(new Straight(120.0));
+					}
+					break;
+				case "LEFTSWITCHONLY":// Will do switch if favorable, else will do baseline
+					if(switchSide == MatchData.OwnedSide.LEFT)
+					{
+						this.addSequential(new Straight(138.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Turn(80.0));
+						this.addSequential(new ResetSensors());
+						this.addSequential(new Straight(24.0));
+						this.addSequential(new SetClawSpeed(0.30));
+						this.addSequential(new Delay(0.5));
+						this.addSequential(new LaunchCube());
+						this.addSequential(new SetClawSpeed(0));
+					}
+					else
+					{
+						this.addSequential(new Straight(120.0));
 					}
 					break;
 				default:
-					this.addSequential(new Straight(126.0));
+					this.addSequential(new Straight(120.0));
 					break;
 			}
 		}
 		catch(final Exception e) // The FMS may screw up
 		{
-			this.addSequential(new Straight(126.0));
+			this.addSequential(new Straight(120.0));
 		}
 	}
 }
