@@ -11,6 +11,7 @@ public class Climber extends Subsystem
 {
 	private final DoubleSolenoid CLIMBER = new DoubleSolenoid(8, 1, 2);
 	private boolean climberExtended = false;
+	//
 	
 	@Override
 	protected void initDefaultCommand()
