@@ -17,7 +17,6 @@ public class Delay extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		// TODO CHECK FUNCTIONALITY
 		return this.isTimedOut();
 	}
 	@Override

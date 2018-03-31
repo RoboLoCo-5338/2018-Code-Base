@@ -19,17 +19,15 @@ public class Claw extends Subsystem
 	private final DoubleSolenoid GRABBER = new DoubleSolenoid(8, 5, 6);
 	private final DoubleSolenoid SHOOTER = new DoubleSolenoid(8, 0, 7);
 	private double potValue; // potentiometer value
-	// TODO CHECK CONSTANTS FOR POSITION
 	private final double SCALE_VALUE = 67.5; // potentiometer value when the dart actuator is retracted
 	private final double FLOOR_VALUE = 690; // potentiometer value when dart actuator is extended
 	private final double SWITCH_VALUE = 290;
 	private boolean clawClosed = true;
 	private boolean shooterPosition = false;
 	private int dartPosition = 3;
-	// TODO CHECK CONSTANTS FOR MOVEMENT SPEED
 	private final double MIN_DART_SPEED = 0.10; // speed to which actuator slows
 	private final double MAX_DART_SPEED = 0.95;
-
+	
 	@Override
 	protected void initDefaultCommand()
 	{
@@ -77,7 +75,6 @@ public class Claw extends Subsystem
 	}
 	public void changeDartPosition()
 	{
-		// TODO CHECK CONSTANTS FOR SLOW DOWN ZONES
 		this.potValue = this.DART.getSensorCollection().getAnalogIn(); // get the analog value of the talon on
 		// which the Dart Actuator runs
 		switch(this.dartPosition)
@@ -236,7 +233,6 @@ public class Claw extends Subsystem
 			this.resetShooter();
 			this.shooterPosition = false;
 		}
-		// TODO CHECK CONSTANTS FOR MODES
 		if(oi.get(OI.Button.INTAKE))
 		{
 			this.setWheelSpeed(-0.35);

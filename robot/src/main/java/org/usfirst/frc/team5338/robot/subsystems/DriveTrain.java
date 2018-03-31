@@ -35,7 +35,7 @@ public class DriveTrain extends Subsystem
 	private final Compressor COMPRESSOR = new Compressor(8);
 	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 1, 2);
 	private boolean shiftedUp;
-
+	
 	// Use constructor for any pre-start initialization
 	public DriveTrain()
 	{
@@ -52,7 +52,6 @@ public class DriveTrain extends Subsystem
 	}
 	private static void configureTalon(final WPI_TalonSRX talon)
 	{
-		// TODO CHECK CONSTANTS FOR CURRENT LIMITING
 		talon.configPeakCurrentLimit(100, 0);
 		talon.configPeakCurrentDuration(3, 0);
 		talon.configContinuousCurrentLimit(80, 0);
@@ -86,7 +85,6 @@ public class DriveTrain extends Subsystem
 	// Actual drive method called in Robot class
 	public void drive(final OI oi)
 	{
-		// TODO CHECK CONTROLABILITY WITH SETTINGS
 		if(this.shiftedUp)
 		{
 			this.DRIVE.tankDrive((oi.getLeftJoystick('Y') * 3) / 5, (oi.getRightJoystick('Y') * 3) / 5, false);

@@ -17,7 +17,7 @@ public class Turn extends Command
 		this.angle = input;
 		this.initalHeading = Robot.sensors.ahrs.getYaw();
 		this.targetHeading = this.initalHeading + this.angle;
-		this.setTimeout((1.5 * Math.abs(this.angle)) / 90.0);
+		this.setTimeout((2 * Math.abs(this.angle)) / 90.0);
 	}
 	@Override
 	protected void initialize()
@@ -40,7 +40,6 @@ public class Turn extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		// TODO CHECK ANGLE AND DIRECTION ARE CORRECT AND TIMEOUT IS ENOUGH
 		return (Math.abs(Robot.sensors.ahrs.getYaw() - this.targetHeading) < 2) || this.isTimedOut();
 	}
 	@Override

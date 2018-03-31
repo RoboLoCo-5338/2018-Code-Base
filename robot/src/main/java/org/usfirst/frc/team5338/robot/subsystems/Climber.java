@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends Subsystem
 {
-	private final DoubleSolenoid CLIMBER = new DoubleSolenoid(8, 1, 2);
+	private final DoubleSolenoid CLIMBER = new DoubleSolenoid(8, 3, 4);
 	private boolean climberExtended = false;
 	
 	@Override

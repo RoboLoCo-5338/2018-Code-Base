@@ -7,7 +7,6 @@ import org.usfirst.frc.team5338.robot.subsystems.Claw;
 import org.usfirst.frc.team5338.robot.subsystems.Climber;
 import org.usfirst.frc.team5338.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5338.robot.subsystems.Sensors;
-import org.usfirst.frc.team5338.robot.subsystems.VisionSystem;
 
 //Import of all essential WPILib classes.
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -20,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot
 {
 	// Creates static DriveTrain, VisionSystem, OI, Sensors, and Claw objects
-	public static final VisionSystem visionsystem = new VisionSystem();
+	// public static final VisionSystem visionsystem = new VisionSystem();
 	public static final DriveTrain drivetrain = new DriveTrain();
 	public static final Claw claw = new Claw();
 	public static final Climber climber = new Climber();
@@ -31,7 +30,7 @@ public class Robot extends IterativeRobot
 	public static SendableChooser<String> autonomousChooser = new SendableChooser<String>();
 	// Defines Command object for Auto
 	public static Command autonomous;
-
+	
 	// Public method that runs once on robot startup.
 	@Override
 	public void robotInit()

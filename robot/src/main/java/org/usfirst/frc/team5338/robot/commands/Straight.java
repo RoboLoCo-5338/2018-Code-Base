@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Straight extends Command
 {
 	double rotations, targetRotationsLeft, targetRotationsRight, numRotations, correctionFactor;
-
+	
 	public Straight(final double input)
 	{
 		// Input in inches to travel
@@ -52,7 +52,6 @@ public class Straight extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		// TODO CHECK DISTANCE AND DIRECTION ARE CORRECT AND TIMEOUT IS ENOUGH
 		return ((Math.abs(this.targetRotationsLeft) < 0) && (Math.abs(this.targetRotationsRight) < 0))
 						|| this.isTimedOut();
 	}

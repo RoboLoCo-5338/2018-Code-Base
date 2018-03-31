@@ -17,11 +17,11 @@ public class Sensors extends Subsystem
 	public final AHRS ahrs = new AHRS(SPI.Port.kMXP, (byte) (200));
 	private double right_rotations, left_rotations, right_prev, right_current, left_prev, left_current;
 	private final PowerDistributionPanel PDP = new PowerDistributionPanel();
-
+	
 	public Sensors()
 	{
 		super();
-		while(this.ahrs.isCalibrating() || this.ahrs.isMagnetometerCalibrated())
+		while(this.ahrs.isCalibrating())
 		{
 			; // Calibrating NavX
 		}

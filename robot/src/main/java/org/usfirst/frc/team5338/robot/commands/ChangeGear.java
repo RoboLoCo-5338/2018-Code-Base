@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class ChangeGear extends Command
 {
 	private final boolean shiftState;
-	
+
 	public ChangeGear(final boolean state)
 	{
 		super();
@@ -23,7 +23,6 @@ public class ChangeGear extends Command
 	@Override
 	protected boolean isFinished()
 	{
-		// TODO CHECK TIMEOUT IS ENOUGH AND FUNCTIONALITY
 		return this.isTimedOut();
 	}
 	@Override
