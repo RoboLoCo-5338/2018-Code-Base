@@ -8,7 +8,7 @@ import openrio.powerup.MatchData;
 public class Autonomous extends CommandGroup
 {
 	private final String autonomous;
-	
+
 	// TODO CHECK EVERYTHING
 	// TODO CHECK EVERYTHING AGAIN
 	public Autonomous()
@@ -35,7 +35,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(48.00));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(35.00));
+						this.addSequential(new Turn(45.00));
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(48.0));
 						this.addSequential(new ChangeClawPosition(2));
@@ -50,7 +50,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(48.00));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Turn(-35.00));
+						this.addSequential(new Turn(-45.00));
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(48.0));
 						this.addSequential(new ChangeClawPosition(2));
@@ -128,10 +128,8 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new Turn(-80.0));
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Straight(35.0));
-						this.addSequential(new SetClawSpeed(0.30));
-						this.addSequential(new Delay(0.5));
-						this.addSequential(new LaunchCube());
-						this.addSequential(new SetClawSpeed(0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.25));
 					}
 					else
 					{
@@ -145,7 +143,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(24.0));
+						this.addSequential(new Straight(35.0));
 						this.addSequential(new SetClawSpeed(0.30));
 						this.addSequential(new Delay(0.5));
 						this.addSequential(new LaunchCube());
@@ -187,7 +185,7 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(40.0));
+						this.addSequential(new Straight(35.0));
 						this.addSequential(new SetClawSpeed(0.30));
 						this.addSequential(new Delay(0.5));
 						this.addSequential(new LaunchCube());
@@ -205,11 +203,9 @@ public class Autonomous extends CommandGroup
 						this.addSequential(new ResetSensors());
 						this.addSequential(new Turn(80.0));
 						this.addSequential(new ResetSensors());
-						this.addSequential(new Straight(24.0));
-						this.addSequential(new SetClawSpeed(0.30));
-						this.addSequential(new Delay(0.5));
-						this.addSequential(new LaunchCube());
-						this.addSequential(new SetClawSpeed(0));
+						this.addSequential(new Straight(35.0));
+						this.addSequential(new ChangeClawPosition(2));
+						this.addSequential(new DepositCube(0.25));
 					}
 					else
 					{
