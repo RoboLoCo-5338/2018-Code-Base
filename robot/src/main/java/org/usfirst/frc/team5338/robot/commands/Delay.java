@@ -1,21 +1,18 @@
 package org.usfirst.frc.team5338.robot.commands;
 
-import org.usfirst.frc.team5338.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ResetSensors extends Command
+public class Delay extends Command
 {
-	public ResetSensors()
+	public Delay(final double delay)
 	{
 		super();
-		this.requires(Robot.sensors);
-		this.setTimeout(0.25);
+		this.setTimeout(delay);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.sensors.resetEncoders();
+		; // Does nothing
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +22,6 @@ public class ResetSensors extends Command
 	@Override
 	protected void end()
 	{
-		;// Do nothing
+		; // Does nothing
 	}
 }

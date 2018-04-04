@@ -4,18 +4,21 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ResetSensors extends Command
+public class SetClawSpeed extends Command
 {
-	public ResetSensors()
+	private final double newWheelSpeed;
+	
+	public SetClawSpeed(final double wheelSpeed)
 	{
 		super();
-		this.requires(Robot.sensors);
+		this.requires(Robot.claw);
 		this.setTimeout(0.25);
+		this.newWheelSpeed = wheelSpeed;
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.sensors.resetEncoders();
+		Robot.claw.setWheelSpeed(this.newWheelSpeed);
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +28,6 @@ public class ResetSensors extends Command
 	@Override
 	protected void end()
 	{
-		;// Do nothing
+		;
 	}
 }

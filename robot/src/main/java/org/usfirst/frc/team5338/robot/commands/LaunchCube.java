@@ -4,18 +4,18 @@ import org.usfirst.frc.team5338.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ResetSensors extends Command
+public class LaunchCube extends Command
 {
-	public ResetSensors()
+	public LaunchCube()
 	{
 		super();
-		this.requires(Robot.sensors);
-		this.setTimeout(0.25);
+		this.requires(Robot.claw);
+		this.setTimeout(0.50);
 	}
 	@Override
 	protected void execute()
 	{
-		Robot.sensors.resetEncoders();
+		Robot.claw.shoot();
 	}
 	@Override
 	protected boolean isFinished()
@@ -25,6 +25,6 @@ public class ResetSensors extends Command
 	@Override
 	protected void end()
 	{
-		;// Do nothing
+		Robot.claw.resetShooter();
 	}
 }
