@@ -1,5 +1,5 @@
 # 2018-Code-Base
-Our demonstrations code for the 2018 FRC Season (Power Up!), Team 5338. This is *not* full code, and only runs a slowed down tank-drive as well.
+Our demonstrations code for the 2018 FRC Season (Power Up!), Team 5338. This is *not* full code, and only runs a slowed down tank-drive. For use at all demonstrations where young children may be driving the robot!
 
 ## Installation
 Welcome new RoboLoCo programmer! To begin the installation process, first verify that on your Windows/macOS/Linux system you have the latest version of **JAVA 8** installed on your system. These following steps will **fail** if you do not have that exact version installed.
