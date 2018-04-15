@@ -31,7 +31,7 @@ public class DriveTrain extends Subsystem
 	// Objects that control the shift and compressor mechanism
 	private final Compressor COMPRESSOR = new Compressor(8);
 	private final DoubleSolenoid SHIFTER = new DoubleSolenoid(8, 3, 4);
-	
+
 	public DriveTrain()
 	{
 		super();
@@ -55,7 +55,7 @@ public class DriveTrain extends Subsystem
 	}
 	public void drive(final OI oi)
 	{
-		this.DRIVE.tankDrive(oi.getRightY() / 3, oi.getLeftY() / 3, false);
+		this.DRIVE.tankDrive(-oi.getLeftY() / 3, -oi.getRightY() / 3, false);
 	}
 	@Override
 	public void initDefaultCommand()
